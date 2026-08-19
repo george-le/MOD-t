@@ -5,7 +5,7 @@
     <!-- Application Structure Plan:
         1. Navigation & Search Bar: Persistent header with quick section switching and real-time search across all guides, G-code parameters, MOD-t Printer Tool setup, filament swap steps, and troubleshooting routines.
         2. Dashboard & Core Operating Rules: Metric highlights, PLA-only mandate notice, interactive "4 Golden Rules" cards, filament storage tips, and Chart.js comparison of MOD-t constraints vs standard 3D printers.
-        3. macOS, Cura & MOD-t Printer Tool Setup Guide: Recommendation banner for tripflex/MOD-t GitHub repo, macOS Gatekeeper bypass, MOD-t Printer Tool desktop app setup, USB bed calibration wizard, step-by-step Filament Swap guide (Load/Unload via app), and Machine Settings tables.
+        3. macOS, Cura & MOD-t Printer Tool Setup Guide: Recommendation banner for george-le/MOD-t GitHub repo, macOS Gatekeeper bypass, MOD-t Printer Tool desktop app setup, USB bed calibration wizard, step-by-step Filament Swap guide (Load/Unload via app), and Machine Settings tables.
         4. Interactive Bed & G-Code Visualizer: HTML Canvas bed coordinate simulator (showing Center X0 Y0, Raft area, and G-Code prime box path step-by-step) alongside interactive Start/End G-Code line explainers.
         5. Interactive Troubleshooting & Clearing Routines: Filterable issue matrix, interactive step-by-step filament clearing routine checklists (Cold Pull, Snapped Filament, Stripped Gear), and Chart.js temperature/heat-creep risk curve.
         6. Volunteer Quick-Reference & Resources: Interactive printable checklist with live progress tracking and community resource cards with direct links.
@@ -121,6 +121,33 @@
                 <p class="text-sm text-brand-muted leading-relaxed">
                     Welcome to the operational master guide for running the New Matter MOD-t 3D printer offline using UltiMaker Cura and the MOD-t Printer Utility on macOS. Operating the MOD-t requires custom G-code routines, strict material selection (PLA ONLY), proper filament storage, precise movement speed throttling, and specific bed adhesion rules to account for its unique unheated flexible build plate and pinion-gear movement system.
                 </p>
+            </div>
+
+            <!-- Defunct Company & Offline Operations Info Box -->
+            <div class="p-5 rounded-xl bg-slate-900 border border-slate-800 text-white shadow-sm space-y-4">
+                <div class="flex items-center gap-3 border-b border-slate-800 pb-3">
+                    <span class="text-3xl">⚠️</span>
+                    <div>
+                        <h3 class="font-bold text-sm text-slate-100 uppercase tracking-wide">Legacy Offline Operations (Important Notice)</h3>
+                        <p class="text-xs text-slate-400 mt-0.5">
+                            New Matter closed its operations in 2018. This MOD-t operates 100% locally and offline.
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                    <div class="p-3.5 rounded-lg bg-slate-950 border border-slate-800/80 space-y-1">
+                        <span class="font-bold text-amber-400 block">💾 Firmware Already Updated</span>
+                        <p class="text-slate-400 leading-relaxed">The printer's firmware has already been flashed to the latest version. <strong>Do not attempt to update the firmware</strong>. The original update servers are offline, and flashing will fail or brick the machine.</p>
+                    </div>
+                    <div class="p-3.5 rounded-lg bg-slate-950 border border-slate-800/80 space-y-1">
+                        <span class="font-bold text-amber-400 block">🔌 USB-Only Control</span>
+                        <p class="text-slate-400 leading-relaxed">Since the original cloud backend is defunct, the printer's Wi-Fi network and setup button are non-functional. All printing and calibration must be done via a local USB connection.</p>
+                    </div>
+                    <div class="p-3.5 rounded-lg bg-slate-950 border border-slate-800/80 space-y-1">
+                        <span class="font-bold text-amber-400 block">🛠️ 100% Self-Sufficient Setup</span>
+                        <p class="text-slate-400 leading-relaxed">Use <strong>Cura 15.04.6</strong> (on older macOS) or modern command-line utilities (on macOS Catalina+) to print. G-code files are loaded locally without needing external accounts.</p>
+                    </div>
+                </div>
             </div>
 
             <!-- Mandatory PLA-Only Banner -->
@@ -315,7 +342,7 @@
             <div class="bg-brand-card p-6 rounded-xl border border-brand-border shadow-sm">
                 <h2 class="text-xl font-bold text-brand-primary mb-2">Software Setup & MOD-t App Filament Swapping</h2>
                 <p class="text-sm text-brand-muted leading-relaxed">
-                    Operating the MOD-t requires two software components on macOS: **UltiMaker Cura** for slicing models into G-code, and the **MOD-t Printer Tool** (or tripflex utility) for bed level calibration, USB printing, and changing/swapping PLA filament.
+                    Operating the MOD-t requires two software components on macOS: **UltiMaker Cura** for slicing models into G-code, and the **MOD-t Printer Tool** (or george-le utility) for bed level calibration, USB printing, and changing/swapping PLA filament.
                 </p>
             </div>
 
@@ -330,12 +357,12 @@
                     Rather than searching for unverified web downloads or outdated cloud mirrors, we strongly recommend obtaining all software, desktop utilities, and G-code profiles directly from the official community repository:
                 </p>
                 <div class="pt-1 flex flex-wrap gap-3 items-center">
-                    <a href="https://github.com/tripflex/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-2 shadow">
+                    <a href="https://github.com/george-le/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-brand-emerald hover:bg-emerald-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-2 shadow">
                         <span>🍏 Download MOD-t App DMG (v1.5.3 Direct)</span>
                         <span class="text-xs">↗</span>
                     </a>
-                    <a href="https://github.com/tripflex/MOD-t/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-brand-indigo hover:bg-indigo-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-2 shadow">
-                        <span>📦 Open tripflex/MOD-t GitHub Software Repository</span>
+                    <a href="https://github.com/george-le/MOD-t/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-2 bg-brand-indigo hover:bg-indigo-600 text-white text-xs font-bold rounded-lg transition flex items-center gap-2 shadow">
+                        <span>📦 Open george-le/MOD-t GitHub Software Repository</span>
                         <span class="text-xs">↗</span>
                     </a>
                 </div>
@@ -482,7 +509,7 @@
                     <div class="p-4 rounded-lg bg-slate-100 border border-slate-200 text-xs text-slate-800 space-y-2">
                         <span class="font-bold text-sm block">Legacy Option: Cura 15.04.6 & Official MOD-t Desktop App (32-bit)</span>
                         <p>Compatible ONLY with macOS 10.14 Mojave or older. Direct .ini profile loading and native MOD-t Desktop Printer Tool are supported natively in 32-bit legacy builds.</p>
-                        <p class="font-mono">Download link: <a href="https://github.com/tripflex/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" class="text-indigo-600 underline">newmatter_modt_osx_v1.5.3.dmg</a></p>
+                        <p class="font-mono">Download link: <a href="https://github.com/george-le/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" class="text-indigo-600 underline">newmatter_modt_osx_v1.5.3.dmg</a></p>
                     </div>
                 </div>
             </div>
@@ -501,7 +528,7 @@
                     <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
                         <div class="flex items-center justify-between">
                             <span class="font-bold text-brand-primary block text-sm">📥 Option A: Official MOD-t Desktop App</span>
-                            <a href="https://github.com/tripflex/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" class="text-xs font-bold text-indigo-600 hover:underline">v1.5.3 DMG ↗</a>
+                            <a href="https://github.com/george-le/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" class="text-xs font-bold text-indigo-600 hover:underline">v1.5.3 DMG ↗</a>
                         </div>
                         <span class="text-brand-muted block">Best for macOS 10.14 Mojave & Older (or virtual machines).</span>
                         <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono pt-1">
@@ -516,7 +543,7 @@
                         <span class="font-bold text-brand-primary block text-sm">⚡ Option B: Modern macOS Terminal/CLI Tools</span>
                         <span class="text-brand-muted block">For macOS Catalina to Sequoia (64-bit / Apple Silicon).</span>
                         <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono pt-1">
-                            <li>Install <code class="bg-slate-200 px-1 py-0.5 rounded">tripflex/MOD-t</code> Python / Go CLI tool via Terminal.</li>
+                            <li>Install <code class="bg-slate-200 px-1 py-0.5 rounded">george-le/MOD-t</code> Python / Go CLI tool via Terminal.</li>
                             <li>Allows sending G-code directly over USB serial port (<code class="bg-slate-200 px-1 py-0.5 rounded">/dev/tty.usbmodem*</code>).</li>
                             <li>Commands: <code class="bg-slate-200 px-1 py-0.5 rounded">modt-tool load</code>, <code class="bg-slate-200 px-1 py-0.5 rounded">modt-tool unload</code>, <code class="bg-slate-200 px-1 py-0.5 rounded">modt-tool print model.gcode</code>.</li>
                         </ol>
@@ -543,10 +570,10 @@
 
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-slate-50 border border-slate-200 rounded-lg gap-3">
                     <div>
-                        <span class="font-bold text-xs text-brand-primary block">Official Download Link (Wayback Machine Archive)</span>
-                        <span class="text-xs text-brand-muted font-mono">Filename: NM Cura Profile 062316.ini</span>
+                        <span class="font-bold text-xs text-brand-primary block">Official Download Link (Repository Archive)</span>
+                        <span class="text-xs text-brand-muted font-mono">Filename: NM+Cura+Profile+062316.ini</span>
                     </div>
-                    <a href="https://web.archive.org/web/20180216201549/https://das4vxwadkuqo.cloudfront.net/support/NM+Cura+Profile+062316.ini" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-brand-indigo text-white text-xs font-semibold rounded-md hover:bg-indigo-700 transition flex items-center gap-1">
+                    <a href="https://github.com/george-le/MOD-t/blob/master/Cura/NM+Cura+Profile+062316.ini" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-brand-indigo text-white text-xs font-semibold rounded-md hover:bg-indigo-700 transition flex items-center gap-1">
                         <span>📥 Download Official .ini Profile</span>
                     </a>
                 </div>
@@ -692,7 +719,7 @@
                 <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-3">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-sm text-brand-primary">Start G-Code Script</h3>
-                        <button onclick="copyText('start-gcode-text')" class="px-2 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-semibold rounded transition">📋 Copy Script</button>
+                        <button onclick="copyText('start-gcode-text', this)" class="px-2 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-semibold rounded transition">📋 Copy Script</button>
                     </div>
                     <pre id="start-gcode-text" class="code-font bg-slate-900 text-slate-200 text-xs p-4 rounded-lg overflow-x-auto leading-relaxed border border-slate-800">
 M42 P10 S1 ; Turn on internal LED chamber light
@@ -730,7 +757,7 @@ G92 E0 ; Reset extrusion counter</pre>
                 <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-3">
                     <div class="flex items-center justify-between border-b border-slate-100 pb-2">
                         <h3 class="font-bold text-sm text-brand-primary">End G-Code Script</h3>
-                        <button onclick="copyText('end-gcode-text')" class="px-2 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-semibold rounded transition">📋 Copy Script</button>
+                        <button onclick="copyText('end-gcode-text', this)" class="px-2 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-semibold rounded transition">📋 Copy Script</button>
                     </div>
                     <pre id="end-gcode-text" class="code-font bg-slate-900 text-slate-200 text-xs p-4 rounded-lg overflow-x-auto leading-relaxed border border-slate-800">
 G92 E0
@@ -986,7 +1013,7 @@ M84 ; Disable stepper motors</pre>
                     <p class="text-xs text-brand-muted">Primary technical repositories, firmware archives, and reverse-engineering documentation:</p>
 
                     <div class="space-y-3 text-xs">
-                        <a href="https://github.com/tripflex/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" rel="noopener noreferrer" class="block p-3 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition space-y-1">
+                        <a href="https://github.com/george-le/MOD-t/blob/master/software/osx/newmatter_modt_osx_v1.5.3.dmg" target="_blank" rel="noopener noreferrer" class="block p-3 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-lg transition space-y-1">
                             <span class="font-bold text-emerald-800 flex items-center justify-between">
                                 <span>🍏 MOD-t App DMG (v1.5.3)</span>
                                 <span class="text-xs bg-emerald-200 text-emerald-900 px-1.5 py-0.5 rounded font-mono">Direct Link</span>
@@ -994,19 +1021,19 @@ M84 ; Disable stepper motors</pre>
                             <span class="text-emerald-700 block">Direct download for the official New Matter MOD-t Desktop App installer for macOS.</span>
                         </a>
 
-                        <a href="https://github.com/tripflex/MOD-t/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-50 hover:bg-slate-100 border border-indigo-200 rounded-lg transition space-y-1">
+                        <a href="https://github.com/george-le/MOD-t/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-50 hover:bg-slate-100 border border-indigo-200 rounded-lg transition space-y-1">
                             <span class="font-bold text-brand-indigo flex items-center justify-between">
-                                <span>📦 tripflex MOD-t GitHub Repo</span>
+                                <span>📦 george-le MOD-t GitHub Repo</span>
                                 <span class="text-xs bg-indigo-100 text-indigo-800 px-1.5 py-0.5 rounded font-mono">Primary Source</span>
                             </span>
                             <span class="text-brand-muted block">Archived MOD-t Printer Tool installers, .ini Cura profiles, recovery firmware, Wi-Fi config scripts, and CLI tools.</span>
                         </a>
 
-                        <a href="https://web.archive.org/web/20180216201549/https://das4vxwadkuqo.cloudfront.net/support/NM+Cura+Profile+062316.ini" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition space-y-1">
+                        <a href="https://github.com/george-le/MOD-t/blob/master/Cura/NM+Cura+Profile+062316.ini" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition space-y-1">
                             <span class="font-bold text-brand-amber flex items-center gap-1">
-                                <span>🏛️ Internet Archive Wayback Machine</span>
+                                <span>📄 Cura Profile (.ini)</span>
                             </span>
-                            <span class="text-brand-muted block">Direct download link for official New Matter NM Cura Profile 062316.ini.</span>
+                            <span class="text-brand-muted block">Official New Matter NM Cura Profile 062316.ini in this repository.</span>
                         </a>
 
                         <a href="https://download.lulzbot.com/Software/" target="_blank" rel="noopener noreferrer" class="block p-3 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-lg transition space-y-1">
@@ -1092,11 +1119,19 @@ M84 ; Disable stepper motors</pre>
         }
 
         // Copy Text Helper
-        function copyText(elementId) {
+        function copyText(elementId, buttonEl) {
             const el = document.getElementById(elementId);
             if (!el) return;
             navigator.clipboard.writeText(el.innerText).then(() => {
-                alert('Script copied to clipboard!');
+                if (buttonEl) {
+                    const originalText = buttonEl.innerText;
+                    buttonEl.innerText = "✓ Copied!";
+                    buttonEl.className = "px-2 py-1 bg-emerald-100 text-emerald-800 text-xs font-semibold rounded transition";
+                    setTimeout(() => {
+                        buttonEl.innerText = originalText;
+                        buttonEl.className = "px-2 py-1 bg-slate-100 text-slate-700 hover:bg-slate-200 text-xs font-semibold rounded transition";
+                    }, 1500);
+                }
             });
         }
 
@@ -1109,7 +1144,7 @@ M84 ; Disable stepper motors</pre>
             }
 
             // Automatically switch tabs if query matches specific sections
-            if (['swap', 'unload', 'load', 'tool', 'utility', 'app', 'usb', 'driver', 'calibrate', 'github', 'tripflex', 'dmg'].some(k => query.includes(k))) {
+            if (['swap', 'unload', 'load', 'tool', 'utility', 'app', 'usb', 'driver', 'calibrate', 'github', 'george-le', 'dmg'].some(k => query.includes(k))) {
                 switchTab('setup');
             } else if (['shift', 'clog', 'collision', 'warp', 'click', 'heat', 'moisture', 'dry'].some(k => query.includes(k))) {
                 switchTab('troubleshoot');
