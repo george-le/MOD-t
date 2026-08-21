@@ -1,0 +1,4 @@
+#!/bin/bash 
+BASEDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+# Absolute path this script is in, thus /home/user/bin
+sleep 30 && open "$BASEDIR/../../../../.." --args --silent
