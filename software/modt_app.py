@@ -459,18 +459,19 @@ class ModTApp:
         if not state:
             return 'Unknown'
         mapping = {
-            'STATE_IDLE': 'Idle',
-            'STATE_BUSY': 'Busy',
+            'STATE_IDLE': 'Ready to start',
+            'STATE_BUSY': 'Working',
             'STATE_PRINTING': 'Printing',
-            'STATE_JOB_QUEUED': 'Queued',
+            'STATE_JOB_QUEUED': 'Queued — ready to start',
             'STATE_JOB_PAUSED': 'Paused',
-            'STATE_FILE_RX': 'Receiving file',
-            'STATE_HEATING': 'Heating',
+            'STATE_FILE_RX': 'File received — waiting for start',
+            'STATE_HEATING': 'Heating up',
             'STATE_PREHEAT': 'Preheating',
-            'STATE_ERROR': 'Error',
-            'STATE_OFFLINE': 'Offline',
+            'STATE_ERROR': 'Needs attention',
+            'STATE_OFFLINE': 'Disconnected',
         }
-        return mapping.get(state.upper(), state)
+        value = str(state).upper()
+        return mapping.get(value, value.replace('_', ' ').title())
 
     def update_telemetry_labels(self, temp, state, x, y, z, raw_json):
         readable_state = self.humanize_status(state)
@@ -480,18 +481,22 @@ class ModTApp:
         self.lbl_y.config(text=f"Y Position: {y} mm")
         self.lbl_z.config(text=f"Z Position: {z} mm")
 
-        if readable_state == 'Receiving file':
-            self.transfer_status.config(text='Transfer status: Receiving file', fg='#7C2D12', bg='#FEF3C7')
+        if 'File received' in readable_state or 'waiting for start' in readable_state.lower():
+            self.transfer_status.config(text='Transfer status: File received', fg='#7C2D12', bg='#FEF3C7')
             self.transfer_status.pack(fill=tk.X, pady=(0, 6))
-            self.trigger_label.config(text='Waiting for print trigger: press the MOD-t front button', fg='#7C2D12', bg='#FEF3C7')
+            self.trigger_label.config(text='Press the printer front button to begin the print', fg='#7C2D12', bg='#FEF3C7')
             self.trigger_label.pack(fill=tk.X, pady=(6, 0))
-        elif readable_state == 'Queued':
-            self.transfer_status.config(text='Transfer status: Queued', fg='#065F46', bg='#ECFDF5')
+        elif 'Queued' in readable_state or 'Ready to start' in readable_state:
+            self.transfer_status.config(text='Transfer status: Ready to start', fg='#065F46', bg='#ECFDF5')
             self.transfer_status.pack(fill=tk.X, pady=(0, 6))
-            self.trigger_label.config(text='Ready: press the MOD-t front button to begin', fg='#065F46', bg='#ECFDF5')
+            self.trigger_label.config(text='Press the printer front button to begin the print', fg='#065F46', bg='#ECFDF5')
             self.trigger_label.pack(fill=tk.X, pady=(6, 0))
         elif readable_state == 'Printing':
             self.transfer_status.config(text='Transfer status: Printing', fg='#0F172A', bg='#DBEAFE')
+            self.transfer_status.pack(fill=tk.X, pady=(0, 6))
+            self.trigger_label.pack_forget()
+        elif readable_state in ('Heating up', 'Preheating'):
+            self.transfer_status.config(text='Transfer status: Heating up', fg='#7C2D12', bg='#FEF3C7')
             self.transfer_status.pack(fill=tk.X, pady=(0, 6))
             self.trigger_label.pack_forget()
         else:
