@@ -24,8 +24,8 @@ class ModTApp:
     def __init__(self, root):
         self.root = root
         self.root.title("MOD-t Desktop Printer Utility")
-        self.root.geometry("640x580")
-        self.root.minsize(600, 520)
+        self.root.geometry("760x620")
+        self.root.minsize(680, 560)
 
         # Connection & state variables
         self.dev = None
@@ -48,108 +48,118 @@ class ModTApp:
     def setup_styles(self):
         style = ttk.Style()
         style.theme_use('clam')
-        style.configure('TFrame', background='#FDFBF7')
-        style.configure('TLabel', background='#FDFBF7', foreground='#0F172A', font=('Arial', 10))
-        style.configure('Header.TLabel', font=('Arial', 12, 'bold'))
-        style.configure('Title.TLabel', font=('Arial', 16, 'bold'), foreground='#4F46E5')
-        style.configure('Status.TLabel', font=('Courier', 10))
-        style.configure('TButton', font=('Arial', 10, 'bold'), borderwidth=1)
-        style.configure('Action.TButton', background='#4F46E5', foreground='white')
-        style.map('Action.TButton', background=[('active', '#4338CA')])
+
+        # Base colors and surfaces
+        bg = '#EEF4FF'
+        panel = '#FFFFFF'
+        panel_alt = '#F8FAFC'
+        border = '#DDE8F7'
+        text = '#0F172A'
+        muter = '#475569'
+        primary = '#2563EB'
+        primary_dark = '#1D4ED8'
+        success = '#059669'
+        danger = '#DC2626'
+
+        self.root.configure(bg=bg)
+        style.configure('.', background=bg, foreground=text, font=('Arial', 10))
+        style.configure('Card.TFrame', background=panel)
+        style.configure('Panel.TFrame', background=panel_alt)
+        style.configure('TLabelframe', background=bg, foreground=text)
+        style.configure('TLabelframe.Label', background=bg, foreground=text, font=('Arial', 10, 'bold'))
+        style.configure('TLabel', background=bg, foreground=text)
+        style.configure('Muted.TLabel', foreground=muter, background=bg)
+        style.configure('Title.TLabel', font=('Arial', 21, 'bold'), foreground=primary, background=bg)
+        style.configure('TButton', font=('Arial', 10, 'bold'), borderwidth=0, padding=8)
+        style.configure('Action.TButton', background=primary, foreground='white')
+        style.map('Action.TButton', background=[('active', primary_dark)], foreground=[('active', 'white')])
+        style.configure('Ghost.TButton', background=panel, foreground=text)
+        style.map('Ghost.TButton', background=[('active', panel_alt)])
+        style.configure('Success.TLabel', foreground=success, font=('Arial', 10, 'bold'))
+        style.configure('Error.TLabel', foreground=danger, font=('Arial', 10, 'bold'))
+        style.configure('TCheckbutton', background=bg, foreground=text)
+        style.configure('Horizontal.TProgressbar', troughcolor='#E2E8F0', background=primary, thickness=10)
 
     def create_widgets(self):
-        self.root.configure(bg='#FDFBF7')
+        self.root.configure(bg='#EEF4FF')
 
-        # Top Title Header
-        header_frame = ttk.Frame(self.root, padding=10)
-        header_frame.pack(fill=tk.X)
-        title_label = ttk.Label(header_frame, text="🖨️ MOD-t Operations Utility", style="Title.TLabel")
+        header_frame = ttk.Frame(self.root, padding=(20, 18, 20, 12), style='Card.TFrame')
+        header_frame.pack(fill=tk.X, padx=18, pady=(18, 0))
+
+        title_label = ttk.Label(header_frame, text="MOD-t Operations", style='Title.TLabel')
         title_label.pack(side=tk.LEFT)
 
-        self.conn_status_label = ttk.Label(header_frame, text="● Disconnected", foreground="#E11D48", font=('Arial', 10, 'bold'))
-        self.conn_status_label.pack(side=tk.RIGHT, padx=10)
+        self.conn_status_label = ttk.Label(header_frame, text="● Disconnected", foreground='#DC2626', font=('Arial', 10, 'bold'))
+        self.conn_status_label.pack(side=tk.RIGHT, padx=8)
 
-        # Main separator
-        ttk.Separator(self.root, orient='horizontal').pack(fill=tk.X, padx=10)
-
-        # Main split container
-        main_frame = ttk.Frame(self.root, padding=10)
+        main_frame = ttk.Frame(self.root, padding=(18, 14, 18, 18))
         main_frame.pack(fill=tk.BOTH, expand=True)
 
-        # Left Column: Telemetry & Status
-        left_frame = ttk.LabelFrame(main_frame, text=" Printer Telemetry ", padding=10)
-        left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+        left_frame = ttk.Frame(main_frame, style='Card.TFrame', padding=14)
+        left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 12))
 
-        self.lbl_temp = ttk.Label(left_frame, text="Hotend Temp: -- °C")
-        self.lbl_temp.pack(anchor=tk.W, pady=5)
+        telemetry_header = ttk.Label(left_frame, text="Telemetry", style='Section.TLabel', font=('Arial', 11, 'bold'))
+        telemetry_header.pack(anchor=tk.W, pady=(0, 8))
 
-        self.lbl_state = ttk.Label(left_frame, text="Printer State: --")
-        self.lbl_state.pack(anchor=tk.W, pady=5)
+        telemetry_grid = ttk.Frame(left_frame, style='Panel.TFrame', padding=12)
+        telemetry_grid.pack(fill=tk.X)
 
-        self.lbl_x = ttk.Label(left_frame, text="X Position: -- mm")
-        self.lbl_x.pack(anchor=tk.W, pady=5)
+        self.lbl_temp = ttk.Label(telemetry_grid, text="Hotend Temp: -- °C", font=('Arial', 11, 'bold'))
+        self.lbl_temp.pack(anchor=tk.W, pady=4)
+        self.lbl_state = ttk.Label(telemetry_grid, text="Printer State: --")
+        self.lbl_state.pack(anchor=tk.W, pady=4)
+        self.lbl_x = ttk.Label(telemetry_grid, text="X Position: -- mm")
+        self.lbl_x.pack(anchor=tk.W, pady=4)
+        self.lbl_y = ttk.Label(telemetry_grid, text="Y Position: -- mm")
+        self.lbl_y.pack(anchor=tk.W, pady=4)
+        self.lbl_z = ttk.Label(telemetry_grid, text="Z Position: -- mm")
+        self.lbl_z.pack(anchor=tk.W, pady=(4, 0))
 
-        self.lbl_y = ttk.Label(left_frame, text="Y Position: -- mm")
-        self.lbl_y.pack(anchor=tk.W, pady=5)
+        raw_header = ttk.Label(left_frame, text="Raw Response Details", style='Section.TLabel', font=('Arial', 11, 'bold'))
+        raw_header.pack(anchor=tk.W, pady=(14, 8))
 
-        self.lbl_z = ttk.Label(left_frame, text="Z Position: -- mm")
-        self.lbl_z.pack(anchor=tk.W, pady=5)
-
-        # Telemetry JSON Dump Textbox for advanced debugging
-        ttk.Label(left_frame, text="Raw Response Details:", font=('Arial', 9, 'bold')).pack(anchor=tk.W, pady=(15, 2))
-        self.txt_telemetry = tk.Text(left_frame, height=10, width=30, font=('Courier', 9), bg='#F1F5F9', fg='#0F172A', wrap=tk.WORD)
+        self.txt_telemetry = tk.Text(left_frame, height=14, width=36, font=('Courier', 9), bg='#F8FAFC', fg='#0F172A', wrap=tk.WORD, relief=tk.FLAT, borderwidth=1, highlightthickness=1, highlightbackground='#DDE8F7')
         self.txt_telemetry.pack(fill=tk.BOTH, expand=True)
         self.txt_telemetry.insert(tk.END, "Waiting for connection...")
         self.txt_telemetry.config(state=tk.DISABLED)
 
-        # Right Column: Controls & Print Job
         right_frame = ttk.Frame(main_frame)
-        right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True, padx=5, pady=5)
+        right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        # Filament Operations Box
-        fil_frame = ttk.LabelFrame(right_frame, text=" Filament Swap ", padding=10)
-        fil_frame.pack(fill=tk.X, pady=5)
-
-        self.btn_load = ttk.Button(fil_frame, text="📥 Load Filament (210°C)", command=self.load_filament)
+        fil_frame = ttk.Frame(right_frame, style='Card.TFrame', padding=12)
+        fil_frame.pack(fill=tk.X, pady=(0, 10))
+        ttk.Label(fil_frame, text="Filament", style='Section.TLabel', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
+        self.btn_load = ttk.Button(fil_frame, text="Load Filament (210°C)", style='Ghost.TButton', command=self.load_filament)
         self.btn_load.pack(fill=tk.X, pady=3)
-
-        self.btn_unload = ttk.Button(fil_frame, text="📤 Unload Filament", command=self.unload_filament)
+        self.btn_unload = ttk.Button(fil_frame, text="Unload Filament", style='Ghost.TButton', command=self.unload_filament)
         self.btn_unload.pack(fill=tk.X, pady=3)
 
-        # Print Job Box
-        job_frame = ttk.LabelFrame(right_frame, text=" G-Code Print Job ", padding=10)
-        job_frame.pack(fill=tk.BOTH, expand=True, pady=5)
+        job_frame = ttk.Frame(right_frame, style='Card.TFrame', padding=12)
+        job_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        ttk.Label(job_frame, text="Print Job", style='Section.TLabel', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
 
-        self.btn_select_file = ttk.Button(job_frame, text="📂 Select G-Code File", command=self.select_file)
-        self.btn_select_file.pack(fill=tk.X, pady=5)
+        self.btn_select_file = ttk.Button(job_frame, text="Select G-Code File", style='Ghost.TButton', command=self.select_file)
+        self.btn_select_file.pack(fill=tk.X, pady=(0, 6))
+        self.selected_file_label = ttk.Label(job_frame, text="No file selected", font=('Arial', 9, 'italic'), wraplength=260, justify=tk.LEFT)
+        self.selected_file_label.pack(anchor=tk.W, pady=(0, 6))
 
-        self.selected_file_label = ttk.Label(job_frame, text="No file selected", font=('Arial', 9, 'italic'), wraplength=250)
-        self.selected_file_label.pack(anchor=tk.W, pady=2)
-
-        # Checkbox to optimize G-code on the fly
         self.optimize_var = tk.BooleanVar(value=True)
-        self.chk_optimize = ttk.Checkbutton(job_frame, text="Optimize G-code trajectory on the fly", variable=self.optimize_var)
-        self.chk_optimize.pack(anchor=tk.W, pady=5)
+        self.chk_optimize = ttk.Checkbutton(job_frame, text="Optimize G-code on the fly", variable=self.optimize_var)
+        self.chk_optimize.pack(anchor=tk.W, pady=(0, 8))
 
-        self.btn_print = ttk.Button(job_frame, text="🚀 Send to Printer", style="Action.TButton", command=self.start_print)
-        self.btn_print.pack(fill=tk.X, pady=5)
+        self.btn_print = ttk.Button(job_frame, text="Send to Printer", style='Action.TButton', command=self.start_print)
+        self.btn_print.pack(fill=tk.X, pady=(0, 6))
+        self.btn_stop = ttk.Button(job_frame, text="Cancel Send/Job", style='Ghost.TButton', command=self.stop_print, state=tk.DISABLED)
+        self.btn_stop.pack(fill=tk.X, pady=(0, 8))
 
-        self.btn_stop = ttk.Button(job_frame, text="🛑 Cancel Send/Job", command=self.stop_print, state=tk.DISABLED)
-        self.btn_stop.pack(fill=tk.X, pady=2)
-
-        # Progress bar
-        self.progress_bar = ttk.Progressbar(job_frame, orient="horizontal", mode="determinate")
-        self.progress_bar.pack(fill=tk.X, pady=8)
-
-        self.progress_label = ttk.Label(job_frame, text="Progress: 0.0%")
+        self.progress_bar = ttk.Progressbar(job_frame, orient='horizontal', mode='determinate', length=300, style='Horizontal.TProgressbar')
+        self.progress_bar.pack(fill=tk.X, pady=(0, 6))
+        self.progress_label = ttk.Label(job_frame, text='Progress: 0.0%')
         self.progress_label.pack(anchor=tk.CENTER)
 
-        # Recovery Utilities Box
-        recovery_frame = ttk.LabelFrame(right_frame, text=" Recovery Utilities ", padding=10)
-        recovery_frame.pack(fill=tk.X, pady=5)
-
-        self.btn_dfu = ttk.Button(recovery_frame, text="⚙️ Enter DFU (Recovery) Mode", command=self.enter_dfu)
-        self.btn_dfu.pack(fill=tk.X)
+        self.clear_nozzle_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'clearnozzle.gcode'))
+        self.btn_clear_nozzle = ttk.Button(job_frame, text='Load bundled clearnozzle.gcode', style='Ghost.TButton', command=self.load_clear_nozzle_file)
+        self.btn_clear_nozzle.pack(fill=tk.X, pady=(12, 0))
 
     # background status polling loop
     def background_poll(self):
@@ -287,17 +297,12 @@ class ModTApp:
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send command: {e}")
 
-    def enter_dfu(self):
-        if not self.connected or not self.dev:
-            messagebox.showerror("Error", "No printer connected.")
+    def load_clear_nozzle_file(self):
+        if not os.path.isfile(self.clear_nozzle_path):
+            messagebox.showerror("Missing file", "clearnozzle.gcode was not found in the project root.")
             return
-        if messagebox.askyesno("Confirm", "Are you sure you want to enter DFU mode? The printer will reattach as a recovery DFU device."):
-            try:
-                self.dev.write(2, bytearray.fromhex('246a0095ff'))
-                self.dev.write(2, '{"transport":{"attrs":["request","twoway"],"id":7},"data":{"command":{"idx":53,"name":"Enter_dfu_mode"}}};')
-                messagebox.showinfo("DFU Recovery", "DFU command sent. The printer will reboot into recovery mode.")
-            except Exception as e:
-                messagebox.showerror("Error", f"Failed to put in DFU mode: {e}")
+        self.selected_file_label.config(text=self.clear_nozzle_path)
+        messagebox.showinfo("Clear Nozzle", f"Loaded bundled clearnozzle.gcode:\n{self.clear_nozzle_path}")
 
     def select_file(self):
         fname = filedialog.askopenfilename(filetypes=[("G-code Files", "*.gcode"), ("All Files", "*.*")])
