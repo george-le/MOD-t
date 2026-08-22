@@ -49,117 +49,123 @@ class ModTApp:
         style = ttk.Style()
         style.theme_use('clam')
 
-        # Base colors and surfaces
         bg = '#EEF4FF'
         panel = '#FFFFFF'
         panel_alt = '#F8FAFC'
-        border = '#DDE8F7'
+        mute = '#64748B'
         text = '#0F172A'
-        muter = '#475569'
         primary = '#2563EB'
         primary_dark = '#1D4ED8'
-        success = '#059669'
+        success = '#0F766E'
         danger = '#DC2626'
 
         self.root.configure(bg=bg)
         style.configure('.', background=bg, foreground=text, font=('Arial', 10))
         style.configure('Card.TFrame', background=panel)
         style.configure('Panel.TFrame', background=panel_alt)
-        style.configure('TLabelframe', background=bg, foreground=text)
-        style.configure('TLabelframe.Label', background=bg, foreground=text, font=('Arial', 10, 'bold'))
         style.configure('TLabel', background=bg, foreground=text)
-        style.configure('Muted.TLabel', foreground=muter, background=bg)
-        style.configure('Title.TLabel', font=('Arial', 21, 'bold'), foreground=primary, background=bg)
+        style.configure('Title.TLabel', font=('Arial', 22, 'bold'), foreground=primary, background=bg)
+        style.configure('Section.TLabel', font=('Arial', 11, 'bold'), foreground=text, background=bg)
+        style.configure('Muted.TLabel', font=('Arial', 9), foreground=mute, background=bg)
         style.configure('TButton', font=('Arial', 10, 'bold'), borderwidth=0, padding=8)
         style.configure('Action.TButton', background=primary, foreground='white')
         style.map('Action.TButton', background=[('active', primary_dark)], foreground=[('active', 'white')])
         style.configure('Ghost.TButton', background=panel, foreground=text)
         style.map('Ghost.TButton', background=[('active', panel_alt)])
-        style.configure('Success.TLabel', foreground=success, font=('Arial', 10, 'bold'))
-        style.configure('Error.TLabel', foreground=danger, font=('Arial', 10, 'bold'))
         style.configure('TCheckbutton', background=bg, foreground=text)
         style.configure('Horizontal.TProgressbar', troughcolor='#E2E8F0', background=primary, thickness=10)
 
     def create_widgets(self):
         self.root.configure(bg='#EEF4FF')
 
-        header_frame = ttk.Frame(self.root, padding=(20, 18, 20, 12), style='Card.TFrame')
+        header_frame = tk.Frame(self.root, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=20, pady=16)
         header_frame.pack(fill=tk.X, padx=18, pady=(18, 0))
 
-        title_label = ttk.Label(header_frame, text="MOD-t Operations", style='Title.TLabel')
+        title_label = tk.Label(header_frame, text='MOD-t Operations', bg='#FFFFFF', fg='#2563EB', font=('Arial', 22, 'bold'))
         title_label.pack(side=tk.LEFT)
 
-        self.conn_status_label = ttk.Label(header_frame, text="● Disconnected", foreground='#DC2626', font=('Arial', 10, 'bold'))
-        self.conn_status_label.pack(side=tk.RIGHT, padx=8)
+        self.conn_status_label = tk.Label(header_frame, text='● Disconnected', bg='#FFFFFF', fg='#DC2626', font=('Arial', 10, 'bold'))
+        self.conn_status_label.pack(side=tk.RIGHT)
 
-        main_frame = ttk.Frame(self.root, padding=(18, 14, 18, 18))
+        main_frame = tk.Frame(self.root, bg='#EEF4FF', padx=18, pady=18)
         main_frame.pack(fill=tk.BOTH, expand=True)
 
-        left_frame = ttk.Frame(main_frame, style='Card.TFrame', padding=14)
+        left_frame = tk.Frame(main_frame, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=14, pady=14)
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 12))
 
-        telemetry_header = ttk.Label(left_frame, text="Telemetry", style='Section.TLabel', font=('Arial', 11, 'bold'))
+        telemetry_header = tk.Label(left_frame, text='Telemetry', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold'))
         telemetry_header.pack(anchor=tk.W, pady=(0, 8))
 
-        telemetry_grid = ttk.Frame(left_frame, style='Panel.TFrame', padding=12)
+        telemetry_grid = tk.Frame(left_frame, bg='#F8FAFC', padx=12, pady=12)
         telemetry_grid.pack(fill=tk.X)
 
-        self.lbl_temp = ttk.Label(telemetry_grid, text="Hotend Temp: -- °C", font=('Arial', 11, 'bold'))
-        self.lbl_temp.pack(anchor=tk.W, pady=4)
-        self.lbl_state = ttk.Label(telemetry_grid, text="Printer State: --")
-        self.lbl_state.pack(anchor=tk.W, pady=4)
-        self.lbl_x = ttk.Label(telemetry_grid, text="X Position: -- mm")
-        self.lbl_x.pack(anchor=tk.W, pady=4)
-        self.lbl_y = ttk.Label(telemetry_grid, text="Y Position: -- mm")
-        self.lbl_y.pack(anchor=tk.W, pady=4)
-        self.lbl_z = ttk.Label(telemetry_grid, text="Z Position: -- mm")
-        self.lbl_z.pack(anchor=tk.W, pady=(4, 0))
+        self.lbl_temp = tk.Label(telemetry_grid, text='Hotend Temp: -- °C', bg='#E0F2FE', fg='#075985', font=('Arial', 11, 'bold'), padx=10, pady=8)
+        self.lbl_temp.pack(fill=tk.X, pady=(0, 6))
+        self.lbl_state = tk.Label(telemetry_grid, text='Printer State: --', bg='#ECFDF5', fg='#065F46', font=('Arial', 10, 'bold'), padx=10, pady=8)
+        self.lbl_state.pack(fill=tk.X, pady=(0, 6))
+        self.lbl_x = tk.Label(telemetry_grid, text='X Position: -- mm', bg='#F8FAFC', fg='#0F172A', padx=10, pady=8)
+        self.lbl_x.pack(fill=tk.X, pady=(0, 6))
+        self.lbl_y = tk.Label(telemetry_grid, text='Y Position: -- mm', bg='#F8FAFC', fg='#0F172A', padx=10, pady=8)
+        self.lbl_y.pack(fill=tk.X, pady=(0, 6))
+        self.lbl_z = tk.Label(telemetry_grid, text='Z Position: -- mm', bg='#F8FAFC', fg='#0F172A', padx=10, pady=8)
+        self.lbl_z.pack(fill=tk.X, pady=(0, 0))
 
-        raw_header = ttk.Label(left_frame, text="Raw Response Details", style='Section.TLabel', font=('Arial', 11, 'bold'))
+        raw_header = tk.Label(left_frame, text='Raw Response Details', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold'))
         raw_header.pack(anchor=tk.W, pady=(14, 8))
 
         self.txt_telemetry = tk.Text(left_frame, height=14, width=36, font=('Courier', 9), bg='#F8FAFC', fg='#0F172A', wrap=tk.WORD, relief=tk.FLAT, borderwidth=1, highlightthickness=1, highlightbackground='#DDE8F7')
         self.txt_telemetry.pack(fill=tk.BOTH, expand=True)
-        self.txt_telemetry.insert(tk.END, "Waiting for connection...")
+        self.txt_telemetry.insert(tk.END, 'Waiting for connection...')
         self.txt_telemetry.config(state=tk.DISABLED)
 
-        right_frame = ttk.Frame(main_frame)
+        right_frame = tk.Frame(main_frame, bg='#EEF4FF')
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-        fil_frame = ttk.Frame(right_frame, style='Card.TFrame', padding=12)
+        fil_frame = tk.Frame(right_frame, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=12, pady=12)
         fil_frame.pack(fill=tk.X, pady=(0, 10))
-        ttk.Label(fil_frame, text="Filament", style='Section.TLabel', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
-        self.btn_load = ttk.Button(fil_frame, text="Load Filament (210°C)", style='Ghost.TButton', command=self.load_filament)
+        tk.Label(fil_frame, text='Filament', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
+        self.btn_load = ttk.Button(fil_frame, text='Load Filament (210°C)', style='Ghost.TButton', command=self.load_filament)
         self.btn_load.pack(fill=tk.X, pady=3)
-        self.btn_unload = ttk.Button(fil_frame, text="Unload Filament", style='Ghost.TButton', command=self.unload_filament)
+        self.btn_unload = ttk.Button(fil_frame, text='Unload Filament', style='Ghost.TButton', command=self.unload_filament)
         self.btn_unload.pack(fill=tk.X, pady=3)
 
-        job_frame = ttk.Frame(right_frame, style='Card.TFrame', padding=12)
+        job_frame = tk.Frame(right_frame, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=12, pady=12)
         job_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
-        ttk.Label(job_frame, text="Print Job", style='Section.TLabel', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
+        tk.Label(job_frame, text='Print Job', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
 
-        self.btn_select_file = ttk.Button(job_frame, text="Select G-Code File", style='Ghost.TButton', command=self.select_file)
+        self.btn_select_file = ttk.Button(job_frame, text='Select G-Code File', style='Ghost.TButton', command=self.select_file)
         self.btn_select_file.pack(fill=tk.X, pady=(0, 6))
-        self.selected_file_label = ttk.Label(job_frame, text="No file selected", font=('Arial', 9, 'italic'), wraplength=260, justify=tk.LEFT)
+        self.selected_file_label = tk.Label(job_frame, text='No file selected', bg='#FFFFFF', fg='#475569', font=('Arial', 9, 'italic'), wraplength=260, justify=tk.LEFT)
         self.selected_file_label.pack(anchor=tk.W, pady=(0, 6))
 
         self.optimize_var = tk.BooleanVar(value=True)
-        self.chk_optimize = ttk.Checkbutton(job_frame, text="Optimize G-code on the fly", variable=self.optimize_var)
+        self.chk_optimize = ttk.Checkbutton(job_frame, text='Optimize G-code on the fly', variable=self.optimize_var)
         self.chk_optimize.pack(anchor=tk.W, pady=(0, 8))
 
-        self.btn_print = ttk.Button(job_frame, text="Send to Printer", style='Action.TButton', command=self.start_print)
+        self.btn_print = ttk.Button(job_frame, text='Send to Printer', style='Action.TButton', command=self.start_print)
         self.btn_print.pack(fill=tk.X, pady=(0, 6))
-        self.btn_stop = ttk.Button(job_frame, text="Cancel Send/Job", style='Ghost.TButton', command=self.stop_print, state=tk.DISABLED)
+        self.btn_stop = ttk.Button(job_frame, text='Cancel Send/Job', style='Ghost.TButton', command=self.stop_print, state=tk.DISABLED)
         self.btn_stop.pack(fill=tk.X, pady=(0, 8))
 
         self.progress_bar = ttk.Progressbar(job_frame, orient='horizontal', mode='determinate', length=300, style='Horizontal.TProgressbar')
         self.progress_bar.pack(fill=tk.X, pady=(0, 6))
-        self.progress_label = ttk.Label(job_frame, text='Progress: 0.0%')
+        self.progress_label = tk.Label(job_frame, text='Progress: 0.0%', bg='#FFFFFF', fg='#0F172A')
         self.progress_label.pack(anchor=tk.CENTER)
+
+        self.trigger_label = tk.Label(job_frame, text='Waiting for print trigger', bg='#F8FAFC', fg='#475569', font=('Arial', 9, 'italic'), padx=10, pady=8)
+        self.trigger_label.pack(fill=tk.X, pady=(6, 0))
+        self.trigger_label.pack_forget()
+
+        self.transfer_status = tk.Label(job_frame, text='Idle', bg='#F8FAFC', fg='#475569', font=('Arial', 9, 'bold'), padx=10, pady=8)
+        self.transfer_status.pack(fill=tk.X, pady=(0, 6))
+        self.transfer_status.pack_forget()
 
         self.clear_nozzle_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'clearnozzle.gcode'))
         self.btn_clear_nozzle = ttk.Button(job_frame, text='Load bundled clearnozzle.gcode', style='Ghost.TButton', command=self.load_clear_nozzle_file)
         self.btn_clear_nozzle.pack(fill=tk.X, pady=(12, 0))
+
+        self.btn_reset = ttk.Button(job_frame, text='Reset USB Connection', style='Ghost.TButton', command=self.reset_connection)
+        self.btn_reset.pack(fill=tk.X, pady=(8, 0))
 
     # background status polling loop
     def background_poll(self):
@@ -229,7 +235,7 @@ class ModTApp:
         try:
             self.status_data = json.loads(raw_str.strip())
             status = self.status_data.get("status", {})
-            
+
             temp = status.get("temperature", "--")
             state = status.get("state", "--")
             pos = status.get("position", {})
@@ -242,12 +248,48 @@ class ModTApp:
         except Exception:
             pass
 
+    def humanize_status(self, state):
+        if not state:
+            return 'Unknown'
+        mapping = {
+            'STATE_IDLE': 'Idle',
+            'STATE_BUSY': 'Busy',
+            'STATE_PRINTING': 'Printing',
+            'STATE_JOB_QUEUED': 'Queued',
+            'STATE_JOB_PAUSED': 'Paused',
+            'STATE_FILE_RX': 'Receiving file',
+            'STATE_HEATING': 'Heating',
+            'STATE_PREHEAT': 'Preheating',
+            'STATE_ERROR': 'Error',
+            'STATE_OFFLINE': 'Offline',
+        }
+        return mapping.get(state.upper(), state)
+
     def update_telemetry_labels(self, temp, state, x, y, z, raw_json):
+        readable_state = self.humanize_status(state)
         self.lbl_temp.config(text=f"Hotend Temp: {temp} °C")
-        self.lbl_state.config(text=f"Printer State: {state}")
+        self.lbl_state.config(text=f"Printer State: {readable_state}", fg='#065F46', bg='#ECFDF5')
         self.lbl_x.config(text=f"X Position: {x} mm")
         self.lbl_y.config(text=f"Y Position: {y} mm")
         self.lbl_z.config(text=f"Z Position: {z} mm")
+
+        if readable_state == 'Receiving file':
+            self.transfer_status.config(text='Transfer status: Receiving file', fg='#7C2D12', bg='#FEF3C7')
+            self.transfer_status.pack(fill=tk.X, pady=(0, 6))
+            self.trigger_label.config(text='Waiting for print trigger: press the MOD-t front button', fg='#7C2D12', bg='#FEF3C7')
+            self.trigger_label.pack(fill=tk.X, pady=(6, 0))
+        elif readable_state == 'Queued':
+            self.transfer_status.config(text='Transfer status: Queued', fg='#065F46', bg='#ECFDF5')
+            self.transfer_status.pack(fill=tk.X, pady=(0, 6))
+            self.trigger_label.config(text='Ready: press the MOD-t front button to begin', fg='#065F46', bg='#ECFDF5')
+            self.trigger_label.pack(fill=tk.X, pady=(6, 0))
+        elif readable_state == 'Printing':
+            self.transfer_status.config(text='Transfer status: Printing', fg='#0F172A', bg='#DBEAFE')
+            self.transfer_status.pack(fill=tk.X, pady=(0, 6))
+            self.trigger_label.pack_forget()
+        else:
+            self.transfer_status.pack_forget()
+            self.trigger_label.pack_forget()
 
         self.txt_telemetry.config(state=tk.NORMAL)
         self.txt_telemetry.delete("1.0", tk.END)
@@ -324,7 +366,11 @@ class ModTApp:
         self.btn_select_file.config(state=tk.DISABLED)
         self.chk_optimize.config(state=tk.DISABLED)
         self.progress_bar["value"] = 0
-        self.progress_label.config(text="Initializing print...")
+        self.progress_label.config(text="Preparing file transfer...")
+        self.root.after(0, lambda: messagebox.showinfo(
+            "Transfer in progress",
+            "Sending the G-code file to the MOD-t. Keep the USB connected and wait until the printer finishes receiving the file. When upload is complete, press the front button on the printer to start printing."
+        ))
 
         self.stop_print_flag = False
         self.print_thread = threading.Thread(target=self.print_worker, args=(fname,), daemon=True)
@@ -333,6 +379,34 @@ class ModTApp:
     def stop_print(self):
         self.stop_print_flag = True
         self.btn_stop.config(state=tk.DISABLED)
+
+    def reset_connection(self):
+        self.stop_print_flag = True
+        self.connected = False
+        self.dev = None
+        self.root.after(0, self.update_status_ui_disconnected)
+        messagebox.showinfo("Reset", "USB connection state cleared. The app will reconnect automatically if the printer is present.")
+
+    def show_optimization_warning(self, error_text):
+        messagebox.showwarning("Warning", f"G-code optimization failed, sending original file. Error: {error_text}")
+
+    def wait_for_ready_state(self, timeout_seconds=15.0):
+        deadline = time.monotonic() + timeout_seconds
+        while time.monotonic() < deadline:
+            if self.stop_print_flag:
+                return False
+            try:
+                self.dev.write(4, '{"metadata":{"version":1,"type":"status"}}')
+                data = self.read_modt_response(0x83)
+                if data:
+                    self.parse_status(data)
+                    state = self.status_data.get('status', {}).get('state', '')
+                    if state and state.upper() in ('STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING'):
+                        return True
+            except Exception:
+                pass
+            time.sleep(0.5)
+        return False
 
     def print_worker(self, fname):
         # 1. Optimize G-code if checked
@@ -343,7 +417,8 @@ class ModTApp:
                 self.run_gcode_optimization(fname, opt_filename)
                 fname_to_send = opt_filename
             except Exception as e:
-                self.root.after(0, lambda: messagebox.showwarning("Warning", f"G-code optimization failed, sending original file. Error: {e}"))
+                error_text = str(e)
+                self.root.after(0, lambda msg=error_text: self.show_optimization_warning(msg))
                 fname_to_send = fname
         else:
             fname_to_send = fname
@@ -397,7 +472,19 @@ class ModTApp:
                 self.root.after(0, lambda p=progress: self.update_progress(p))
 
             if not self.stop_print_flag:
-                self.root.after(0, lambda: messagebox.showinfo("Print Started", "G-code sent successfully! The printer will begin printing now."))
+                ready = self.wait_for_ready_state()
+                if ready:
+                    self.root.after(0, lambda: self.progress_label.config(text='Ready — press the printer button'))
+                    self.root.after(0, lambda: messagebox.showinfo(
+                        "Ready to print",
+                        "The MOD-t reported a ready/queued state. Press the front button on the printer to begin printing."
+                    ))
+                else:
+                    self.root.after(0, lambda: self.progress_label.config(text='Transfer finished — waiting for printer state'))
+                    self.root.after(0, lambda: messagebox.showwarning(
+                        "Printer not ready",
+                        "The file transfer finished, but the MOD-t did not report a queued/ready state. Keep the USB connected and verify the printer is waiting for the front-button trigger."
+                    ))
 
         except Exception as e:
             self.root.after(0, lambda error_msg=str(e): messagebox.showerror("Print Error", f"Failed to send G-code: {error_msg}"))
