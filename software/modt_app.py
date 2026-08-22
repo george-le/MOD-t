@@ -45,10 +45,6 @@ class ModTApp:
         self.poll_thread = threading.Thread(target=self.background_poll, daemon=True)
         self.poll_thread.start()
 
-        # transient communication failure tracking to avoid UI flicker
-        self.conn_fail_count = 0
-        self.conn_fail_threshold = 3
-
     def setup_styles(self):
         style = ttk.Style()
         style.theme_use('clam')
@@ -162,28 +158,15 @@ class ModTApp:
                 self.try_connect()
             else:
                 try:
-                    # Write status request using safe_write to normalize types and surface errors
-                    self.safe_write(4, '{"metadata":{"version":1,"type":"status"}}')
+                    # Write status request
+                    self.dev.write(4, '{"metadata":{"version":1,"type":"status"}}')
                     data = self.read_modt_response(0x83)
                     if data:
                         self.parse_status(data)
-                    # reset transient failure counter on successful comms
-                    self.conn_fail_count = 0
                 except Exception as e:
-                    # On transient communication errors, don't immediately flip UI; debounce failures
-                    self.conn_fail_count = getattr(self, 'conn_fail_count', 0) + 1
-                    self.update_log(f"Comm error: {e} (failure {self.conn_fail_count}/{self.conn_fail_threshold})")
-                    if self.conn_fail_count >= self.conn_fail_threshold:
-                        # Consider the device disconnected only after repeated failures
-                        self.conn_fail_count = 0
-                        # Clean up any claimed interfaces / resources
-                        try:
-                            self.disconnect_device()
-                        except Exception:
-                            # fallback to naive reset
-                            self.dev = None
-                            self.connected = False
-                            self.root.after(0, self.update_status_ui_disconnected)
+                    self.connected = False
+                    self.dev = None
+                    self.update_status_ui_disconnected()
             time.sleep(2)
 
     def try_connect(self):
@@ -203,116 +186,14 @@ class ModTApp:
 
             if found is not None:
                 try:
-                    # Attempt to detach any kernel driver and claim the interface before use.
-                    # This can resolve "Access denied" errors when the OS or another driver
-                    # has the interface claimed.
-                    try:
-                        # Some backends (libusb) expose is_kernel_driver_active/detach_kernel_driver
-                        cfg = None
-                        try:
-                            cfg = found.get_active_configuration()
-                        except Exception:
-                            # get_active_configuration may fail if not set; proceed anyway
-                            pass
-
-                        # Try to set configuration first (best-effort)
-                        try:
-                            found.set_configuration()
-                        except Exception:
-                            pass
-
-                        # If we have a configuration object, iterate interfaces
-                        if cfg is None:
-                            try:
-                                cfg = found.get_active_configuration()
-                            except Exception:
-                                cfg = None
-
-                        if cfg is not None:
-                            for intf in cfg:
-                                intf_num = intf.bInterfaceNumber
-                                try:
-                                    if hasattr(found, 'is_kernel_driver_active') and found.is_kernel_driver_active(intf_num):
-                                        try:
-                                            found.detach_kernel_driver(intf_num)
-                                            self.update_log(f"Detached kernel driver from interface {intf_num}")
-                                        except Exception as e:
-                                            self.update_log(f"Failed to detach kernel driver on interface {intf_num}: {e}")
-                                except Exception:
-                                    # ignore if backend doesn't support check
-                                    pass
-
-                                try:
-                                    usb.util.claim_interface(found, intf_num)
-                                except Exception:
-                                    # claiming may fail; continue and let handshake detect failure
-                                    pass
-                    except Exception as e:
-                        self.update_log(f"Interface claim/detach attempt failed: {e}")
-
-                    # Now attempt a light handshake to verify we can communicate
-                    try:
-                        if hasattr(self, 'safe_write'):
-                            # write then attempt read
-                            self.safe_write(4, '{"metadata":{"version":1,"type":"status"}}')
-                            resp = None
-                            try:
-                                resp = self.read_modt_response(0x83)
-                            except Exception as e:
-                                resp = None
-
-                            if resp:
-                                # successful comms, mark connected
-                                self.dev = found
-                                self.connected = True
-                                self.root.after(0, self.update_status_ui_connected)
-                                return
-                            else:
-                                # Couldn't read after write — likely permission/endpoint issue
-                                self.update_log(f"Found device but handshake failed (no response). PID={hex(found.idProduct)}")
-                                # Release any claimed interfaces to avoid leaving device in claimed state
-                                try:
-                                    cfg2 = found.get_active_configuration()
-                                    if cfg2 is not None:
-                                        for intf2 in cfg2:
-                                            try:
-                                                usb.util.release_interface(found, intf2.bInterfaceNumber)
-                                            except Exception:
-                                                pass
-                                except Exception:
-                                    pass
-                        else:
-                            # Fallback: mark connected if no safe_write available
-                            self.dev = found
-                            self.connected = True
-                            self.root.after(0, self.update_status_ui_connected)
-                            return
-                    except Exception as e:
-                        # Surface a helpful message for permission errors
-                        self.update_log(f"Device handshake error: {type(e).__name__} {e}")
-                        # If access denied, don't mark connected; log and continue polling
-                        try:
-                            cfg3 = found.get_active_configuration()
-                            if cfg3 is not None:
-                                for intf3 in cfg3:
-                                    try:
-                                        usb.util.release_interface(found, intf3.bInterfaceNumber)
-                                    except Exception:
-                                        pass
-                        except Exception:
-                            pass
-
-                        self.connected = False
-                        self.dev = None
-                        self.root.after(0, self.update_status_ui_disconnected)
-                        return
-
+                    found.set_configuration()
                 except Exception:
-                    # Any unexpected exception during connect should not crash the poller
-                    self.connected = False
-                    self.root.after(0, self.update_status_ui_disconnected)
-                    return
-
+                    # Some backends or states may raise when setting configuration;
+                    # allow the device object to be used anyway if possible.
+                    pass
+                self.dev = found
+                self.connected = True
+                self.root.after(0, self.update_status_ui_connected)
             else:
                 self.connected = False
                 self.root.after(0, self.update_status_ui_disconnected)
@@ -331,30 +212,8 @@ class ModTApp:
                 text = ''.join(map(chr, raw))
                 fulltext += text
             return fulltext
-        except Exception as e:
-            # Provide richer logs for troubleshooting
-            try:
-                errstr = f"read error: {type(e).__name__} {e}"
-            except Exception:
-                errstr = "read error: unknown"
-            self.update_log(errstr)
-            raise
-
-    def safe_write(self, ep, data):
-        """Write to the device ensuring data is bytes and surface clear exceptions.
-        Raises the underlying exception to be handled by callers.
-        """
-        if not self.dev:
-            raise RuntimeError("No device available to write to")
-        try:
-            if isinstance(data, str):
-                data = data.encode('utf-8')
-            # For small control bytes that are already bytes-like, pass through
-            self.dev.write(ep, data)
-            return True
-        except Exception as e:
-            # Surface a clear error for logging upstream
-            raise
+        except Exception:
+            return None
 
     def parse_status(self, raw_str):
         try:
@@ -406,46 +265,13 @@ class ModTApp:
         self.txt_telemetry.insert(tk.END, f"\n{text}")
         self.txt_telemetry.config(state=tk.DISABLED)
 
-    def disconnect_device(self):
-        """Release claimed interfaces and re-attach kernel drivers where possible."""
-        if not self.dev:
-            return
-        try:
-            try:
-                cfg = self.dev.get_active_configuration()
-            except Exception:
-                cfg = None
-            if cfg is not None:
-                for intf in cfg:
-                    idx = intf.bInterfaceNumber
-                    try:
-                        usb.util.release_interface(self.dev, idx)
-                    except Exception:
-                        pass
-                    try:
-                        # try to re-attach kernel driver if supported
-                        if hasattr(self.dev, 'attach_kernel_driver'):
-                            self.dev.attach_kernel_driver(idx)
-                    except Exception:
-                        pass
-        except Exception:
-            pass
-        finally:
-            try:
-                usb.util.dispose_resources(self.dev)
-            except Exception:
-                pass
-            self.dev = None
-            self.connected = False
-            self.root.after(0, self.update_status_ui_disconnected)
-
     def load_filament(self):
         if not self.connected or not self.dev:
             messagebox.showerror("Error", "No printer connected.")
             return
         try:
-            self.safe_write(2, bytearray.fromhex('24690096ff'))
-            self.safe_write(2, '{"transport":{"attrs":["request","twoway"],"id":9},"data":{"command":{"idx":52,"name":"load_initiate"}}};')
+            self.dev.write(2, bytearray.fromhex('24690096ff'))
+            self.dev.write(2, '{"transport":{"attrs":["request","twoway"],"id":9},"data":{"command":{"idx":52,"name":"load_initiate"}}};')
             messagebox.showinfo("Filament", "Filament load command sent. The hotend will begin preheating.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send command: {e}")
@@ -455,8 +281,8 @@ class ModTApp:
             messagebox.showerror("Error", "No printer connected.")
             return
         try:
-            self.safe_write(2, bytearray.fromhex('246c0093ff'))
-            self.safe_write(2, '{"transport":{"attrs":["request","twoway"],"id":11},"data":{"command":{"idx":51,"name":"unload_initiate"}}};')
+            self.dev.write(2, bytearray.fromhex('246c0093ff'))
+            self.dev.write(2, '{"transport":{"attrs":["request","twoway"],"id":11},"data":{"command":{"idx":51,"name":"unload_initiate"}}};')
             messagebox.showinfo("Filament", "Filament unload command sent. The hotend will begin preheating.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send command: {e}")
@@ -467,8 +293,8 @@ class ModTApp:
             return
         if messagebox.askyesno("Confirm", "Are you sure you want to enter DFU mode? The printer will reattach as a recovery DFU device."):
             try:
-                self.safe_write(2, bytearray.fromhex('246a0095ff'))
-                self.safe_write(2, '{"transport":{"attrs":["request","twoway"],"id":7},"data":{"command":{"idx":53,"name":"Enter_dfu_mode"}}};')
+                self.dev.write(2, bytearray.fromhex('246a0095ff'))
+                self.dev.write(2, '{"transport":{"attrs":["request","twoway"],"id":7},"data":{"command":{"idx":53,"name":"Enter_dfu_mode"}}};')
                 messagebox.showinfo("DFU Recovery", "DFU command sent. The printer will reboot into recovery mode.")
             except Exception as e:
                 messagebox.showerror("Error", f"Failed to put in DFU mode: {e}")
