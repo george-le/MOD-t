@@ -32,6 +32,7 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
+   icon='software/assets/windows/modt_app_icon.ico',
 )
 coll = COLLECT(
     exe,
@@ -40,11 +41,11 @@ coll = COLLECT(
     strip=False,
     upx=True,
     upx_exclude=[],
-    name='MOD-t_Printer_Utility',
+    name='MOD-t_Printer_Utility_windows',
 )
 app = BUNDLE(
     coll,
-    name='MOD-t_Printer_Utility.app',
-    icon=None,
+    name='MOD-t_Printer_Utility_macos.app',
+    icon='software/assets/macos/modt_app_icon.icns',
     bundle_identifier=None,
 )

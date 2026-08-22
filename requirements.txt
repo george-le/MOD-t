@@ -1,0 +1,16 @@
+# MOD-t desktop utility dependencies
+# Install with: pip install -r requirements.txt
+
+# Core runtime dependency for USB communication with the MOD-t
+pyusb>=1.3.1
+
+# Packaging the app into a desktop bundle/executable
+pyinstaller>=6.0.0
+
+# Icon generation and asset export helpers used for creating app branding assets
+Pillow>=10.4.0
+cairosvg>=2.7.0
+
+# tkinter is bundled with most Python distributions for macOS/Windows.
+# If your installation is missing it, install the standard Python package
+# for your OS or use a full Python distribution that includes Tk.

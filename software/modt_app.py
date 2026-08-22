@@ -23,9 +23,10 @@ PRODUCT_IDS = (0x0002, 0x0003)
 class ModTApp:
     def __init__(self, root):
         self.root = root
-        self.root.title("MOD-t Desktop Printer Utility")
+        self.root.title("MOD-t Printer Utility")
         self.root.geometry("760x620")
         self.root.minsize(680, 560)
+        self.app_icon_photo = None
 
         # Connection & state variables
         self.dev = None
@@ -38,12 +39,59 @@ class ModTApp:
 
         # Apply standard styles
         self.setup_styles()
+        self.configure_app_icon()
         self.create_widgets()
 
         # Start background polling thread
         self.poll_active = True
         self.poll_thread = threading.Thread(target=self.background_poll, daemon=True)
         self.poll_thread.start()
+
+    def get_icon_directory(self):
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+        asset_root = os.path.join(base_dir, 'assets')
+
+        platform_dirs = []
+        if sys.platform == 'darwin':
+            platform_dirs.extend([
+                os.path.join(asset_root, 'macos'),
+                os.path.join(asset_root, 'osx'),
+            ])
+        elif os.name == 'nt' or sys.platform.startswith('win'):
+            platform_dirs.extend([
+                os.path.join(asset_root, 'windows'),
+                os.path.join(asset_root, 'win'),
+            ])
+        platform_dirs.append(asset_root)
+
+        for icon_dir in platform_dirs:
+            if os.path.isdir(icon_dir):
+                return icon_dir
+        return asset_root
+
+    def configure_app_icon(self):
+        icon_dir = self.get_icon_directory()
+        candidates = [
+            os.path.join(icon_dir, 'modt_app_icon.png'),
+            os.path.join(icon_dir, 'modt_app_icon.ico'),
+            os.path.join(icon_dir, 'modt_app_icon.icns'),
+        ]
+
+        for icon_path in candidates:
+            if not os.path.exists(icon_path):
+                continue
+            try:
+                if icon_path.lower().endswith('.png'):
+                    image = tk.PhotoImage(file=icon_path)
+                    self.root.iconphoto(True, image)
+                    self.app_icon_photo = image
+            except Exception:
+                pass
+            try:
+                self.root.iconbitmap(default=icon_path)
+            except Exception:
+                pass
+            break
 
     def setup_styles(self):
         style = ttk.Style()

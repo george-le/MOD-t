@@ -5,15 +5,17 @@ set -e
 cd "$(dirname "$0")/.."
 
 echo "============================================="
-echo "Building Standalone MOD-t Printer Utility App"
+echo "Building MOD-t Printer Utility"
 echo "============================================="
 
 # Ensure virtual environment exists
 if [ ! -d ".venv" ]; then
     echo "Virtual environment not found. Creating..."
     python3 -m venv .venv
-    .venv/bin/pip install pyusb pyinstaller
 fi
+
+# Install repo dependencies from the pinned requirements file.
+.venv/bin/pip install -r requirements.txt
 
 # Run PyInstaller
 echo "Compiling with PyInstaller..."

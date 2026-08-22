@@ -1,6 +1,6 @@
 # MOD-t Desktop Utility Guide
 
-This guide explains what the desktop utility in `software/modt_app.py` does and how to run or package it on macOS and Windows.
+This guide explains what the MOD-t Printer Utility in `software/modt_app.py` does and how to run or package it on macOS and Windows.
 
 ## What the app does
 
@@ -37,6 +37,18 @@ Python requirements:
 - `pyusb`
 - `PyInstaller` for packaging an app bundle or executable
 
+For the base project install:
+
+```bash
+pip install -r requirements.txt
+```
+
+For development and lint/test tooling:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
 USB requirements:
 
 - The MOD-t must be connected by USB
@@ -51,7 +63,7 @@ From the repo root:
 cd /path/to/MOD-t
 python3 -m venv .venv
 source .venv/bin/activate
-pip install pyusb pyinstaller
+pip install -r requirements.txt
 python3 software/modt_app.py
 ```
 
@@ -61,7 +73,7 @@ On Windows PowerShell:
 cd C:\path\to\MOD-t
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install pyusb pyinstaller
+pip install -r requirements.txt
 python .\software\modt_app.py
 ```
 
@@ -77,7 +89,7 @@ This repo already contains a PyInstaller spec file: `MOD-t_Printer_Utility.spec`
 cd /path/to/MOD-t
 python3 -m venv .venv
 source .venv/bin/activate
-pip install pyusb pyinstaller
+pip install -r requirements.txt
 ```
 
 ### Ensure libusb is available
@@ -127,7 +139,7 @@ Windows packaging is similar, but you should expect to install a libusb-compatib
 cd C:\path\to\MOD-t
 py -3.11 -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install pyusb pyinstaller
+pip install -r requirements.txt
 ```
 
 ### Install the USB driver
