@@ -6,4 +6,5 @@
 *.hex
 *.map
 dist/*
+build/*
 *.pyc
