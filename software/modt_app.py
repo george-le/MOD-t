@@ -67,37 +67,53 @@ class ModTApp:
         style.configure('Title.TLabel', font=('Arial', 22, 'bold'), foreground=primary, background=bg)
         style.configure('Section.TLabel', font=('Arial', 11, 'bold'), foreground=text, background=bg)
         style.configure('Muted.TLabel', font=('Arial', 9), foreground=mute, background=bg)
-        style.configure('TButton', font=('Arial', 10, 'bold'), borderwidth=0, padding=8)
-        style.configure('Action.TButton', background=primary, foreground='white')
-        style.map('Action.TButton', background=[('active', primary_dark)], foreground=[('active', 'white')])
-        style.configure('Ghost.TButton', background=panel, foreground=text)
-        style.map('Ghost.TButton', background=[('active', panel_alt)])
+        style.configure('TButton', font=('Arial', 10, 'bold'), borderwidth=0, padding=(12, 10))
+        style.configure('Primary.TButton', background=primary, foreground='white', padding=(14, 11), relief='flat')
+        style.map('Primary.TButton', background=[('active', primary_dark)], foreground=[('active', 'white')])
+        style.configure('Secondary.TButton', background='#E2E8F0', foreground=text, padding=(12, 10), relief='flat')
+        style.map('Secondary.TButton', background=[('active', '#CBD5E1')], foreground=[('active', text)])
+        style.configure('Ghost.TButton', background=panel, foreground=text, padding=(12, 10), relief='flat')
+        style.map('Ghost.TButton', background=[('active', panel_alt)], foreground=[('active', text)])
         style.configure('TCheckbutton', background=bg, foreground=text)
         style.configure('Horizontal.TProgressbar', troughcolor='#E2E8F0', background=primary, thickness=10)
+        style.configure('StatusChip.TLabel', background='#E2E8F0', foreground='#0F172A', font=('Arial', 9, 'bold'))
+
+        self.theme_widgets = []
 
     def create_widgets(self):
         self.root.configure(bg='#EEF4FF')
 
         header_frame = tk.Frame(self.root, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=20, pady=16)
         header_frame.pack(fill=tk.X, padx=18, pady=(18, 0))
+        self.theme_widgets.append(header_frame)
 
-        title_label = tk.Label(header_frame, text='MOD-t Operations', bg='#FFFFFF', fg='#2563EB', font=('Arial', 22, 'bold'))
+        title_label = tk.Label(header_frame, text='MOD-t Operations', bg='#FFFFFF', fg='#1D4ED8', font=('Arial', 22, 'bold'))
         title_label.pack(side=tk.LEFT)
+        self.theme_widgets.append(title_label)
+
+        action_bar = tk.Frame(header_frame, bg='#FFFFFF')
+        action_bar.pack(side=tk.RIGHT)
+        self.theme_widgets.append(action_bar)
 
         self.conn_status_label = tk.Label(header_frame, text='● Disconnected', bg='#FFFFFF', fg='#DC2626', font=('Arial', 10, 'bold'))
-        self.conn_status_label.pack(side=tk.RIGHT)
+        self.conn_status_label.pack(side=tk.RIGHT, padx=(0, 12))
+        self.theme_widgets.append(self.conn_status_label)
 
         main_frame = tk.Frame(self.root, bg='#EEF4FF', padx=18, pady=18)
         main_frame.pack(fill=tk.BOTH, expand=True)
+        self.theme_widgets.append(main_frame)
 
         left_frame = tk.Frame(main_frame, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=14, pady=14)
         left_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=(0, 12))
+        self.theme_widgets.append(left_frame)
 
         telemetry_header = tk.Label(left_frame, text='Telemetry', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold'))
         telemetry_header.pack(anchor=tk.W, pady=(0, 8))
+        self.theme_widgets.append(telemetry_header)
 
         telemetry_grid = tk.Frame(left_frame, bg='#F8FAFC', padx=12, pady=12)
         telemetry_grid.pack(fill=tk.X)
+        self.theme_widgets.append(telemetry_grid)
 
         self.lbl_temp = tk.Label(telemetry_grid, text='Hotend Temp: -- °C', bg='#E0F2FE', fg='#075985', font=('Arial', 11, 'bold'), padx=10, pady=8)
         self.lbl_temp.pack(fill=tk.X, pady=(0, 6))
@@ -109,48 +125,63 @@ class ModTApp:
         self.lbl_y.pack(fill=tk.X, pady=(0, 6))
         self.lbl_z = tk.Label(telemetry_grid, text='Z Position: -- mm', bg='#F8FAFC', fg='#0F172A', padx=10, pady=8)
         self.lbl_z.pack(fill=tk.X, pady=(0, 0))
+        for widget in [self.lbl_temp, self.lbl_state, self.lbl_x, self.lbl_y, self.lbl_z]:
+            self.theme_widgets.append(widget)
 
         raw_header = tk.Label(left_frame, text='Raw Response Details', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold'))
         raw_header.pack(anchor=tk.W, pady=(14, 8))
+        self.theme_widgets.append(raw_header)
 
         self.txt_telemetry = tk.Text(left_frame, height=14, width=36, font=('Courier', 9), bg='#F8FAFC', fg='#0F172A', wrap=tk.WORD, relief=tk.FLAT, borderwidth=1, highlightthickness=1, highlightbackground='#DDE8F7')
         self.txt_telemetry.pack(fill=tk.BOTH, expand=True)
         self.txt_telemetry.insert(tk.END, 'Waiting for connection...')
         self.txt_telemetry.config(state=tk.DISABLED)
+        self.theme_widgets.append(self.txt_telemetry)
 
         right_frame = tk.Frame(main_frame, bg='#EEF4FF')
         right_frame.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+        self.theme_widgets.append(right_frame)
 
         fil_frame = tk.Frame(right_frame, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=12, pady=12)
         fil_frame.pack(fill=tk.X, pady=(0, 10))
+        self.theme_widgets.append(fil_frame)
         tk.Label(fil_frame, text='Filament', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
-        self.btn_load = ttk.Button(fil_frame, text='Load Filament (210°C)', style='Ghost.TButton', command=self.load_filament)
+        self.btn_load = ttk.Button(fil_frame, text='Load Filament (210°C)', style='Secondary.TButton', command=self.load_filament)
         self.btn_load.pack(fill=tk.X, pady=3)
-        self.btn_unload = ttk.Button(fil_frame, text='Unload Filament', style='Ghost.TButton', command=self.unload_filament)
+        self.btn_unload = ttk.Button(fil_frame, text='Unload Filament', style='Secondary.TButton', command=self.unload_filament)
         self.btn_unload.pack(fill=tk.X, pady=3)
 
         job_frame = tk.Frame(right_frame, bg='#FFFFFF', bd=0, highlightthickness=1, highlightbackground='#DDE8F7', padx=12, pady=12)
         job_frame.pack(fill=tk.BOTH, expand=True, pady=(0, 10))
+        self.theme_widgets.append(job_frame)
         tk.Label(job_frame, text='Print Job', bg='#FFFFFF', fg='#0F172A', font=('Arial', 11, 'bold')).pack(anchor=tk.W, pady=(0, 8))
 
-        self.btn_select_file = ttk.Button(job_frame, text='Select G-Code File', style='Ghost.TButton', command=self.select_file)
-        self.btn_select_file.pack(fill=tk.X, pady=(0, 6))
-        self.selected_file_label = tk.Label(job_frame, text='No file selected', bg='#FFFFFF', fg='#475569', font=('Arial', 9, 'italic'), wraplength=260, justify=tk.LEFT)
-        self.selected_file_label.pack(anchor=tk.W, pady=(0, 6))
+        self.btn_select_file = ttk.Button(job_frame, text='Select G-Code File', style='Primary.TButton', command=self.select_file)
+        self.btn_select_file.pack(fill=tk.X, pady=(0, 8))
+
+        file_card = tk.Frame(job_frame, bg='#F8FAFC', bd=1, highlightthickness=1, highlightbackground='#DDE8F7', padx=10, pady=8)
+        file_card.pack(fill=tk.X, pady=(0, 8))
+        self.theme_widgets.append(file_card)
+        tk.Label(file_card, text='Selected file', bg='#F8FAFC', fg='#475569', font=('Arial', 8, 'bold')).pack(anchor=tk.W)
+        self.selected_file_label = tk.Label(file_card, text='No file selected', bg='#F8FAFC', fg='#0F172A', font=('Arial', 9), wraplength=260, justify=tk.LEFT)
+        self.selected_file_label.pack(anchor=tk.W, pady=(2, 0))
+        self.theme_widgets.append(self.selected_file_label)
 
         self.optimize_var = tk.BooleanVar(value=True)
         self.chk_optimize = ttk.Checkbutton(job_frame, text='Optimize G-code on the fly', variable=self.optimize_var)
         self.chk_optimize.pack(anchor=tk.W, pady=(0, 8))
 
-        self.btn_print = ttk.Button(job_frame, text='Send to Printer', style='Action.TButton', command=self.start_print)
+        self.btn_print = ttk.Button(job_frame, text='Send to Printer', style='Primary.TButton', command=self.start_print)
         self.btn_print.pack(fill=tk.X, pady=(0, 6))
-        self.btn_stop = ttk.Button(job_frame, text='Cancel Send/Job', style='Ghost.TButton', command=self.stop_print, state=tk.DISABLED)
+        self.btn_stop = ttk.Button(job_frame, text='Cancel Send/Job', style='Secondary.TButton', command=self.stop_print, state=tk.DISABLED)
         self.btn_stop.pack(fill=tk.X, pady=(0, 8))
 
         self.progress_bar = ttk.Progressbar(job_frame, orient='horizontal', mode='determinate', length=300, style='Horizontal.TProgressbar')
         self.progress_bar.pack(fill=tk.X, pady=(0, 6))
-        self.progress_label = tk.Label(job_frame, text='Progress: 0.0%', bg='#FFFFFF', fg='#0F172A')
+        self.progress_label = tk.Label(job_frame, text='Progress: 0.0%', bg='#FFFFFF', fg='#0F172A', font=('Arial', 9, 'bold'))
         self.progress_label.pack(anchor=tk.CENTER)
+        self.eta_label = tk.Label(job_frame, text='Upload ETA: --', bg='#FFFFFF', fg='#475569', font=('Arial', 9, 'italic'))
+        self.eta_label.pack(anchor=tk.CENTER, pady=(0, 4))
 
         self.trigger_label = tk.Label(job_frame, text='Waiting for print trigger', bg='#F8FAFC', fg='#475569', font=('Arial', 9, 'italic'), padx=10, pady=8)
         self.trigger_label.pack(fill=tk.X, pady=(6, 0))
@@ -159,6 +190,10 @@ class ModTApp:
         self.transfer_status = tk.Label(job_frame, text='Idle', bg='#F8FAFC', fg='#475569', font=('Arial', 9, 'bold'), padx=10, pady=8)
         self.transfer_status.pack(fill=tk.X, pady=(0, 6))
         self.transfer_status.pack_forget()
+
+        self.print_eta_label = tk.Label(job_frame, text='Print ETA: unavailable', bg='#FFFFFF', fg='#475569', font=('Arial', 9, 'italic'))
+        self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4))
+        self.print_eta_label.pack_forget()
 
         self.clear_nozzle_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'clearnozzle.gcode'))
         self.btn_clear_nozzle = ttk.Button(job_frame, text='Load bundled clearnozzle.gcode', style='Ghost.TButton', command=self.load_clear_nozzle_file)
@@ -306,11 +341,46 @@ class ModTApp:
         self.lbl_x.config(text="X Position: -- mm")
         self.lbl_y.config(text="Y Position: -- mm")
         self.lbl_z.config(text="Z Position: -- mm")
-        
+
         self.txt_telemetry.config(state=tk.NORMAL)
         self.txt_telemetry.delete("1.0", tk.END)
         self.txt_telemetry.insert(tk.END, "Disconnected. Connect MOD-t via USB...")
         self.txt_telemetry.config(state=tk.DISABLED)
+
+    def apply_theme(self):
+        style = ttk.Style()
+        style.configure('Primary.TButton', background='#2563EB', foreground='white', padding=(14, 11), relief='flat')
+        style.map('Primary.TButton', background=[('active', '#1D4ED8')], foreground=[('active', 'white')])
+        style.configure('Secondary.TButton', background='#E2E8F0', foreground='#0F172A', padding=(12, 10), relief='flat')
+        style.map('Secondary.TButton', background=[('active', '#CBD5E1')], foreground=[('active', '#0F172A')])
+        style.configure('Ghost.TButton', background='#FFFFFF', foreground='#0F172A', padding=(12, 10), relief='flat')
+        style.map('Ghost.TButton', background=[('active', '#F8FAFC')], foreground=[('active', '#0F172A')])
+
+        self.root.configure(bg='#EEF4FF')
+        self.conn_status_label.config(bg='#FFFFFF', fg='#DC2626')
+        self.lbl_temp.config(bg='#E0F2FE', fg='#075985')
+        self.lbl_state.config(bg='#ECFDF5', fg='#065F46')
+        self.lbl_x.config(bg='#F8FAFC', fg='#0F172A')
+        self.lbl_y.config(bg='#F8FAFC', fg='#0F172A')
+        self.lbl_z.config(bg='#F8FAFC', fg='#0F172A')
+        self.txt_telemetry.configure(bg='#F8FAFC', fg='#0F172A')
+        self.progress_label.configure(bg='#FFFFFF', fg='#0F172A')
+        self.eta_label.configure(bg='#FFFFFF', fg='#475569')
+        self.print_eta_label.configure(bg='#FFFFFF', fg='#475569')
+        self.selected_file_label.configure(bg='#F8FAFC', fg='#0F172A')
+        self.transfer_status.configure(bg='#F8FAFC', fg='#475569')
+        self.trigger_label.configure(bg='#F8FAFC', fg='#475569')
+
+        for widget in self.theme_widgets:
+            try:
+                widget.configure(bg='#FFFFFF')
+            except Exception:
+                pass
+            try:
+                if isinstance(widget, tk.Label):
+                    widget.configure(fg='#0F172A')
+            except Exception:
+                pass
 
     def update_log(self, text):
         self.txt_telemetry.config(state=tk.NORMAL)
@@ -373,6 +443,7 @@ class ModTApp:
         ))
 
         self.stop_print_flag = False
+        self.transfer_started_at = time.monotonic()
         self.print_thread = threading.Thread(target=self.print_worker, args=(fname,), daemon=True)
         self.print_thread.start()
 
@@ -475,12 +546,16 @@ class ModTApp:
                 ready = self.wait_for_ready_state()
                 if ready:
                     self.root.after(0, lambda: self.progress_label.config(text='Ready — press the printer button'))
+                    self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
+                    self.root.after(0, lambda: self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4)))
                     self.root.after(0, lambda: messagebox.showinfo(
                         "Ready to print",
                         "The MOD-t reported a ready/queued state. Press the front button on the printer to begin printing."
                     ))
                 else:
                     self.root.after(0, lambda: self.progress_label.config(text='Transfer finished — waiting for printer state'))
+                    self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
+                    self.root.after(0, lambda: self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4)))
                     self.root.after(0, lambda: messagebox.showwarning(
                         "Printer not ready",
                         "The file transfer finished, but the MOD-t did not report a queued/ready state. Keep the USB connected and verify the printer is waiting for the front-button trigger."
@@ -503,11 +578,26 @@ class ModTApp:
         self.progress_bar["value"] = val
         self.progress_label.config(text=f"Sending: {val:.1f}%")
 
+        if val > 0 and self.transfer_started_at is not None:
+            elapsed = max(time.monotonic() - self.transfer_started_at, 0.1)
+            eta_seconds = elapsed * (100.0 - val) / max(val, 0.1)
+            minutes, seconds = divmod(int(eta_seconds), 60)
+            if minutes > 0:
+                eta_text = f"Upload ETA: {minutes}m {seconds}s"
+            else:
+                eta_text = f"Upload ETA: {seconds}s"
+        else:
+            eta_text = "Upload ETA: --"
+        self.eta_label.config(text=eta_text)
+
     def reset_print_ui(self):
         self.btn_print.config(state=tk.NORMAL)
         self.btn_stop.config(state=tk.DISABLED)
         self.btn_select_file.config(state=tk.NORMAL)
         self.chk_optimize.config(state=tk.NORMAL)
+        self.eta_label.config(text='Upload ETA: --')
+        self.print_eta_label.config(text='Print ETA: unavailable')
+        self.print_eta_label.pack_forget()
 
     def run_gcode_optimization(self, infname, outfname):
         # Direct port of the logic in optimize_gcode.py

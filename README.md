@@ -103,6 +103,10 @@ Scripts copied from [Xaero252 Mod-T-Scripts Repo](https://github.com/Xaero252/Mo
 
 Go to the directory and see the `README.md` for documentation
 
+### [Desktop utility guide](https://github.com/tripflex/MOD-t/tree/master/docs/modt_app_guide.md)
+
+Documentation for the Tkinter desktop utility in `software/modt_app.py`, including how to run it from source and package it for macOS and Windows.
+
 ### [Lockbar](https://github.com/tripflex/MOD-t/tree/master/Lockbar)
 
 [MOD-Skis: How to Improve the Stability of Your Prints](https://web.archive.org/web/20180619021649/https://newmatter.com/lockbars/)
