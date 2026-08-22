@@ -651,19 +651,18 @@ class ModTApp:
                     state = self.extract_status_state(self.status_data)
                     normalized = str(state).upper() if state else ''
                     last_state = normalized
-                    if normalized in ('STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING', 'STATE_HEATING'):
-                        return True
+                    if normalized in ('STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING', 'STATE_HEATING', 'STATE_FILE_RX'):
+                        return normalized
                     if normalized == 'STATE_FILE_RX':
                         self.root.after(0, lambda: self.progress_label.config(text='Transfer complete — waiting for printer trigger'))
             except Exception:
                 pass
             time.sleep(0.5)
 
-        # A MOD-t that is still blinking after the file transfer is normal; it is waiting for the
-        # physical front-button trigger. Do not force this into a false "ready" state.
-        if last_state == 'STATE_FILE_RX':
-            return False
-        return False
+        # STATE_FILE_RX is a normal post-transfer state on the MOD-t; the user is expected to press
+        # the front button on the printer to begin the print. Treat this as a successful transfer
+        # result instead of a stuck state.
+        return last_state if last_state in ('STATE_FILE_RX', 'STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING', 'STATE_HEATING') else False
 
     def print_worker(self, fname):
         # 1. Optimize G-code if checked
@@ -729,11 +728,11 @@ class ModTApp:
                 self.root.after(0, lambda p=progress: self.update_progress(p))
 
             if not self.stop_print_flag:
-                ready = self.wait_for_ready_state()
+                ready_state = self.wait_for_ready_state()
                 final_state = self.extract_status_state(self.status_data) if self.status_data else None
                 final_state_display = str(final_state).upper() if final_state else 'UNKNOWN'
 
-                if ready:
+                if ready_state in ('STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING', 'STATE_HEATING'):
                     self.root.after(0, lambda: self.progress_label.config(text='Ready — press the printer button'))
                     self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
                     self.root.after(0, lambda: self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4)))
@@ -741,13 +740,13 @@ class ModTApp:
                         "Ready to print",
                         "The MOD-t reported a ready/queued state. Press the front button on the printer to begin printing."
                     ))
-                elif final_state_display == 'STATE_FILE_RX':
+                elif ready_state == 'STATE_FILE_RX' or final_state_display == 'STATE_FILE_RX':
                     self.root.after(0, lambda: self.progress_label.config(text='File received — waiting for print trigger'))
                     self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
                     self.root.after(0, lambda: self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4)))
                     self.root.after(0, lambda: messagebox.showinfo(
                         "Transfer complete",
-                        "The file was received by the MOD-t and the printer is blinking while waiting for the front button trigger. Press the button on the printer to start the print."
+                        "The file was received by the MOD-t and it is waiting for the front-button trigger. Press the button on the printer to start the print."
                     ))
                 else:
                     self.root.after(0, lambda: self.progress_label.config(text='Transfer finished — waiting for printer state'))
