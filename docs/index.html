@@ -119,11 +119,12 @@
 
                 <!-- Navigation Tabs (Desktop) -->
                 <nav class="hidden md:flex space-x-1 text-sm font-medium">
-                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-2 rounded-md bg-slate-800 text-white hover:bg-slate-700 transition">Dashboard</button>
-                    <button onclick="switchTab('setup')" id="nav-setup" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Cura, Tool & Swap</button>
-                    <button onclick="switchTab('gcode')" id="nav-gcode" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Bed & G-Code</button>
+                    <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn px-3 py-2 rounded-md bg-slate-800 text-white hover:bg-slate-700 transition">Printer Overview</button>
+                    <button onclick="switchTab('setup')" id="nav-setup" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Install Required Apps</button>
+                    <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Tinkercad Prep</button>
+                    <button onclick="switchTab('stl')" id="nav-stl" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Prepare STL to G-code</button>
+                    <button onclick="switchTab('gcode')" id="nav-gcode" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Preparing to print</button>
                     <button onclick="switchTab('troubleshoot')" id="nav-troubleshoot" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Troubleshooting</button>
-                    <button onclick="switchTab('checklist')" id="nav-checklist" class="nav-btn px-3 py-2 rounded-md text-slate-300 hover:text-white hover:bg-slate-800 transition">Volunteer Sheet</button>
                 </nav>
 
                 <!-- Global Actions -->
@@ -141,11 +142,12 @@
 
         <!-- Mobile Nav Bar -->
         <div class="md:hidden flex overflow-x-auto space-x-1 p-2 bg-slate-900 border-t border-slate-800 text-xs">
-            <button onclick="switchTab('dashboard')" class="mobile-nav-btn px-2.5 py-1.5 rounded bg-slate-800 text-white whitespace-nowrap">Dashboard</button>
-            <button onclick="switchTab('setup')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">Setup & Swap</button>
-            <button onclick="switchTab('gcode')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">G-Code</button>
+            <button onclick="switchTab('dashboard')" class="mobile-nav-btn px-2.5 py-1.5 rounded bg-slate-800 text-white whitespace-nowrap">Overview</button>
+            <button onclick="switchTab('setup')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">Apps</button>
+            <button onclick="switchTab('checklist')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">Tinkercad</button>
+            <button onclick="switchTab('stl')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">STL → G-code</button>
+            <button onclick="switchTab('gcode')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">Preparing</button>
             <button onclick="switchTab('troubleshoot')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">Troubleshooting</button>
-            <button onclick="switchTab('checklist')" class="mobile-nav-btn px-2.5 py-1.5 rounded text-slate-300 whitespace-nowrap">Checklist</button>
         </div>
     </header>
 
@@ -157,9 +159,9 @@
             
             <!-- Intro Paragraph -->
             <div class="bg-brand-card p-6 rounded-xl border border-brand-border shadow-sm">
-                <h2 class="text-xl font-bold text-brand-primary mb-2">MOD-t Offline Volunteer Dashboard</h2>
+                <h2 class="text-xl font-bold text-brand-primary mb-2">Printer Overview</h2>
                 <p class="text-sm text-brand-muted leading-relaxed">
-                    Welcome to the operational master guide for running the New Matter MOD-t 3D printer offline using UltiMaker Cura and the MOD-t Printer Utility on macOS. Operating the MOD-t requires custom G-code routines, strict material selection (PLA ONLY), proper filament storage, precise movement speed throttling, and specific bed adhesion rules to account for its unique unheated flexible build plate and pinion-gear movement system.
+                    Welcome to the MOD-t operations guide for printing offline using UltiMaker Cura and the MOD-t Printer Utility on macOS. This printer needs custom G-code routines, PLA-only material, proper filament handling, careful bed adhesion, and attention to the MOD-t’s unique center-origin setup and unheated build plate.
                 </p>
             </div>
 
@@ -408,107 +410,6 @@
                 </div>
             </div>
 
-            <!-- NEW: How to Swap Filament Using the MOD-t App -->
-            <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <h3 class="font-bold text-base text-brand-primary flex items-center gap-2">
-                        <span>🔄</span> How to Swap Filament Using the MOD-t App
-                    </h3>
-                    <span class="text-xs font-mono bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded">Desktop App Utility Workflow</span>
-                </div>
-                <p class="text-xs text-brand-muted">
-                    Because the MOD-t lacks a screen or direct hardware unloading buttons on the chassis, all filament changes (loading new spools or removing spent filament) must be commanded via USB using the <strong>MOD-t Printer Tool app</strong> (or CLI utility).
-                </p>
-
-                <!-- Interactive Step-by-Step Workflow Tabs -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-                    
-                    <!-- Phase A: Unloading Existing Filament -->
-                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                            <span class="font-bold text-brand-primary text-sm flex items-center gap-1.5">
-                                <span class="text-amber-600">📤</span> Phase 1: Unload Current Filament
-                            </span>
-                            <span class="text-xs font-mono bg-amber-100 text-amber-900 px-2 py-0.5 rounded">Step-by-Step</span>
-                        </div>
-                        <ol class="space-y-2.5 text-brand-muted font-mono">
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">1</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Connect USB &amp; Power On:</strong>
-                                    Connect Mac to MOD-t via USB cable and launch <strong>MOD-t Printer Tool</strong>.
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">2</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Select "Unload Filament":</strong>
-                                    Click <strong>Filament &gt; Unload Filament</strong> in the top menu or dashboard.
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">3</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Wait for Preheat (~210 °C):</strong>
-                                    The app will signal the hotend to heat up. The front MOD-t button LED will pulse.
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">4</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Automatic Motor Reverse:</strong>
-                                    Once heated, the drive gears run in reverse to retract filament up the tube. Pull strand out gently once free.
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-
-                    <!-- Phase B: Loading New PLA Filament -->
-                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
-                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
-                            <span class="font-bold text-brand-primary text-sm flex items-center gap-1.5">
-                                <span class="text-emerald-600">📥</span> Phase 2: Load New PLA Filament
-                            </span>
-                            <span class="text-xs font-mono bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">Step-by-Step</span>
-                        </div>
-                        <ol class="space-y-2.5 text-brand-muted font-mono">
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">1</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Snip Filament Tip at 45°:</strong>
-                                    Cut the end of the new PLA strand at a sharp 45-degree angle. Never feed flat or mushroomed ends.
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">2</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Select "Load Filament":</strong>
-                                    Click <strong>Filament &gt; Load Filament</strong> in the MOD-t Printer Tool app.
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">3</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Insert Strand into Carriage:</strong>
-                                    Feed strand into the top entrance hole until it touches drive gears. Hold light downward pressure.
-                                </div>
-                            </li>
-                            <li class="flex items-start gap-2">
-                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">4</span>
-                                <div>
-                                    <strong class="text-brand-primary block">Purge &amp; Complete:</strong>
-                                    The drive gears pull the strand in and extrude plastic out the nozzle. Once pure color flows, click <strong>Done / Stop</strong>.
-                                </div>
-                            </li>
-                        </ol>
-                    </div>
-
-                </div>
-
-                <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-mono flex items-center justify-between">
-                    <span>💡 <strong>Terminal CLI Alternative (macOS 10.15+):</strong> Open Terminal and execute: <code class="bg-amber-100 px-1 py-0.5 rounded">modt-tool load</code> or <code class="bg-amber-100 px-1 py-0.5 rounded">modt-tool unload</code></span>
-                </div>
-            </div>
 
             <!-- OS Selector Interactive Tabs -->
             <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-4">
@@ -580,7 +481,17 @@
                     </div>
 
                     <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
-                        <span class="font-bold text-brand-primary block text-sm">⚡ Option B: Modern macOS Terminal/CLI Tools</span>
+                        <span class="font-bold text-brand-primary block text-sm">⚡ Option B: Existing Working Build</span>
+                        <span class="text-brand-muted block">Use this when a developer already has a known-good local build and wants a faster way to test the app without rebuilding it.</span>
+                        <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono pt-1">
+                            <li>Use an already-built <code class="bg-slate-200 px-1 py-0.5 rounded">MOD-t_Printer_Utility.app</code> or equivalent valid app bundle.</li>
+                            <li>Drag it to Applications or launch it directly from the build folder for testing.</li>
+                            <li>Use the same USB workflow as above: confirm the printer is connected, then send the G-code and press the printer button to start.</li>
+                        </ol>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2 md:col-span-2">
+                        <span class="font-bold text-brand-primary block text-sm">🧭 Option C: Modern macOS Terminal/CLI Tools</span>
                         <span class="text-brand-muted block">For macOS Catalina to Sequoia (64-bit / Apple Silicon).</span>
                         <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono pt-1">
                             <li>Install <code class="bg-slate-200 px-1 py-0.5 rounded">george-le/MOD-t</code> Python / Go CLI tool via Terminal.</li>
@@ -645,8 +556,86 @@
 
             <!-- Machine Configuration Settings -->
             <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-4">
-                <h3 class="font-bold text-base text-brand-primary border-b border-slate-100 pb-2">Step 4: Machine Configuration (Preferences &gt; Printers &gt; Add New &gt; Non-Networked &gt; Custom FFF Printer)</h3>
-                
+                <h3 class="font-bold text-base text-brand-primary border-b border-slate-100 pb-2">Step 4: Add the New Matter MOD-t Printer in Cura</h3>
+
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3 text-xs text-brand-muted">
+                    <span class="font-bold text-brand-primary block">Modern Cura flow:</span>
+                    <ol class="list-decimal list-inside space-y-1 font-mono">
+                        <li>Open <strong>Ultimaker Cura</strong> and go to <strong>Preferences</strong> &gt; <strong>Printers</strong>.</li>
+                        <li>Click <strong>Add Printer</strong> and choose <strong>Non-Networked Printer</strong>.</li>
+                        <li>Select <strong>Custom FFF Printer</strong> and name it <code class="bg-slate-200 px-1 py-0.5 rounded">New Matter MOD-t</code>.</li>
+                        <li>Leave the default single-extruder profile in place unless you are intentionally customizing a second setup.</li>
+                        <li>After the printer is created, import the recommended profile file: <code class="bg-slate-200 px-1 py-0.5 rounded">NM Cura Profile 062316.ini</code>.</li>
+                        <li>Select the imported profile and click <strong>Activate</strong> so Cura uses it for all future slices.</li>
+                    </ol>
+                </div>
+
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900">
+                    <span class="font-bold">Important:</span> The MOD-t is not a standard Cartesian printer. You must set the origin to the center of the bed, keep the build plate unheated, and use the MOD-t profile values rather than a stock PLA profile.
+                </div>
+
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3 text-xs text-brand-muted">
+                    <span class="font-bold text-brand-primary block">Activate the recommended print profile:</span>
+                    <ol class="list-decimal list-inside space-y-1 font-mono">
+                        <li>In Cura, open <strong>Preferences</strong> &gt; <strong>Profiles</strong> and click <strong>Import</strong>.</li>
+                        <li>Select <code class="bg-slate-200 px-1 py-0.5 rounded">NM Cura Profile 062316.ini</code> from the repo or the downloaded archive.</li>
+                        <li>Choose the imported profile and confirm it is the active profile for the <code class="bg-slate-200 px-1 py-0.5 rounded">New Matter MOD-t</code> printer.</li>
+                        <li>Confirm the profile includes the MOD-t-specific values for speed, acceleration, Z-hop, and center-origin motion.</li>
+                    </ol>
+                </div>
+
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3 text-xs text-brand-muted">
+                    <span class="font-bold text-brand-primary block">Recommended Start / End G-code (from <code class="bg-slate-200 px-1 py-0.5 rounded">Basic_GCode.md</code>):</span>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                        <div>
+                            <div class="font-bold text-brand-primary mb-1">Start G-code</div>
+                            <pre class="bg-slate-900 text-slate-100 p-3 rounded-md overflow-x-auto whitespace-pre-wrap font-mono text-[10px] leading-relaxed">M42 P10 S1 ; Turn on LED
+G21 ; set units to millimeters
+G90 ; use absolute coordinates
+M82 ; use absolute distances for extrusion
+M204 S500
+
+G0 Z1 F300 ; Make sure main Z drop isn’t too fast
+
+;Move to side and put down a line to prime the nozzle
+G1 X64.332 Y24.938 F9000
+G1 Z0.315 F300
+G92 E0
+G1 X74.332 Y-44.938 E3.9642 F2520
+G1 X74.964 Y-44.938 E4.0001
+G1 X74.964 Y24.938 E7.9643
+G1 X74.532 Y24.938 E7.9888
+G1 X74.332 Y24.938 F2520
+G1 X73.876 Y25.394 F9000
+G92 E0
+G1 X73.876 Y-45.394 E4.0159 F1680
+G1 X75.42 Y-45.394 E4.1035
+G1 X75.42 Y25.394 E8.1195
+G1 X74.076 Y25.394 E8.1957
+G1 X73.876 Y25.394 F1680
+G1 X73.876 Y23.394 F1680
+
+G0 Z1 F300
+G0 X0 Y0 F5000
+
+G92 E0</pre>
+                        </div>
+                        <div>
+                            <div class="font-bold text-brand-primary mb-1">End G-code</div>
+                            <pre class="bg-slate-900 text-slate-100 p-3 rounded-md overflow-x-auto whitespace-pre-wrap font-mono text-[10px] leading-relaxed">G92 E0
+G0 Z130 F300; Go high
+
+G0 X77.7 Y52.3 F3000
+G92 X0 Y0 ; Change Offset back to center
+
+G0 X0 Y50 F3000; Go front and center
+M104 S0 ; Turn off temperature
+M107 ; Turn on fan
+M84 ; Disable motors</pre>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <!-- Printer Tab Table -->
                     <div>
@@ -694,14 +683,176 @@
             </div>
         </section>
 
-        <!-- ================= SECTION 3: BED & G-CODE VISUALIZER ================= -->
+        <!-- ================= SECTION 3: STL TO G-CODE ================= -->
+        <section id="sec-stl" class="tab-content hidden space-y-6">
+            <div class="bg-brand-card p-6 rounded-xl border border-brand-border shadow-sm">
+                <h2 class="text-xl font-bold text-brand-primary mb-2">Prepare STL to G-code</h2>
+                <p class="text-sm text-brand-muted leading-relaxed">
+                    Once the STL is ready, use Cura and the MOD-t profile to convert the model into a valid G-code file. This is the step after your model is designed and before the printer is prepared for the actual run.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-5">
+                <h3 class="font-bold text-base text-brand-primary border-b border-slate-100 pb-2">Step-by-step: STL → G-code in Cura</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                        <span class="font-bold text-brand-primary block">1. Load the model</span>
+                        <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono">
+                            <li>Open Cura and click <strong>Open File</strong>.</li>
+                            <li>Select your <code class="bg-slate-200 px-1 py-0.5 rounded">.stl</code> model.</li>
+                            <li>Confirm the active printer is <code class="bg-slate-200 px-1 py-0.5 rounded">New Matter MOD-t</code>.</li>
+                        </ol>
+                    </div>
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                        <span class="font-bold text-brand-primary block">2. Check scale and placement</span>
+                        <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono">
+                            <li>Verify the object fits inside the 150 × 100 × 125 mm build volume.</li>
+                            <li>Place it near the center, or use the MOD-t’s center-origin setup.</li>
+                            <li>Use the same profile you activated earlier for the MOD-t.</li>
+                        </ol>
+                    </div>
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                        <span class="font-bold text-brand-primary block">3. Slice the model</span>
+                        <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono">
+                            <li>Choose the PRESET profile for the MOD-t.</li>
+                            <li>Set material to <code class="bg-slate-200 px-1 py-0.5 rounded">PLA</code> and confirm 1.75 mm filament.</li>
+                            <li>Apply the correct build plate adhesion: <strong>Raft</strong> and a moderate brim/prime strategy if needed.</li>
+                        </ol>
+                    </div>
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+                        <span class="font-bold text-brand-primary block">4. Export the G-code</span>
+                        <ol class="list-decimal list-inside space-y-1 text-brand-muted font-mono">
+                            <li>Click <strong>Slice</strong>.</li>
+                            <li>Once slicing completes, click <strong>Save to Disk</strong>.</li>
+                            <li>Choose a filename ending in <code class="bg-slate-200 px-1 py-0.5 rounded">.gcode</code>.</li>
+                            <li>Transfer the file to the MOD-t Printer Utility over USB.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="p-4 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900">
+                    <span class="font-bold">Common MOD-t gotchas:</span> Do not use a stock generic PLA profile. The MOD-t needs center-origin motion, Z-hop, raft adhesion, and safe speed limits to avoid skipped gear teeth and layer shifting.
+                </div>
+
+                <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3 text-xs text-brand-muted">
+                    <span class="font-bold text-brand-primary block">Recommended Cura export checklist</span>
+                    <ul class="list-disc list-inside space-y-1 font-mono">
+                        <li>Printer set to <code class="bg-slate-200 px-1 py-0.5 rounded">New Matter MOD-t</code></li>
+                        <li>Material: <code class="bg-slate-200 px-1 py-0.5 rounded">PLA 1.75 mm</code></li>
+                        <li>Build plate adhesion: <code class="bg-slate-200 px-1 py-0.5 rounded">Raft</code></li>
+                        <li>Origin: <code class="bg-slate-200 px-1 py-0.5 rounded">Center (X0 Y0)</code></li>
+                        <li>Feed rate / acceleration: keep within MOD-t safe limits</li>
+                        <li>File saved as <code class="bg-slate-200 px-1 py-0.5 rounded">.gcode</code></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SECTION 4: BED & G-CODE VISUALIZER ================= -->
         <section id="sec-gcode" class="tab-content hidden space-y-6">
             
             <div class="bg-brand-card p-6 rounded-xl border border-brand-border shadow-sm">
-                <h2 class="text-xl font-bold text-brand-primary mb-2">Interactive Bed & G-Code Simulator</h2>
+                <h2 class="text-xl font-bold text-brand-primary mb-2">Preparing to print</h2>
                 <p class="text-sm text-brand-muted leading-relaxed">
-                    Understand how the MOD-t positions coordinates relative to its center origin <code class="bg-slate-100 px-1 py-0.5 rounded text-indigo-700">X0 Y0</code> and watch how the custom Start G-code draws a dual-pass prime box on the far right edge (<code class="bg-slate-100 px-1 py-0.5 rounded">X64–X75</code>) before starting the print.
+                    Before sending a job, confirm the printer is ready: the USB connection is live, the filament is loaded correctly, and the MOD-t is set to its center-origin workflow before the print starts.
                 </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl border border-brand-border shadow-sm space-y-4">
+                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <h3 class="font-bold text-base text-brand-primary flex items-center gap-2">
+                        <span>🔄</span> How to Swap Filament Using the MOD-t App
+                    </h3>
+                    <span class="text-xs font-mono bg-indigo-100 text-indigo-800 px-2.5 py-0.5 rounded">Desktop App Utility Workflow</span>
+                </div>
+                <p class="text-xs text-brand-muted">
+                    Because the MOD-t lacks a screen or direct hardware unloading buttons on the chassis, all filament changes (loading new spools or removing spent filament) must be commanded via USB using the <strong>MOD-t Printer Tool app</strong> (or CLI utility).
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <span class="font-bold text-brand-primary text-sm flex items-center gap-1.5">
+                                <span class="text-amber-600">📤</span> Phase 1: Unload Current Filament
+                            </span>
+                            <span class="text-xs font-mono bg-amber-100 text-amber-900 px-2 py-0.5 rounded">Step-by-Step</span>
+                        </div>
+                        <ol class="space-y-2.5 text-brand-muted font-mono">
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">1</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Connect USB &amp; Power On:</strong>
+                                    Connect Mac to MOD-t via USB cable and launch <strong>MOD-t Printer Tool</strong>.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">2</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Select "Unload Filament":</strong>
+                                    Click <strong>Filament &gt; Unload Filament</strong> in the top menu or dashboard.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">3</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Wait for Preheat (~210 °C):</strong>
+                                    The app will signal the hotend to heat up. The front MOD-t button LED will pulse.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">4</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Automatic Motor Reverse:</strong>
+                                    Once heated, the drive gears run in reverse to retract filament up the tube. Pull strand out gently once free.
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
+                        <div class="flex items-center justify-between border-b border-slate-200 pb-2">
+                            <span class="font-bold text-brand-primary text-sm flex items-center gap-1.5">
+                                <span class="text-emerald-600">📥</span> Phase 2: Load New PLA Filament
+                            </span>
+                            <span class="text-xs font-mono bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded">Step-by-Step</span>
+                        </div>
+                        <ol class="space-y-2.5 text-brand-muted font-mono">
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">1</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Snip Filament Tip at 45°:</strong>
+                                    Cut the end of the new PLA strand at a sharp 45-degree angle. Never feed flat or mushroomed ends.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">2</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Select "Load Filament":</strong>
+                                    Click <strong>Filament &gt; Load Filament</strong> in the MOD-t Printer Tool app.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">3</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Insert Strand into Carriage:</strong>
+                                    Feed strand into the top entrance hole until it touches drive gears. Hold light downward pressure.
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="bg-slate-200 text-brand-primary font-bold px-1.5 py-0.5 rounded text-[10px]">4</span>
+                                <div>
+                                    <strong class="text-brand-primary block">Purge &amp; Complete:</strong>
+                                    The drive gears pull the strand in and extrude plastic out the nozzle. Once pure color flows, click <strong>Done / Stop</strong>.
+                                </div>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-mono flex items-center justify-between">
+                    <span>💡 <strong>Terminal CLI Alternative (macOS 10.15+):</strong> Open Terminal and execute: <code class="bg-amber-100 px-1 py-0.5 rounded">modt-tool load</code> or <code class="bg-amber-100 px-1 py-0.5 rounded">modt-tool unload</code></span>
+                </div>
             </div>
 
             <!-- Canvas Simulator Container -->
@@ -974,9 +1125,9 @@ M84 ; Disable stepper motors</pre>
         <section id="sec-checklist" class="tab-content hidden space-y-6">
             
             <div class="bg-brand-card p-6 rounded-xl border border-brand-border shadow-sm">
-                <h2 class="text-xl font-bold text-brand-primary mb-2">Printable Volunteer Quick-Reference & Checklist</h2>
+                <h2 class="text-xl font-bold text-brand-primary mb-2">Tinkercad Prep & Design Considerations</h2>
                 <p class="text-sm text-brand-muted leading-relaxed">
-                    Interactive operational checklist for volunteers running print shifts. Check off items as you verify the printer state.
+                    This step happens before Cura. If you are creating a model in Tinkercad, keep the print size, orientation, wall thickness, and support strategy in mind before exporting the STL and slicing it for the MOD-t.
                 </p>
             </div>
 

@@ -45,7 +45,7 @@ coll = COLLECT(
 )
 app = BUNDLE(
     coll,
-    name='MOD-t_Printer_Utility_macos.app',
+    name='MOD-t Printer Utility.app',
     icon='software/assets/macos/modt_app_icon.icns',
     bundle_identifier=None,
 )

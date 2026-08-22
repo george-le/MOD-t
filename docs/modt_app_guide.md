@@ -92,6 +92,16 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
+### Alternative: use an existing working build
+
+If someone has already built a working macOS app locally, they can use that build directly instead of rebuilding the app for each test cycle. This is mainly for a developer or operator who already has a known-good bundle on hand and wants to test quickly against hardware.
+
+```bash
+open "dist/MOD-t_Printer_Utility.app"
+```
+
+Or drag the built app from the build folder into Applications and launch it from there.
+
 ### Ensure libusb is available
 
 Apple Silicon / modern macOS (Homebrew):

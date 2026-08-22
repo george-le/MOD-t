@@ -314,17 +314,141 @@ class ModTApp:
         except Exception:
             return None
 
+    def _first_matching_value(self, obj, keys):
+        if isinstance(obj, dict):
+            for key in keys:
+                if key in obj and obj[key] is not None:
+                    return obj[key]
+            for value in obj.values():
+                found = self._first_matching_value(value, keys)
+                if found is not None:
+                    return found
+        elif isinstance(obj, list):
+            for item in obj:
+                found = self._first_matching_value(item, keys)
+                if found is not None:
+                    return found
+        return None
+
+    def _normalize_temperature(self, value):
+        if value is None or value == "--":
+            return "--"
+        if isinstance(value, dict):
+            value = value.get('current', value.get('value', value.get('temp', value.get('celsius', value.get('actual', "--")))))
+        if isinstance(value, (list, tuple)) and value:
+            value = value[0]
+        try:
+            numeric = float(value)
+            return int(numeric) if abs(numeric - round(numeric)) < 1e-6 else round(numeric, 1)
+        except (TypeError, ValueError):
+            return value
+
+    def _extract_temperature_value(self, payload):
+        if payload is None:
+            return None
+        if isinstance(payload, dict):
+            for key in ['temperature', 'temp', 'hotend_temp', 'current_temp', 'actual_temp', 'heater_temp', 'extruder_temp', 'hotend', 'extruder']:
+                if key in payload:
+                    return payload[key]
+            for key, value in payload.items():
+                normalized = str(key).lower()
+                if 'temp' in normalized or 'heater' in normalized or 'hotend' in normalized or 'extruder' in normalized:
+                    if isinstance(value, (int, float)):
+                        return value
+                    if isinstance(value, dict):
+                        nested = self._extract_temperature_value(value)
+                        if nested is not None:
+                            return nested
+                nested = self._extract_temperature_value(value)
+                if nested is not None:
+                    return nested
+        elif isinstance(payload, list):
+            for item in payload:
+                nested = self._extract_temperature_value(item)
+                if nested is not None:
+                    return nested
+        return None
+
+    def extract_status_state(self, payload):
+        if payload is None:
+            return None
+        if isinstance(payload, dict):
+            for key in ['state', 'printer_state', 'status_state', 'job_state']:
+                value = payload.get(key)
+                if value is not None:
+                    return value
+            for value in payload.values():
+                nested = self.extract_status_state(value)
+                if nested is not None:
+                    return nested
+        elif isinstance(payload, list):
+            for item in payload:
+                nested = self.extract_status_state(item)
+                if nested is not None:
+                    return nested
+        return None
+
+    def _parse_json_payload(self, raw_str):
+        if raw_str is None:
+            return None
+        cleaned = raw_str.replace('\x00', '').strip()
+        if not cleaned:
+            return None
+        try:
+            return json.loads(cleaned)
+        except Exception:
+            pass
+
+        start = cleaned.find('{')
+        end = cleaned.rfind('}')
+        if 0 <= start < end:
+            try:
+                return json.loads(cleaned[start:end+1])
+            except Exception:
+                pass
+        return None
+
+    def request_status(self):
+        if not self.connected or not self.dev:
+            return
+        try:
+            self.dev.write(4, '{"metadata":{"version":1,"type":"status"}}')
+            data = self.read_modt_response(0x83)
+            if data:
+                self.parse_status(data)
+        except Exception:
+            pass
+
     def parse_status(self, raw_str):
         try:
-            self.status_data = json.loads(raw_str.strip())
-            status = self.status_data.get("status", {})
+            decoded = self._parse_json_payload(raw_str)
+            if not isinstance(decoded, dict):
+                return
+            self.status_data = decoded
 
-            temp = status.get("temperature", "--")
-            state = status.get("state", "--")
-            pos = status.get("position", {})
-            x = pos.get("x", "--")
-            y = pos.get("y", "--")
-            z = pos.get("z", "--")
+            status = decoded.get("status")
+            if status is None and isinstance(decoded.get("data"), dict):
+                status = decoded.get("data").get("status")
+            if status is None and isinstance(decoded.get("result"), dict):
+                status = decoded.get("result").get("status")
+            if status is None:
+                status = decoded
+
+            temp = self._normalize_temperature(self._extract_temperature_value(decoded))
+            if temp == "--":
+                temp = self._normalize_temperature(self._first_matching_value(status, ['temperature', 'temp', 'hotend_temp', 'current_temp', 'actual_temp', 'heater_temp', 'extruder_temp']))
+            state = self.extract_status_state(decoded)
+            if state is None:
+                state = self._first_matching_value(status, ['state', 'printer_state', 'status_state'])
+
+            pos = status.get('position') if isinstance(status, dict) else {}
+            if pos is None:
+                pos = {}
+            if not isinstance(pos, dict):
+                pos = {}
+            x = pos.get('x', self._first_matching_value(status, ['x', 'x_pos', 'position_x']))
+            y = pos.get('y', self._first_matching_value(status, ['y', 'y_pos', 'position_y']))
+            z = pos.get('z', self._first_matching_value(status, ['z', 'z_pos', 'position_z']))
 
             # Update labels safely in Tkinter main thread
             self.root.after(0, lambda: self.update_telemetry_labels(temp, state, x, y, z, raw_str))
@@ -442,6 +566,8 @@ class ModTApp:
         try:
             self.dev.write(2, bytearray.fromhex('24690096ff'))
             self.dev.write(2, '{"transport":{"attrs":["request","twoway"],"id":9},"data":{"command":{"idx":52,"name":"load_initiate"}}};')
+            self.root.after(0, lambda: self.update_log("Filament load command sent. Requesting fresh status..."))
+            self.request_status()
             messagebox.showinfo("Filament", "Filament load command sent. The hotend will begin preheating.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send command: {e}")
@@ -453,6 +579,8 @@ class ModTApp:
         try:
             self.dev.write(2, bytearray.fromhex('246c0093ff'))
             self.dev.write(2, '{"transport":{"attrs":["request","twoway"],"id":11},"data":{"command":{"idx":51,"name":"unload_initiate"}}};')
+            self.root.after(0, lambda: self.update_log("Filament unload command sent. Requesting fresh status..."))
+            self.request_status()
             messagebox.showinfo("Filament", "Filament unload command sent. The hotend will begin preheating.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to send command: {e}")
@@ -509,8 +637,9 @@ class ModTApp:
     def show_optimization_warning(self, error_text):
         messagebox.showwarning("Warning", f"G-code optimization failed, sending original file. Error: {error_text}")
 
-    def wait_for_ready_state(self, timeout_seconds=15.0):
+    def wait_for_ready_state(self, timeout_seconds=45.0):
         deadline = time.monotonic() + timeout_seconds
+        last_state = None
         while time.monotonic() < deadline:
             if self.stop_print_flag:
                 return False
@@ -519,12 +648,21 @@ class ModTApp:
                 data = self.read_modt_response(0x83)
                 if data:
                     self.parse_status(data)
-                    state = self.status_data.get('status', {}).get('state', '')
-                    if state and state.upper() in ('STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING'):
+                    state = self.extract_status_state(self.status_data)
+                    normalized = str(state).upper() if state else ''
+                    last_state = normalized
+                    if normalized in ('STATE_JOB_QUEUED', 'STATE_IDLE', 'STATE_PRINTING', 'STATE_HEATING'):
                         return True
+                    if normalized == 'STATE_FILE_RX':
+                        self.root.after(0, lambda: self.progress_label.config(text='Transfer complete — waiting for printer trigger'))
             except Exception:
                 pass
             time.sleep(0.5)
+
+        # A MOD-t that is still blinking after the file transfer is normal; it is waiting for the
+        # physical front-button trigger. Do not force this into a false "ready" state.
+        if last_state == 'STATE_FILE_RX':
+            return False
         return False
 
     def print_worker(self, fname):
@@ -592,6 +730,9 @@ class ModTApp:
 
             if not self.stop_print_flag:
                 ready = self.wait_for_ready_state()
+                final_state = self.extract_status_state(self.status_data) if self.status_data else None
+                final_state_display = str(final_state).upper() if final_state else 'UNKNOWN'
+
                 if ready:
                     self.root.after(0, lambda: self.progress_label.config(text='Ready — press the printer button'))
                     self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
@@ -600,13 +741,21 @@ class ModTApp:
                         "Ready to print",
                         "The MOD-t reported a ready/queued state. Press the front button on the printer to begin printing."
                     ))
+                elif final_state_display == 'STATE_FILE_RX':
+                    self.root.after(0, lambda: self.progress_label.config(text='File received — waiting for print trigger'))
+                    self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
+                    self.root.after(0, lambda: self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4)))
+                    self.root.after(0, lambda: messagebox.showinfo(
+                        "Transfer complete",
+                        "The file was received by the MOD-t and the printer is blinking while waiting for the front button trigger. Press the button on the printer to start the print."
+                    ))
                 else:
                     self.root.after(0, lambda: self.progress_label.config(text='Transfer finished — waiting for printer state'))
                     self.root.after(0, lambda: self.print_eta_label.config(text='Print ETA: unavailable'))
                     self.root.after(0, lambda: self.print_eta_label.pack(anchor=tk.CENTER, pady=(0, 4)))
                     self.root.after(0, lambda: messagebox.showwarning(
                         "Printer not ready",
-                        "The file transfer finished, but the MOD-t did not report a queued/ready state. Keep the USB connected and verify the printer is waiting for the front-button trigger."
+                        "The file transfer finished, but the MOD-t has not reached a queued/ready state. Keep the USB connected and be ready to press the printer button when it stops blinking."
                     ))
 
         except Exception as e:
