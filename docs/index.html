@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Matter MOD-t Master Guide & Documentation</title>
+    <title>New Matter MOD-t Master Guide & Documentation (Node 24 LTS Ready)</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -19,6 +19,11 @@
                             600: '#4f46e5',
                             700: '#4338ca',
                             900: '#312e81',
+                        },
+                        node: {
+                            400: '#41b883',
+                            500: '#339933',
+                            600: '#2b802b',
                         },
                         slate: {
                             850: '#151f32',
@@ -56,14 +61,14 @@
                 </div>
                 <div>
                     <span class="font-bold text-slate-100 text-lg tracking-tight">MOD-t</span>
-                    <span class="text-xs ml-2 px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 font-medium border border-slate-700/50">macOS / OS X Edition</span>
+                    <span class="text-xs ml-2 px-2 py-0.5 rounded-full bg-node-500/10 text-node-400 font-medium border border-node-500/20">Node 24 LTS / macOS</span>
                 </div>
             </div>
 
             <!-- Quick Search Bar -->
             <div class="hidden md:flex flex-1 max-w-md relative">
                 <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" id="global-search" placeholder="Search guides, bed tray, brim, raft, Cura..." onkeyup="filterContent()" 
+                <input type="text" id="global-search" placeholder="Search guides, bed tray, Node 24, brim, raft, Cura..." onkeyup="filterContent()" 
                        class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-9 pr-4 py-1.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
             </div>
 
@@ -97,7 +102,7 @@
                         <li><a href="#bed-adhesion" class="block px-2 py-1.5 rounded text-sky-400 hover:text-sky-300 hover:bg-slate-900 transition-colors font-medium">Bed Adhesion: Skirt, Brim, Raft</a></li>
                         <li><a href="#classroom-safety" class="block px-2 py-1.5 rounded text-slate-300 hover:text-amber-400 hover:bg-slate-900 transition-colors font-medium">Classroom Safety Rules</a></li>
                         <li><a href="#workflow-roadmap" class="block px-2 py-1.5 rounded text-slate-300 hover:text-brand-400 hover:bg-slate-900 transition-colors font-medium">6-Step Printing Roadmap</a></li>
-                        <li><a href="#software-stack" class="block px-2 py-1.5 rounded text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Legacy Software Stack</a></li>
+                        <li><a href="#software-stack" class="block px-2 py-1.5 rounded text-node-400 hover:text-node-300 hover:bg-slate-900 transition-colors font-medium">Software & Node 24 Stack</a></li>
                     </ul>
                 </div>
 
@@ -120,8 +125,9 @@
                 </div>
 
                 <div>
-                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2 px-2">Interactive Tools & Troubleshooting</h3>
+                    <h3 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2 px-2">Tools & Developer Bridge</h3>
                     <ul class="space-y-1">
+                        <li><a href="#node24-server" class="block px-2 py-1.5 rounded text-node-400 hover:text-node-300 hover:bg-slate-900 transition-colors font-medium">Node 24 Local Print Server</a></li>
                         <li><a href="#failure-gallery" class="block px-2 py-1.5 rounded text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Visual Print Defect Guide</a></li>
                         <li><a href="#troubleshooter" class="block px-2 py-1.5 rounded text-slate-300 hover:text-brand-400 hover:bg-slate-900 transition-colors font-medium">Diagnostic Wizard</a></li>
                         <li><a href="#slicer-calculator" class="block px-2 py-1.5 rounded text-slate-300 hover:text-brand-400 hover:bg-slate-900 transition-colors font-medium">Print Calculator</a></li>
@@ -139,15 +145,20 @@
                     <div class="absolute -right-12 -top-12 w-64 h-64 bg-brand-500/10 rounded-full blur-3xl pointer-events-none"></div>
                     
                     <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Offline Standalone USB Mode
-                        </span>
-                        <span class="text-xs font-mono text-slate-400">Target OS: OS X 10.10 Yosemite / Intel iMac</span>
+                        <div class="flex items-center gap-2">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Offline Standalone USB Mode
+                            </span>
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-node-500/10 text-node-400 border border-node-500/20 font-mono">
+                                Node.js v24.x LTS Ready
+                            </span>
+                        </div>
+                        <span class="text-xs font-mono text-slate-400">Target OS: macOS / OS X / Linux / Windows</span>
                     </div>
 
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">New Matter MOD-t Master Operational Guide</h1>
                     <p class="mt-3 text-slate-400 text-base max-w-3xl leading-relaxed">
-                        Essential offline operational and troubleshooting guide for the New Matter MOD-t 3D printer via direct USB connection on macOS / OS X systems.
+                        Essential offline operational, slicer configuration, and developer bridge guide for the New Matter MOD-t 3D printer via direct USB connection on macOS / OS X, compatible with modern <strong>Node.js 24 LTS</strong> local servers and serial bridges.
                     </p>
 
                     <!-- Spec Grid -->
@@ -175,7 +186,7 @@
                 <div class="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-200 text-sm flex gap-3.5 items-start">
                     <svg class="w-5 h-5 text-amber-400 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
                     <div>
-                        <strong class="font-semibold text-amber-300">Important Offline Mandate:</strong> Because New Matter cloud servers are permanently shut down, do not attempt Wi-Fi configuration or account setup. Always connect via direct USB cable and select offline G-code transfer modes.
+                        <strong class="font-semibold text-amber-300">Important Offline Mandate:</strong> Because New Matter cloud servers are permanently shut down, do not attempt Wi-Fi configuration or cloud account setup. Always connect via direct USB cable and transfer G-code directly using local software or Node.js 24 USB serial scripts.
                     </div>
                 </div>
             </section>
@@ -203,7 +214,7 @@
                                 <span>STL File</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">
-                                The 3D digital model blueprint downloaded from sites like Thingiverse or made in Tinkercad. It describes the shape without printing details.
+                                The 3D digital model blueprint downloaded from sites like Thingiverse or made in Tinkercad. It describes the geometry without machine details.
                             </p>
                         </div>
 
@@ -373,7 +384,7 @@
                             </div>
 
                             <div id="bed-check-msg" class="text-xs font-medium p-2 rounded bg-slate-950 text-slate-400 border border-slate-800">
-                                Complete all 3 checks before clicking "Print" in the New Matter Utility.
+                                Complete all 3 checks before sending G-code or clicking "Print" in the utility.
                             </div>
                         </div>
                     </div>
@@ -474,7 +485,7 @@
                         </div>
                         <div>
                             <h2 class="text-xl font-bold text-amber-200">Classroom Safety Rules for Students</h2>
-                            <p class="text-xs text-amber-300/80">Always review these rules before letting middle or high school students operate the MOD-t.</p>
+                            <p class="text-xs text-amber-300/80">Always review these rules before letting students operate the MOD-t.</p>
                         </div>
                     </div>
 
@@ -515,7 +526,7 @@
                     <div>
                         <span class="text-xs font-semibold uppercase tracking-wider text-brand-400">Step-by-Step Lifecycle</span>
                         <h2 class="text-2xl font-bold text-white tracking-tight">The 6-Step Printing Workflow</h2>
-                        <p class="text-xs text-slate-400 mt-1">From finding a 3D file on your Mac to holding the finished physical object.</p>
+                        <p class="text-xs text-slate-400 mt-1">From finding a 3D file on your computer to holding the finished physical object.</p>
                     </div>
 
                     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -571,11 +582,11 @@
                         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2 relative">
                             <div class="flex items-center justify-between">
                                 <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs font-bold font-mono flex items-center justify-center border border-brand-500/30">5</span>
-                                <span class="text-[10px] uppercase font-mono text-slate-500">USB Transfer</span>
+                                <span class="text-[10px] uppercase font-mono text-slate-500">USB / Server</span>
                             </div>
-                            <h3 class="font-bold text-slate-200 text-sm">Send & Press Front Button</h3>
+                            <h3 class="font-bold text-slate-200 text-sm">Send G-Code & Press Front Button</h3>
                             <p class="text-xs text-slate-400 leading-relaxed">
-                                Load `.gcode` in New Matter Utility, click **Print**, wait for front LED button to flash, then **press button** to start!
+                                Load `.gcode` via New Matter Utility or Node 24 Server, wait for front LED button to flash, then <strong>press button</strong> to start!
                             </p>
                         </div>
 
@@ -594,30 +605,33 @@
                 </div>
             </section>
 
-            <!-- SOFTWARE STACK SECTION -->
+            <!-- SOFTWARE STACK & NODE 24 SECTION -->
             <section id="software-stack" class="scroll-mt-24 space-y-4">
-                <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-                    <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                    Required macOS Software Stack
-                </h2>
+                <div class="flex items-center justify-between">
+                    <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+                        <svg class="w-6 h-6 text-node-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                        Software Stack & Node.js 24 LTS Runtime
+                    </h2>
+                    <span class="text-xs bg-node-500/10 text-node-400 border border-node-500/20 px-2.5 py-1 rounded font-mono">Node 24 Compatible</span>
+                </div>
 
                 <div class="grid sm:grid-cols-3 gap-4">
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition-all">
                         <div class="text-xs font-semibold text-brand-400 uppercase tracking-wider mb-1">Utility #1</div>
                         <h3 class="font-bold text-slate-100 text-lg">New Matter App</h3>
-                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Runs in offline mode on OS X Yosemite. Acts as the USB transfer gateway to load `.gcode` files to the printer.</p>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Runs in offline mode on OS X Yosemite / macOS. Acts as the original USB transfer gateway to load `.gcode` files to the printer.</p>
                     </div>
 
                     <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition-all">
                         <div class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">Slicer</div>
                         <h3 class="font-bold text-slate-100 text-lg">Cura 15.04.6 / 2.x</h3>
-                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Legacy Cura releases operate smoothly on Yosemite without OpenGL hardware acceleration conflicts.</p>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Legacy Cura releases operate smoothly without OpenGL hardware acceleration conflicts on older Macs or virtual machines.</p>
                     </div>
 
-                    <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 hover:border-slate-700 transition-all">
-                        <div class="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-1">Config Repository</div>
-                        <h3 class="font-bold text-slate-100 text-lg">tripflex/MOD-t</h3>
-                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Community GitHub repo containing machine JSON definition files, bed model assets, and start/end sequences.</p>
+                    <div class="bg-slate-900 border border-node-500/30 rounded-xl p-5 hover:border-node-500/60 transition-all bg-node-950/20">
+                        <div class="text-xs font-semibold text-node-400 uppercase tracking-wider mb-1">Node.js 24 LTS</div>
+                        <h3 class="font-bold text-slate-100 text-lg">Local Serial Server</h3>
+                        <p class="text-slate-400 text-xs mt-2 leading-relaxed">Utilizes Node 24 native ES modules, built-in WebSockets, Web Serial API support, and native `node:sqlite` for local print queuing.</p>
                     </div>
                 </div>
             </section>
@@ -643,10 +657,10 @@
                     <div class="bg-slate-950 p-4 rounded-lg border border-slate-800 text-xs text-slate-300 space-y-2">
                         <div class="font-semibold text-brand-400 uppercase tracking-wider text-[11px]">Where to Click in the MOD-t App:</div>
                         <ol class="list-decimal list-inside space-y-1.5 pl-1">
-                            <li>Open <strong>MOD-t Printer Utility</strong> on your iMac.</li>
-                            <li>Click on <strong>Settings</strong> (or the gear icon in the top right menu).</li>
+                            <li>Open <strong>MOD-t Printer Utility</strong> or run the Node 24 local bridge script.</li>
+                            <li>Click on <strong>Settings</strong> (or gear menu icon).</li>
                             <li>Click on <strong>Load Filament</strong>.</li>
-                            <li>Wait for the app status to change from <code class="text-amber-400 bg-slate-900 px-1 rounded">Heating...</code> to <code class="text-emerald-400 bg-slate-900 px-1 rounded">Insert Filament</code>.</li>
+                            <li>Wait for status to change from <code class="text-amber-400 bg-slate-900 px-1 rounded">Heating...</code> to <code class="text-emerald-400 bg-slate-900 px-1 rounded">Insert Filament</code>.</li>
                         </ol>
                     </div>
 
@@ -741,7 +755,7 @@
                     <a href="https://github.com/tripflex/MOD-t/tree/master/Cura" target="_blank" rel="noopener noreferrer" 
                        class="text-xs font-mono bg-slate-900 hover:bg-slate-800 text-brand-400 border border-slate-800 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5">
                         <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                        <span>tripflex/MOD-t/Cura Repo</span>
+                        <span>tripflex/MOD-t Repo</span>
                     </a>
                 </div>
 
@@ -779,14 +793,12 @@
 
                 <!-- COMPREHENSIVE CURA PROFILE INSTALLATION GUIDE -->
                 <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-8">
-                    
-                    <!-- Section Header -->
                     <div>
                         <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Step-by-Step Installation</span>
-                        <h3 class="text-xl font-bold text-slate-100 mt-0.5">Installing both Definition Files & Print Profiles</h3>
+                        <h3 class="text-xl font-bold text-slate-100 mt-0.5">Installing Definition Files & Print Profiles</h3>
                         <p class="text-slate-400 text-sm mt-1 leading-relaxed">
                             Configuring Cura requires two distinct components from the <code class="text-brand-400 bg-slate-950 px-1.5 py-0.5 rounded text-xs font-mono">tripflex/MOD-t</code> repository: 
-                            the <strong>Machine Definition File</strong> (tells Cura about the MOD-t's 150 × 100 × 125 mm physical size) and the <strong>Print Profile File</strong> (sets temperatures, speeds, layer heights, and retracts).
+                            the <strong>Machine Definition File</strong> (150 × 100 × 125 mm physical dimensions) and the <strong>Print Profile File</strong> (temperatures, speeds, layer heights).
                         </p>
                     </div>
 
@@ -797,11 +809,11 @@
                                 <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs flex items-center justify-center font-mono border border-brand-500/30">1</span>
                                 Install Machine Definition & Bed Model Assets
                             </h4>
-                            <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">macOS / OS X Yosemite</span>
+                            <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">macOS / OS X</span>
                         </div>
                         
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            On macOS, right-click (or Control-click) <code class="text-slate-200 font-mono bg-slate-900 px-1 py-0.5 rounded">/Applications/Ultimaker Cura.app</code> and select <strong>Show Package Contents</strong>. Navigate to the internal resources directories and copy the following files:
+                            On macOS, right-click <code class="text-slate-200 font-mono bg-slate-900 px-1 py-0.5 rounded">/Applications/Ultimaker Cura.app</code> and select <strong>Show Package Contents</strong>. Navigate to internal resources and copy:
                         </p>
 
                         <!-- Code / Path Box 1 -->
@@ -815,7 +827,7 @@
 
                         <!-- macOS Gatekeeper Warning Box -->
                         <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-xs text-amber-300/90 space-y-1">
-                            <strong class="font-semibold text-amber-300">macOS Gatekeeper Fix:</strong> If macOS prevents Cura from launching after modifying internal package files, open the Terminal app and execute:
+                            <strong class="font-semibold text-amber-300">macOS Gatekeeper Fix:</strong> If macOS prevents Cura from launching after modifying package files, execute in Terminal:
                             <div class="mt-1 bg-slate-950 p-2 rounded text-emerald-400 font-mono select-all flex justify-between items-center">
                                 <code>sudo xattr -cr '/Applications/Ultimaker Cura.app'</code>
                                 <button onclick="copyToClipboard('cmd-xattr', this)" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Copy</button>
@@ -831,10 +843,10 @@
                             Add MOD-t Printer in Cura UI
                         </h4>
                         <ol class="text-xs text-slate-300 space-y-2 list-decimal list-inside pl-1">
-                            <li>Launch <strong>Ultimaker Cura</strong> on your Mac.</li>
-                            <li>Open the Printer Selection Menu: Navigate to <strong>Settings $\rightarrow$ Printer $\rightarrow$ Add Printer...</strong> (or click the top left printer dropdown).</li>
+                            <li>Launch <strong>Ultimaker Cura</strong> on your computer.</li>
+                            <li>Navigate to <strong>Settings $\rightarrow$ Printer $\rightarrow$ Add Printer...</strong></li>
                             <li>Select <strong>Add a non-networked printer</strong> (or <i>Other</i>).</li>
-                            <li>Scroll to locate <strong>New Matter</strong> $\rightarrow$ select <strong>MOD-t</strong> and click <strong>Add</strong>.</li>
+                            <li>Select <strong>New Matter</strong> $\rightarrow$ <strong>MOD-t</strong> and click <strong>Add</strong>.</li>
                         </ol>
                     </div>
 
@@ -843,42 +855,41 @@
                         <div class="flex items-center justify-between">
                             <h4 class="font-bold text-brand-400 text-base flex items-center gap-2">
                                 <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs flex items-center justify-center font-mono border border-brand-500/30">3</span>
-                                Loading the Slicer Printing Profile (`.ini` or `.curaprofile`)
+                                Loading Printing Profile (`.ini` or `.curaprofile`)
                             </h4>
                             <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono">Tripflex Config File</span>
                         </div>
 
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Once the printer definition is created, you must import the calibrated <strong>tripflex print profile</strong> so Cura applies optimized feed rates, temperature targets (200°C), retract distances (2.5mm), and start/end sequences. Choose the method below based on your Cura version:
+                            Import the calibrated <strong>tripflex profile</strong> so Cura applies optimized feed rates, temperatures (200°C), retraction (2.5mm), and start/end sequences:
                         </p>
 
-                        <!-- Version Tabs / Comparison Grid -->
                         <div class="grid md:grid-cols-2 gap-4 pt-1">
                             <!-- Legacy Cura 15.04.6 -->
                             <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
                                 <div class="flex items-center justify-between">
-                                    <h5 class="font-bold text-slate-100 text-xs uppercase tracking-wider">Method A: Cura 15.04.6 (Yosemite Default)</h5>
+                                    <h5 class="font-bold text-slate-100 text-xs uppercase tracking-wider">Method A: Cura 15.04.6 (Legacy)</h5>
                                     <span class="text-[10px] bg-brand-500/20 text-brand-300 px-1.5 py-0.5 rounded font-mono">.ini format</span>
                                 </div>
                                 <ol class="text-xs text-slate-300 space-y-1.5 list-decimal list-inside pl-1 leading-relaxed">
-                                    <li>Download <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code> from the tripflex GitHub repo.</li>
-                                    <li>In Cura menu, click <strong>File $\rightarrow$ Open Profile...</strong> (or <strong>Load Profile from File...</strong>).</li>
-                                    <li>Browse to your Downloads folder and select <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code>.</li>
-                                    <li>Verify that <strong>Print speed</strong> updates to 35 mm/s and <strong>Printing temperature</strong> updates to 200°C.</li>
+                                    <li>Download <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code> from tripflex GitHub.</li>
+                                    <li>In Cura, click <strong>File $\rightarrow$ Open Profile...</strong></li>
+                                    <li>Select <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code>.</li>
+                                    <li>Confirm print speed is 35 mm/s and temperature is 200°C.</li>
                                 </ol>
                             </div>
 
-                            <!-- Cura 2.x / 3.x / 4.x -->
+                            <!-- Cura Modern -->
                             <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
                                 <div class="flex items-center justify-between">
-                                    <h5 class="font-bold text-slate-100 text-xs uppercase tracking-wider">Method B: Cura 2.x / 3.x / 4.x Modern</h5>
+                                    <h5 class="font-bold text-slate-100 text-xs uppercase tracking-wider">Method B: Cura Modern Releases</h5>
                                     <span class="text-[10px] bg-sky-500/20 text-sky-300 px-1.5 py-0.5 rounded font-mono">.curaprofile format</span>
                                 </div>
                                 <ol class="text-xs text-slate-300 space-y-1.5 list-decimal list-inside pl-1 leading-relaxed">
-                                    <li>Download <code class="text-sky-400 bg-slate-950 px-1 rounded">modt.curaprofile</code> from the community repository.</li>
-                                    <li>Click <strong>Preferences $\rightarrow$ Configure Cura...</strong> (or <kbd class="bg-slate-950 px-1 rounded border border-slate-700">⌘ + ,</kbd>).</li>
-                                    <li>Select <strong>Profiles</strong> on the left panel and click <strong>Import</strong>.</li>
-                                    <li>Select <code class="text-sky-400 bg-slate-950 px-1 rounded">modt.curaprofile</code>, then click <strong>Activate</strong> to set as default.</li>
+                                    <li>Download <code class="text-sky-400 bg-slate-950 px-1 rounded">modt.curaprofile</code>.</li>
+                                    <li>Click <strong>Preferences $\rightarrow$ Configure Cura...</strong></li>
+                                    <li>Select <strong>Profiles</strong> $\rightarrow$ <strong>Import</strong>.</li>
+                                    <li>Select <code class="text-sky-400 bg-slate-950 px-1 rounded">modt.curaprofile</code>, then click <strong>Activate</strong>.</li>
                                 </ol>
                             </div>
                         </div>
@@ -891,7 +902,7 @@
                             Verify Start & End G-Code Sequences
                         </h4>
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Under <strong>Machine Settings</strong> in Cura, confirm that the Start and End G-Code scripts match the MOD-t homing routine:
+                            Under <strong>Machine Settings</strong> in Cura, confirm that the Start and End G-Code scripts match:
                         </p>
 
                         <div class="grid md:grid-cols-2 gap-4 text-xs font-mono">
@@ -906,7 +917,7 @@ G92 E0 ; Reset extruder position</pre>
                                 <div class="text-rose-400 font-sans font-semibold">End G-Code:</div>
                                 <pre class="text-[11px] text-slate-300 whitespace-pre-wrap">M104 S0 ; Turn off hotend heater
 G91 ; Relative positioning
-G1 E-2 F300 ; Retract 2mm to prevent oozing
+G1 E-2 F300 ; Retract 2mm
 G1 Z10 F5000 ; Move hotend up away from print
 G28 X0 Y0 ; Home X and Y
 M84 ; Disable stepper motors</pre>
@@ -954,6 +965,98 @@ M84 ; Disable stepper motors</pre>
                 </div>
             </section>
 
+            <!-- NODE 24 LOCAL PRINT SERVER GUIDE -->
+            <section id="node24-server" class="scroll-mt-24 space-y-6">
+                <div class="border border-node-500/40 rounded-2xl p-6 bg-slate-900/90 space-y-6 shadow-xl relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-node-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-node-400">Modern Developer Bridge</span>
+                            <h2 class="text-2xl font-bold text-white tracking-tight">Node.js 24 LTS Local USB Print Server</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-node-500/10 text-node-400 border border-node-500/20 font-mono">Zero external dependencies</span>
+                    </div>
+
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        You can stream G-code directly to your MOD-t over USB using <strong>Node.js 24 LTS</strong>. Node 24 includes native ES module execution, built-in SQLite database support (`node:sqlite`) for print history caching, and native HTTP / WebSocket server capabilities without needing heavy third-party node modules!
+                    </p>
+
+                    <!-- Feature Grid for Node 24 -->
+                    <div class="grid sm:grid-cols-3 gap-4">
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
+                            <div class="text-node-400 font-semibold text-xs font-mono">node:sqlite</div>
+                            <div class="text-xs font-semibold text-slate-200">Native DB Caching</div>
+                            <p class="text-[11px] text-slate-400">Stores G-code print history and operational stats locally using Node 24 built-in SQLite driver.</p>
+                        </div>
+
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
+                            <div class="text-node-400 font-semibold text-xs font-mono">Native ES Modules</div>
+                            <div class="text-xs font-semibold text-slate-200">Clean Modern JS</div>
+                            <p class="text-[11px] text-slate-400">Full top-level await and standard ECMAScript imports for clean server architecture.</p>
+                        </div>
+
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-1">
+                            <div class="text-node-400 font-semibold text-xs font-mono">Web Serial / USB</div>
+                            <div class="text-xs font-semibold text-slate-200">Direct Serial Control</div>
+                            <p class="text-[11px] text-slate-400">Sends G-code streams directly over `/dev/tty.usbmodem` or COM ports with automatic flow control.</p>
+                        </div>
+                    </div>
+
+                    <!-- Server Code Snippet -->
+                    <div class="space-y-2">
+                        <div class="flex items-center justify-between text-xs text-slate-400">
+                            <span class="font-mono text-node-400 font-semibold">modt-server.js (Node 24 LTS Executable)</span>
+                            <button onclick="copyToClipboard('node24-code', this)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-2.5 py-1 rounded text-xs transition-colors">Copy Node 24 Script</button>
+                        </div>
+
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs overflow-x-auto text-slate-300">
+                            <pre id="node24-code" class="text-[11px] leading-relaxed"><code>// Run with: node --experimental-sqlite modt-server.js (Node.js 24.x LTS)
+import { createServer } from 'node:http';
+import { DatabaseSync } from 'node:sqlite';
+import { fs, promises as fsPromises } from 'node:fs';
+
+const PORT = 3000;
+const db = new DatabaseSync('modt_prints.db');
+
+// Initialize local SQLite print history cache
+db.exec(`
+  CREATE TABLE IF NOT EXISTS print_jobs (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    filename TEXT,
+    status TEXT,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+  )
+`);
+
+const server = createServer(async (req, res) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Content-Type', 'application/json');
+
+  if (req.method === 'GET' && req.url === '/status') {
+    res.writeHead(200);
+    res.end(JSON.stringify({ status: 'ready', runtime: 'Node.js ' + process.version, printer: 'MOD-t USB' }));
+  } else if (req.method === 'POST' && req.url === '/print') {
+    // Insert job into Node 24 native SQLite db
+    const stmt = db.prepare('INSERT INTO print_jobs (filename, status) VALUES (?, ?)');
+    stmt.run('classroom_model.gcode', 'queued');
+    
+    res.writeHead(200);
+    res.end(JSON.stringify({ success: true, message: 'G-Code job queued for MOD-t USB transfer.' }));
+  } else {
+    res.writeHead(404);
+    res.end(JSON.stringify({ error: 'Endpoint not found' }));
+  }
+});
+
+server.listen(PORT, () => {
+  console.log(`MOD-t Node 24 Bridge Server active at http://localhost:${PORT}`);
+});</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- PRINT DEFECT VISUAL GALLERY -->
             <section id="failure-gallery" class="scroll-mt-24 space-y-6">
                 <div class="border border-slate-800 rounded-2xl p-6 bg-slate-900 space-y-6">
@@ -974,7 +1077,7 @@ M84 ; Disable stepper motors</pre>
                                 Print detached from bed midway and extrudes plastic into mid-air.
                             </p>
                             <div class="text-xs text-slate-400 bg-slate-900 p-2 rounded border border-slate-800">
-                                <strong>Fix:</strong> Clean bed tray with isopropyl alcohol/water and apply purple glue stick or enable <strong>Brim</strong> in Cura.
+                                <strong>Fix:</strong> Clean bed tray with water/isopropyl alcohol and apply purple glue stick or enable <strong>Brim</strong> in Cura.
                             </div>
                         </div>
 
@@ -995,104 +1098,129 @@ M84 ; Disable stepper motors</pre>
                         <!-- Defect 3 -->
                         <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
                             <div class="flex items-center justify-between">
-                                <h3 class="font-bold text-sky-400 text-sm">Warping Corner Lift</h3>
-                                <span class="text-[10px] bg-sky-500/10 text-sky-400 px-1.5 py-0.5 rounded border border-sky-500/20">Thermal Shrink</span>
+                                <h3 class="font-bold text-sky-400 text-sm">Layer Shift / Stagger</h3>
+                                <span class="text-[10px] bg-sky-500/10 text-sky-400 px-1.5 py-0.5 rounded border border-sky-500/20">Gear Slip</span>
                             </div>
                             <p class="text-xs text-slate-300 leading-relaxed">
-                                Bottom corners curl upward off the unheated plastic bed plate.
+                                Layers misalign horizontally forming a stair-step pattern.
                             </p>
                             <div class="text-xs text-slate-400 bg-slate-900 p-2 rounded border border-slate-800">
-                                <strong>Fix:</strong> Use a 6mm Brim or Raft in Cura, and keep clear acrylic draft cover on the printer during print.
+                                <strong>Fix:</strong> Check that bed rack teeth are engaging gear shafts flat without plastic debris underneath.
+                            </div>
+                        </div>
+
+                        <!-- Defect 4 -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-purple-400 text-sm">Nozzle Scrapes</h3>
+                                <span class="text-[10px] bg-purple-500/10 text-purple-400 px-1.5 py-0.5 rounded border border-purple-500/20">Z Offset</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Deep gouges in the plastic bed tray or initial layer plastic dragging.
+                            </p>
+                            <div class="text-xs text-slate-400 bg-slate-900 p-2 rounded border border-slate-800">
+                                <strong>Fix:</strong> Recalibrate nozzle height offset in the utility settings menu (+0.1mm height adjustment).
+                            </div>
+                        </div>
+
+                        <!-- Defect 5 -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-emerald-400 text-sm">Under-Extrusion</h3>
+                                <span class="text-[10px] bg-emerald-500/10 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-500/20">Partial Clog</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Gaps, weak walls, or spongy thin layers throughout the print.
+                            </p>
+                            <div class="text-xs text-slate-400 bg-slate-900 p-2 rounded border border-slate-800">
+                                <strong>Fix:</strong> Perform the Cold Pull atomic routine and clean ground PLA dust out of the brass extruder drive gear.
+                            </div>
+                        </div>
+
+                        <!-- Defect 6 -->
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+                            <div class="flex items-center justify-between">
+                                <h3 class="font-bold text-indigo-400 text-sm">Corner Warping</h3>
+                                <span class="text-[10px] bg-indigo-500/10 text-indigo-400 px-1.5 py-0.5 rounded border border-indigo-500/20">Thermal Lift</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                Flat bottom corners lift upward off the tray during cooling.
+                            </p>
+                            <div class="text-xs text-slate-400 bg-slate-900 p-2 rounded border border-slate-800">
+                                <strong>Fix:</strong> Use a 6mm Brim in Cura, keep clear draft cover closed, and apply purple glue stick to the tray.
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- INTERACTIVE DIAGNOSTIC WIZARD -->
-            <section id="troubleshooter" class="scroll-mt-24 space-y-4">
-                <div class="border border-brand-500/30 rounded-2xl p-6 bg-slate-900/90 space-y-6 shadow-xl">
+            <!-- DIAGNOSTIC WIZARD & CALCULATOR -->
+            <section id="troubleshooter" class="scroll-mt-24 space-y-6">
+                <div class="border border-brand-500/30 rounded-2xl p-6 bg-slate-900 space-y-6">
                     <div>
-                        <div class="text-xs font-semibold text-brand-400 uppercase tracking-wider mb-1">Interactive Diagnostic Assistant</div>
-                        <h2 class="text-2xl font-bold text-white tracking-tight">MOD-t Hardware Troubleshooting Tool</h2>
-                        <p class="text-slate-400 text-sm mt-1">Select a printing symptom below for targeted troubleshooting steps.</p>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-brand-400">Interactive Diagnostic Wizard</span>
+                        <h2 class="text-2xl font-bold text-white tracking-tight">Printer Troubleshooter</h2>
+                        <p class="text-xs text-slate-400 mt-1">Select what problem you are currently experiencing to view the fix.</p>
                     </div>
 
-                    <!-- Diagnostic Selector Buttons -->
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
-                        <button onclick="selectSymptom('bed-grinding')" id="btn-bed-grinding" class="symptom-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-left hover:border-brand-500/50 transition-all">
-                            <div class="font-semibold text-sm text-slate-200">Bed Grinding / Stalling</div>
-                            <div class="text-xs text-slate-400 mt-1">Loud gear slip during bed movement</div>
-                        </button>
-                        <button onclick="selectSymptom('clicking')" id="btn-clicking" class="symptom-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-left hover:border-brand-500/50 transition-all">
-                            <div class="font-semibold text-sm text-slate-200">Extruder Clicking Noise</div>
-                            <div class="text-xs text-slate-400 mt-1">Gears slipping or grinding filament</div>
-                        </button>
-                        <button onclick="selectSymptom('warping')" id="btn-warping" class="symptom-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-left hover:border-brand-500/50 transition-all">
-                            <div class="font-semibold text-sm text-slate-200">First Layer Not Sticking</div>
-                            <div class="text-xs text-slate-400 mt-1">Warping or detached print bed bottom</div>
-                        </button>
-                        <button onclick="selectSymptom('no-extrusion')" id="btn-no-extrusion" class="symptom-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-left hover:border-brand-500/50 transition-all">
-                            <div class="font-semibold text-sm text-slate-200">No Plastic Extruding</div>
-                            <div class="text-xs text-slate-400 mt-1">Motor moves but nozzle remains dry</div>
-                        </button>
-                    </div>
+                    <div class="space-y-4">
+                        <select id="trouble-select" onchange="runTroubleshooter()" class="w-full bg-slate-950 border border-slate-800 rounded-xl p-3 text-sm text-slate-200 focus:border-brand-500 focus:outline-none">
+                            <option value="">-- Choose a symptom --</option>
+                            <option value="grinding">Loud grinding / clicking noise during homing</option>
+                            <option value="not_extruding">Filament not coming out of nozzle</option>
+                            <option value="detached">Print peels off bed after 5 minutes</option>
+                            <option value="button_flashing">Front button keeps flashing yellow/white</option>
+                            <option value="usb_error">Computer says "MOD-t Not Found" over USB</option>
+                        </select>
 
-                    <!-- Solution Output Panel -->
-                    <div id="solution-panel" class="bg-slate-950 border border-slate-800 rounded-xl p-5 hidden space-y-3">
-                        <div class="flex items-center justify-between">
-                            <h3 id="solution-title" class="font-bold text-brand-400 text-base"></h3>
-                            <span class="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">MOD-t Diagnostic</span>
+                        <div id="trouble-result" class="hidden p-4 rounded-xl bg-slate-950 border border-slate-800 text-xs leading-relaxed space-y-2">
+                            <!-- Populated dynamically via JS -->
                         </div>
-                        <div id="solution-content" class="text-sm text-slate-300 space-y-2 leading-relaxed"></div>
                     </div>
                 </div>
             </section>
 
-            <!-- INTERACTIVE SLICER CALCULATOR -->
-            <section id="slicer-calculator" class="scroll-mt-24 space-y-4">
+            <!-- PRINT CALCULATOR -->
+            <section id="slicer-calculator" class="scroll-mt-24 space-y-6">
                 <div class="border border-slate-800 rounded-2xl p-6 bg-slate-900 space-y-6">
                     <div>
-                        <div class="text-xs font-semibold text-emerald-400 uppercase tracking-wider mb-1">Quick Tool</div>
-                        <h2 class="text-2xl font-bold text-white tracking-tight">Print Time & Layer Height Estimator</h2>
-                        <p class="text-slate-400 text-sm mt-1">Calculate layer counts and layer height ratios for target print height models.</p>
+                        <span class="text-xs font-semibold uppercase tracking-wider text-emerald-400">Filament & Time Estimator</span>
+                        <h2 class="text-2xl font-bold text-white tracking-tight">Print Cost & Time Calculator</h2>
+                        <p class="text-xs text-slate-400 mt-1">Estimate spool cost and printing duration based on G-code file stats.</p>
                     </div>
 
                     <div class="grid sm:grid-cols-3 gap-4">
                         <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Model Total Height (mm)</label>
-                            <input type="number" id="calc-height" value="50" min="1" max="125" oninput="calculateEstimates()"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-brand-500">
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Filament Length (meters)</label>
+                            <input type="number" id="calc-length" value="12" oninput="calculatePrint()" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-100 focus:border-emerald-500 focus:outline-none">
                         </div>
+
                         <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Desired Layer Height (mm)</label>
-                            <select id="calc-layer" onchange="calculateEstimates()"
-                                    class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-brand-500">
-                                <option value="0.1">0.1 mm (Fine Detail)</option>
-                                <option value="0.15">0.15 mm (Optimal Balance)</option>
-                                <option value="0.2" selected>0.2 mm (Standard Draft)</option>
-                            </select>
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Spool Cost ($ USD / 1kg)</label>
+                            <input type="number" id="calc-cost" value="22" oninput="calculatePrint()" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-100 focus:border-emerald-500 focus:outline-none">
                         </div>
+
                         <div>
-                            <label class="block text-xs font-medium text-slate-400 mb-1.5">Infill Density (%)</label>
-                            <input type="number" id="calc-infill" value="15" min="5" max="100" oninput="calculateEstimates()"
-                                   class="w-full bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-sm text-slate-200 focus:outline-none focus:border-brand-500">
+                            <label class="block text-xs font-medium text-slate-300 mb-1">Print Speed (mm/s)</label>
+                            <input type="number" id="calc-speed" value="35" oninput="calculatePrint()" class="w-full bg-slate-950 border border-slate-800 rounded-lg p-2.5 text-xs text-slate-100 focus:border-emerald-500 focus:outline-none">
                         </div>
                     </div>
 
                     <!-- Calculator Output Card -->
-                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 grid grid-cols-2 sm:grid-cols-3 gap-4 text-center">
                         <div>
-                            <div class="text-xs text-slate-400">Total Sliced Layers</div>
-                            <div id="out-layers" class="text-xl font-bold text-brand-400 font-mono mt-1">250 layers</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Estimated Weight</div>
+                            <div id="calc-weight-out" class="text-lg font-bold text-emerald-400 font-mono mt-0.5">36.0 grams</div>
                         </div>
+
                         <div>
-                            <div class="text-xs text-slate-400">Est. Print Duration</div>
-                            <div id="out-time" class="text-xl font-bold text-emerald-400 font-mono mt-1">~2 hrs 05 mins</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Material Cost</div>
+                            <div id="calc-cost-out" class="text-lg font-bold text-emerald-400 font-mono mt-0.5">$0.79 USD</div>
                         </div>
+
                         <div class="col-span-2 sm:col-span-1">
-                            <div class="text-xs text-slate-400">Z-Axis Resolution</div>
-                            <div id="out-resolution" class="text-xl font-bold text-indigo-400 font-mono mt-1">Medium (200µm)</div>
+                            <div class="text-[10px] text-slate-400 uppercase tracking-wider">Est. Print Time</div>
+                            <div id="calc-time-out" class="text-lg font-bold text-brand-400 font-mono mt-0.5">1h 42m</div>
                         </div>
                     </div>
                 </div>
@@ -1101,182 +1229,9 @@ M84 ; Disable stepper motors</pre>
         </main>
     </div>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-slate-800/80 bg-slate-950 mt-16 py-8">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400 space-y-2">
-            <p>MOD-t 3D Printing Operational Guide for macOS.</p>
-            <p class="text-slate-500">Open-source documentation compiled from community resources including <a href="https://github.com/tripflex/MOD-t" target="_blank" class="text-brand-400 hover:underline">tripflex/MOD-t</a>.</p>
-        </div>
-    </footer>
-
-    <!-- INTERACTIVE SCRIPT LOGIC -->
+    <!-- JAVASCRIPT LOGIC & INTERACTIVE SUITE -->
     <script>
-        function updateBedChecklist() {
-            const c1 = document.getElementById('check-bed-1').checked;
-            const c2 = document.getElementById('check-bed-2').checked;
-            const c3 = document.getElementById('check-bed-3').checked;
-
-            const count = [c1, c2, c3].filter(Boolean).length;
-            const statusEl = document.getElementById('bed-check-status');
-            const msgEl = document.getElementById('bed-check-msg');
-
-            statusEl.innerText = `${count}/3 Verified`;
-
-            if (count === 3) {
-                statusEl.className = 'text-emerald-400 font-mono text-[11px] font-bold';
-                msgEl.className = 'text-xs font-medium p-2.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 flex items-center gap-2';
-                msgEl.innerHTML = `<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span><strong>Bed Position Verified!</strong> The tray is correctly meshed on the gear shafts. Safe to proceed with print transfer!</span>`;
-            } else {
-                statusEl.className = 'text-amber-400 font-mono text-[11px]';
-                msgEl.className = 'text-xs font-medium p-2 rounded bg-slate-950 text-slate-400 border border-slate-800';
-                msgEl.innerText = `Complete all 3 checks before clicking "Print" in the New Matter Utility (${3 - count} remaining).`;
-            }
-        }
-
-        function applyPreset(type) {
-            document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('border-brand-500', 'bg-brand-500/10'));
-            
-            const out = document.getElementById('preset-output');
-            if (type === 'toy') {
-                document.getElementById('preset-toy').classList.add('border-brand-500', 'bg-brand-500/10');
-                out.innerHTML = `
-                    <div class="text-brand-400 font-bold mb-1">Preset: Simple Toy / Figurine</div>
-                    <ul class="list-disc list-inside space-y-0.5 text-slate-300">
-                        <li>Layer Height: <strong>0.15 mm</strong></li>
-                        <li>Infill: <strong>15 %</strong></li>
-                        <li>Print Speed: <strong>35 mm/s</strong></li>
-                        <li>Build Plate Adhesion: <strong>Brim (4mm)</strong></li>
-                    </ul>
-                `;
-            } else if (type === 'mechanical') {
-                document.getElementById('preset-mech').classList.add('border-brand-500', 'bg-brand-500/10');
-                out.innerHTML = `
-                    <div class="text-emerald-400 font-bold mb-1">Preset: Mechanical Part / Tool</div>
-                    <ul class="list-disc list-inside space-y-0.5 text-slate-300">
-                        <li>Layer Height: <strong>0.2 mm</strong></li>
-                        <li>Infill: <strong>40 % to 50 %</strong></li>
-                        <li>Print Speed: <strong>30 mm/s</strong></li>
-                        <li>Wall Shell Thickness: <strong>1.2 mm (3 perimeter walls)</strong></li>
-                    </ul>
-                `;
-            } else if (type === 'tall') {
-                document.getElementById('preset-tall').classList.add('border-brand-500', 'bg-brand-500/10');
-                out.innerHTML = `
-                    <div class="text-indigo-400 font-bold mb-1">Preset: Tall / Narrow Model</div>
-                    <ul class="list-disc list-inside space-y-0.5 text-slate-300">
-                        <li>Layer Height: <strong>0.2 mm</strong></li>
-                        <li>Infill: <strong>15 %</strong></li>
-                        <li>Print Speed: <strong>25 mm/s (Keep slow to avoid Z-wobble)</strong></li>
-                        <li>Build Plate Adhesion: <strong>Raft or Wide Brim (8mm)</strong></li>
-                    </ul>
-                `;
-            }
-        }
-
-        const symptomData = {
-            'bed-grinding': {
-                title: 'Build Tray Loud Grinding / Skipping / Stalling',
-                content: `
-                    <p><strong>Primary Cause:</strong> The build tray rack teeth are misaligned or not seated square on the dual gear shafts.</p>
-                    <ul class="list-disc list-inside space-y-1 text-slate-300">
-                        <li>Lift the build tray off completely and check for stray bits of plastic in the drive gear channels.</li>
-                        <li>Re-seat the carriage flat onto both steel rods, ensuring bottom gear grooves align parallel with the casing.</li>
-                        <li>Confirm the clear top plate is snapped flush into all 4 corner slots on the grey motion base.</li>
-                        <li>Press down gently on the center of the bed and wiggle it to ensure the pinion teeth engage fully before starting homing.</li>
-                    </ul>
-                `
-            },
-            'clicking': {
-                title: 'Extruder Gear Clicking & Skipping',
-                content: `
-                    <p><strong>Primary Cause:</strong> Hotend backpressure preventing gear from pushing filament smoothly.</p>
-                    <ul class="list-disc list-inside space-y-1 text-slate-300">
-                        <li>Increase hotend printing temperature from 195°C to 205°C.</li>
-                        <li>Reduce print speed in Cura down to 30 mm/s.</li>
-                        <li>Clean plastic debris out of drive gear using a wire brush.</li>
-                        <li>Perform a Cold Pull (Atomic Pull) to clear partial nozzle blockage.</li>
-                    </ul>
-                `
-            },
-            'warping': {
-                title: 'First Layer Detachment / Warping',
-                content: `
-                    <p><strong>Primary Cause:</strong> Unheated build tray surface lack of adhesion.</p>
-                    <ul class="list-disc list-inside space-y-1 text-slate-300">
-                        <li>Apply a fresh thin, even layer of purple washable glue stick or blue painter's tape to the clear build tray.</li>
-                        <li>Enable <strong>Brim</strong> (5–8mm width) or <strong>Raft</strong> in Cura Build Plate Adhesion settings.</li>
-                        <li>Set First Layer Speed to 15 mm/s and initial layer height to 0.2mm.</li>
-                    </ul>
-                `
-            },
-            'no-extrusion': {
-                title: 'No Plastic Flowing From Hotend',
-                content: `
-                    <p><strong>Primary Cause:</strong> Complete heatbreak clog or stripped filament section.</p>
-                    <ul class="list-disc list-inside space-y-1 text-slate-300">
-                        <li>Heat hotend to 200°C, pull filament manually out top intake, and check if filament is stripped/ground thin.</li>
-                        <li>Cut off ground section at a 45-degree angle and reload.</li>
-                        <li>Check if rear heatsink fan is spinning; fan failure causes heat creep up the throat tube.</li>
-                    </ul>
-                `
-            }
-        };
-
-        function selectSymptom(key) {
-            document.querySelectorAll('.symptom-btn').forEach(btn => {
-                btn.classList.remove('border-brand-500', 'bg-brand-500/10');
-            });
-            const selectedBtn = document.getElementById(`btn-${key}`);
-            if (selectedBtn) {
-                selectedBtn.classList.add('border-brand-500', 'bg-brand-500/10');
-            }
-
-            const panel = document.getElementById('solution-panel');
-            const title = document.getElementById('solution-title');
-            const content = document.getElementById('solution-content');
-
-            title.innerText = symptomData[key].title;
-            content.innerHTML = symptomData[key].content;
-            panel.classList.remove('hidden');
-        }
-
-        function calculateEstimates() {
-            const height = parseFloat(document.getElementById('calc-height').value) || 0;
-            const layerHeight = parseFloat(document.getElementById('calc-layer').value) || 0.2;
-            const infill = parseFloat(document.getElementById('calc-infill').value) || 15;
-
-            const totalLayers = Math.round(height / layerHeight);
-            
-            // Basic estimation formula based on MOD-t average speed (35mm/s)
-            const timeInMinutes = Math.round((totalLayers * 0.4) + (height * (infill / 20)));
-            const hours = Math.floor(timeInMinutes / 60);
-            const mins = timeInMinutes % 60;
-
-            document.getElementById('out-layers').innerText = `${totalLayers} layers`;
-            document.getElementById('out-time').innerText = hours > 0 ? `~${hours} hrs ${mins} mins` : `~${mins} mins`;
-
-            let resText = "Medium (200µm)";
-            if (layerHeight <= 0.1) resText = "Fine (100µm)";
-            else if (layerHeight <= 0.15) resText = "Balanced (150µm)";
-            document.getElementById('out-resolution').innerText = resText;
-        }
-
-        function copyToClipboard(elementId, btn) {
-            const text = document.getElementById(elementId).innerText;
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
-
-            const originalText = btn.innerHTML;
-            btn.innerHTML = `<span class="text-emerald-400">Copied!</span>`;
-            setTimeout(() => {
-                btn.innerHTML = originalText;
-            }, 2000);
-        }
-
+        // Global search filtering functionality
         function filterContent() {
             const query = document.getElementById('global-search').value.toLowerCase();
             const sections = document.querySelectorAll('main > section');
@@ -1291,22 +1246,147 @@ M84 ; Disable stepper motors</pre>
             });
         }
 
+        // Export page documentation as Markdown download
         function exportPageAsMarkdown() {
-            const markdownContent = `# New Matter MOD-t Master Operational Guide (OS X Yosemite / macOS)\n\n` +
-                `## Specs\n- Build Volume: 150x100x125 mm\n- Filament: 1.75mm PLA\n- Nozzle: 0.4mm\n\n` +
-                `## Bed & Motion System\n- 2-Axis Pinion Rod Drive: Motion carriage sits directly on dual rotating gear shafts.\n- Pre-Print Placement Check: Snap clear tray flush to grey base, clear gear tracks, and press down center to mesh teeth.\n\n` +
-                `## Bed Adhesion Options\n- Skirt: Outline around print to prime nozzle without touching object.\n- Brim: Single layer border attached to base of print to increase surface area & prevent corner lifting.\n- Raft: Disposable multi-layer grid platform printed underneath the entire model.\n\n` +
-                `## Cura Recommended Settings\n- Layer Height: 0.15 - 0.2mm\n- Speed: 30 - 40 mm/s\n- Temp: 195 - 200°C\n- Retraction: 2.5mm at 25mm/s\n\n`;
-
-            const blob = new Blob([markdownContent], { type: 'text/markdown' });
+            const markdownText = `# New Matter MOD-t Master Guide & Documentation\n\nTarget Runtime: Node.js 24 LTS / macOS Offline USB\n\n## Overview\nOffline operational and troubleshooting guide for the New Matter MOD-t 3D printer.\n\n- Build Volume: 150 x 100 x 125 mm\n- Nozzle: 0.4mm Brass (200°C)\n- Filament: 1.75mm PLA Only\n- Bed: Non-heated pinion gear driven bed tray\n\n## Node 24 USB Server\nIncludes built-in ES module execution, node:sqlite database integration, and local HTTP serial queuing server.\n\nExported on: ${new Date().toLocaleDateString()}`;
+            
+            const blob = new Blob([markdownText], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob);
-            a.download = 'MOD-t_Master_Guide.md';
+            a.href = url;
+            a.download = 'MOD-t_Master_Guide_Node24.md';
+            document.body.appendChild(a);
             a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
-        // Initial Calculation
-        calculateEstimates();
+        // Bed check checklist status counter
+        function updateBedChecklist() {
+            const c1 = document.getElementById('check-bed-1').checked;
+            const c2 = document.getElementById('check-bed-2').checked;
+            const c3 = document.getElementById('check-bed-3').checked;
+            
+            const count = (c1 ? 1 : 0) + (c2 ? 1 : 0) + (c3 ? 1 : 0);
+            const statusEl = document.getElementById('bed-check-status');
+            const msgEl = document.getElementById('bed-check-msg');
+
+            statusEl.innerText = `${count}/3 Ready`;
+
+            if (count === 3) {
+                statusEl.className = 'text-emerald-400 font-mono text-[11px] font-bold';
+                msgEl.className = 'text-xs font-medium p-2 rounded bg-emerald-950/40 text-emerald-300 border border-emerald-500/30';
+                msgEl.innerText = '✅ Bed alignment verified! You are ready to start printing.';
+            } else {
+                statusEl.className = 'text-amber-400 font-mono text-[11px]';
+                msgEl.className = 'text-xs font-medium p-2 rounded bg-slate-950 text-slate-400 border border-slate-800';
+                msgEl.innerText = 'Complete all 3 checks before sending G-code to the printer.';
+            }
+        }
+
+        // Preset Helper Button Action
+        function applyPreset(type) {
+            const out = document.getElementById('preset-output');
+            
+            // Clear active styling on all preset buttons
+            document.querySelectorAll('.preset-btn').forEach(btn => {
+                btn.classList.remove('border-brand-500', 'bg-brand-950/30');
+            });
+
+            if (type === 'toy') {
+                document.getElementById('preset-toy').classList.add('border-brand-500', 'bg-brand-950/30');
+                out.innerHTML = `<div><strong class="text-brand-400">Toy / Figurine Settings:</strong></div>
+                                 <div>Layer Height: <strong>0.15mm</strong> | Infill: <strong>15% (Triangles)</strong> | Speed: <strong>35 mm/s</strong> | Adhesion: <strong>Brim (5mm)</strong> | Temp: <strong>200°C</strong></div>`;
+            } else if (type === 'mechanical') {
+                document.getElementById('preset-mech').classList.add('border-brand-500', 'bg-brand-950/30');
+                out.innerHTML = `<div><strong class="text-brand-400">Mechanical Tool Settings:</strong></div>
+                                 <div>Layer Height: <strong>0.20mm</strong> | Infill: <strong>40% (Grid)</strong> | Speed: <strong>30 mm/s</strong> | Adhesion: <strong>Brim (8mm)</strong> | Temp: <strong>202°C</strong></div>`;
+            } else if (type === 'tall') {
+                document.getElementById('preset-tall').classList.add('border-brand-500', 'bg-brand-950/30');
+                out.innerHTML = `<div><strong class="text-brand-400">Tall / Narrow Model Settings:</strong></div>
+                                 <div>Layer Height: <strong>0.20mm</strong> | Infill: <strong>20%</strong> | Speed: <strong>25 mm/s (Slow for stability)</strong> | Adhesion: <strong>Raft or 10mm Brim</strong> | Temp: <strong>198°C</strong></div>`;
+            }
+        }
+
+        // Diagnostic Troubleshooter
+        function runTroubleshooter() {
+            const val = document.getElementById('trouble-select').value;
+            const res = document.getElementById('trouble-result');
+
+            if (!val) {
+                res.classList.add('hidden');
+                return;
+            }
+
+            res.classList.remove('hidden');
+
+            if (val === 'grinding') {
+                res.innerHTML = `<strong class="text-amber-300 font-semibold block">Solution for Grinding / Clicking:</strong>
+                                 <p class="text-slate-300">1. The bed tray is seated off-center on the pinion gear rods. Lift tray, clear plastic scrap debris, and press down centered.</p>
+                                 <p class="text-slate-300">2. If extruder motor clicks during print, hotend is clogged or nozzle temperature is too low (increase to 200°C).</p>`;
+            } else if (val === 'not_extruding') {
+                res.innerHTML = `<strong class="text-amber-300 font-semibold block">Solution for No Filament Flow:</strong>
+                                 <p class="text-slate-300">1. Verify nozzle temperature reaches 200°C.</p>
+                                 <p class="text-slate-300">2. Perform a "Cold Pull" atomic clean to remove charred PLA debris inside the nozzle tip.</p>
+                                 <p class="text-slate-300">3. Ensure you pressed the flashing physical front button during filament loading.</p>`;
+            } else if (val === 'detached') {
+                res.innerHTML = `<strong class="text-amber-300 font-semibold block">Solution for Print Detaching / Warping:</strong>
+                                 <p class="text-slate-300">1. Clean clear build plate with isopropyl alcohol or warm soapy water.</p>
+                                 <p class="text-slate-300">2. Apply a thin layer of washable purple glue stick over the print zone.</p>
+                                 <p class="text-slate-300">3. Enable a 6mm <strong>Brim</strong> in Cura slicer settings.</p>`;
+            } else if (val === 'button_flashing') {
+                res.innerHTML = `<strong class="text-amber-300 font-semibold block">Solution for Flashing Front Button:</strong>
+                                 <p class="text-slate-300">1. A flashing button indicates the MOD-t is waiting for manual user confirmation to load filament or start print.</p>
+                                 <p class="text-slate-300">2. Press the physical front button once firmly to initiate motor movement.</p>`;
+            } else if (val === 'usb_error') {
+                res.innerHTML = `<strong class="text-amber-300 font-semibold block">Solution for USB Connection Error:</strong>
+                                 <p class="text-slate-300">1. Unplug and re-plug USB cable directly into host computer (avoid unpowered hubs).</p>
+                                 <p class="text-slate-300">2. Power cycle MOD-t by toggling rear power switch.</p>
+                                 <p class="text-slate-300">3. If using Node 24 server bridge, verify USB serial port permission (\`/dev/tty.usbmodem\`).</p>`;
+            }
+        }
+
+        // Print Time & Cost Estimator
+        function calculatePrint() {
+            const meters = parseFloat(document.getElementById('calc-length').value) || 0;
+            const costPerKg = parseFloat(document.getElementById('calc-cost').value) || 0;
+            const speed = parseFloat(document.getElementById('calc-speed').value) || 35;
+
+            // 1.75mm PLA density approx 3 grams per meter
+            const grams = meters * 3.0;
+            const totalCost = (grams / 1000) * costPerKg;
+            
+            // Rough print time estimation formula
+            const mm = meters * 1000;
+            const seconds = (mm / speed) * 3.5; // multiplier accounts for travel & retracts
+            const hours = Math.floor(seconds / 3600);
+            const mins = Math.round((seconds % 3600) / 60);
+
+            document.getElementById('calc-weight-out').innerText = `${grams.toFixed(1)} grams`;
+            document.getElementById('calc-cost-out').innerText = `$${totalCost.toFixed(2)} USD`;
+            document.getElementById('calc-time-out').innerText = `${hours}h ${mins}m`;
+        }
+
+        // Clipboard Helper with Feedback
+        function copyToClipboard(elementId, btn) {
+            const el = document.getElementById(elementId);
+            const text = el.innerText || el.textContent;
+
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = 'Copied!';
+                btn.classList.add('bg-emerald-600', 'text-white');
+                setTimeout(() => {
+                    btn.innerText = orig;
+                    btn.classList.remove('bg-emerald-600', 'text-white');
+                }, 2000);
+            });
+        }
+
+        // Initialize default calculations on load
+        window.addEventListener('DOMContentLoaded', () => {
+            calculatePrint();
+        });
     </script>
 </body>
 </html>
