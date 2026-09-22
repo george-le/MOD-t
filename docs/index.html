@@ -63,7 +63,7 @@
             <!-- Quick Search Bar -->
             <div class="hidden md:flex flex-1 max-w-md relative">
                 <svg class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
-                <input type="text" id="global-search" placeholder="Search guides, brim, raft, skirt, Cura..." onkeyup="filterContent()" 
+                <input type="text" id="global-search" placeholder="Search guides, bed tray, brim, raft, Cura..." onkeyup="filterContent()" 
                        class="w-full bg-slate-900 border border-slate-800 rounded-lg pl-9 pr-4 py-1.5 text-sm text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition-all">
             </div>
 
@@ -93,6 +93,7 @@
                     <ul class="space-y-1">
                         <li><a href="#overview" class="block px-2 py-1.5 rounded text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">Printer Overview & Specs</a></li>
                         <li><a href="#basics-101" class="block px-2 py-1.5 rounded text-slate-300 hover:text-white hover:bg-slate-900 transition-colors">3D Printing 101 & Glossary</a></li>
+                        <li><a href="#bed-tray-guide" class="block px-2 py-1.5 rounded text-brand-400 hover:text-brand-300 hover:bg-slate-900 transition-colors font-medium">Build Bed & Tray Mechanism</a></li>
                         <li><a href="#bed-adhesion" class="block px-2 py-1.5 rounded text-sky-400 hover:text-sky-300 hover:bg-slate-900 transition-colors font-medium">Bed Adhesion: Skirt, Brim, Raft</a></li>
                         <li><a href="#classroom-safety" class="block px-2 py-1.5 rounded text-slate-300 hover:text-amber-400 hover:bg-slate-900 transition-colors font-medium">Classroom Safety Rules</a></li>
                         <li><a href="#workflow-roadmap" class="block px-2 py-1.5 rounded text-slate-300 hover:text-brand-400 hover:bg-slate-900 transition-colors font-medium">6-Step Printing Roadmap</a></li>
@@ -146,7 +147,7 @@
 
                     <h1 class="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">New Matter MOD-t Master Operational Guide</h1>
                     <p class="mt-3 text-slate-400 text-base max-w-3xl leading-relaxed">
-                        <comment-tag id="1">Complete reference for maintaining, slicing, and operating the New Matter MOD-t 3D printer without cloud server dependency. Configured specifically for Intel Mac desktop environments using offline USB G-code streaming and community profiles.</comment-tag id="1" text="A concise overview to improve readability: 'Essential offline operational and troubleshooting guide for the New Matter MOD-t 3D printer via USB connection.'" type="suggestion">
+                        Essential offline operational and troubleshooting guide for the New Matter MOD-t 3D printer via direct USB connection on macOS / OS X systems.
                     </p>
 
                     <!-- Spec Grid -->
@@ -191,7 +192,7 @@
                     </div>
 
                     <p class="text-sm text-slate-300 leading-relaxed">
-                        <comment-tag id="2">3D printing with the MOD-t uses a method called <strong>FDM (Fused Deposition Modeling)</strong>. Think of it like a micro hot-glue gun attached to a robot arm: plastic string (filament) is melted and squeezed out layer by layer from the bottom up to build a 3D object.</comment-tag id="2" text="Shorter version for clarity: 'The MOD-t uses FDM (Fused Deposition Modeling) to construct 3D objects layer-by-layer from melted filament.'" type="suggestion">
+                        The MOD-t uses <strong>FDM (Fused Deposition Modeling)</strong> to construct 3D objects layer-by-layer from melted PLA filament string pushed through a heated nozzle.
                     </p>
 
                     <!-- Core Concepts Grid -->
@@ -252,8 +253,128 @@
                                 <span>Hotend / Nozzle</span>
                             </div>
                             <p class="text-xs text-slate-400 leading-relaxed">
-                                The heated metal tip at the print head ($200^\circ\text{C} / 392^\circ\text{F}$). Squeezes plastic out through a tiny 0.4mm hole.
+                                The heated metal tip at the print head (200°C / 392°F). Squeezes plastic out through a tiny 0.4mm hole.
                             </p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- PRINTER BED & TRAY MECHANISM GUIDE -->
+            <section id="bed-tray-guide" class="scroll-mt-24 space-y-6">
+                <div class="border border-brand-500/30 rounded-2xl p-6 bg-slate-900/90 space-y-6 shadow-xl">
+                    <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-4">
+                        <div>
+                            <span class="text-xs font-semibold uppercase tracking-wider text-brand-400">Patented Motion System</span>
+                            <h2 class="text-2xl font-bold text-white tracking-tight">How the MOD-t Printer & Bed Tray Works</h2>
+                        </div>
+                        <span class="text-xs px-2.5 py-1 rounded-full bg-brand-500/10 text-brand-400 border border-brand-500/20 font-mono">2-Axis Pinion Mechanism</span>
+                    </div>
+
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        Unlike conventional 3D printers where the print head moves left, right, forward, and backward, the New Matter MOD-t uses an ingenious <strong>floating bed tray motion system</strong>. Understanding how this tray interacts with the printer gears is key to preventing job failures and grinding noises.
+                    </p>
+
+                    <!-- Mechanism Explanation Cards -->
+                    <div class="grid md:grid-cols-2 gap-5">
+                        <!-- Dual Gear Pinion Rods -->
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                            <div class="flex items-center gap-2 text-brand-400 font-semibold text-sm">
+                                <svg class="w-5 h-5 text-brand-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span>1. Dual Pinion Gear Rod Drive (X & Y Axes)</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                The print head nozzle inside the MOD-t <strong>only moves straight UP and DOWN (Z-axis)</strong>. All horizontal X and Y motion is created by two rotating grooved gear shafts located beneath the bed platform.
+                            </p>
+                            <ul class="text-xs text-slate-400 space-y-1.5 list-disc list-inside pt-2 border-t border-slate-900">
+                                <li>The bottom of the motion carriage has <strong>perpendicular rack gear grooves</strong> molded directly into it.</li>
+                                <li>Rotating the left rod shifts the tray diagonally; turning both in tandem creates precise X-Y positioning.</li>
+                                <li>Because the tray is completely detachable, it sits directly on top of metal ball bearings.</li>
+                            </ul>
+                        </div>
+
+                        <!-- 2-Piece Tray Assembly -->
+                        <div class="bg-slate-950 p-5 rounded-xl border border-slate-800 space-y-3">
+                            <div class="flex items-center gap-2 text-emerald-400 font-semibold text-sm">
+                                <svg class="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+                                <span>2. Two-Part Build Tray Assembly</span>
+                            </div>
+                            <p class="text-xs text-slate-300 leading-relaxed">
+                                The build bed consists of two separate components that snap together:
+                            </p>
+                            <ol class="text-xs text-slate-400 space-y-1.5 list-decimal list-inside pt-2 border-t border-slate-900">
+                                <li><strong class="text-slate-200">The Motion Base (Carriage):</strong> Heavy grey plastic base plate with bottom gear teeth that rides on the printer drive shafts.</li>
+                                <li><strong class="text-slate-200">The Clear Build Plate (Tray Insert):</strong> Flexible clear plastic plate where plastic prints stick. It snaps securely into the top slots of the motion base.</li>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <!-- CRITICAL PRE-PRINT PLACEMENT & ALIGNMENT REQUIREMENT -->
+                    <div class="bg-slate-950 border border-amber-500/40 rounded-xl p-5 space-y-4">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-bold text-amber-300 flex items-center gap-2">
+                                <svg class="w-5 h-5 text-amber-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+                                Critical Requirement: Proper Bed Alignment & Seating Before Every Print
+                            </h3>
+                            <span class="text-[10px] bg-amber-500/10 text-amber-400 border border-amber-500/20 px-2.5 py-0.5 rounded font-mono uppercase">Pre-Print Checklist</span>
+                        </div>
+
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Because the MOD-t bed tray is not fixed in a track with screws, <strong>if the tray is placed off-center by even a single gear tooth or tilted at an angle</strong>, the printer will misalign during homing. This results in loud grinding noises, off-center prints, nozzle scrapes, or instant motor stalls!
+                        </p>
+
+                        <!-- Step-by-Step Bed Alignment Steps -->
+                        <div class="grid sm:grid-cols-4 gap-3 pt-2">
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-brand-400 font-bold text-xs font-mono">STEP 1</div>
+                                <div class="text-xs font-semibold text-slate-200">Snap Plate to Base</div>
+                                <p class="text-[11px] text-slate-400">Ensure the clear plastic build plate is firmly pressed down and locked into all 4 corner tabs on the grey motion carriage.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-brand-400 font-bold text-xs font-mono">STEP 2</div>
+                                <div class="text-xs font-semibold text-slate-200">Clear Gear Channels</div>
+                                <p class="text-[11px] text-slate-400">Check underneath the metal gear rods for stray filament strands or plastic scrap bits that could block tray travel.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-brand-400 font-bold text-xs font-mono">STEP 3</div>
+                                <div class="text-xs font-semibold text-slate-200">Orient & Center Tray</div>
+                                <p class="text-[11px] text-slate-400">Place the base flat on the stainless steel gear rods so the bottom rack teeth engage square and parallel to the printer frame.</p>
+                            </div>
+
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-brand-400 font-bold text-xs font-mono">STEP 4</div>
+                                <div class="text-xs font-semibold text-slate-200">Gentle Press & Wiggle</div>
+                                <p class="text-[11px] text-slate-400">Press down lightly on the center of the bed with two fingers and wiggle gently to verify the teeth are fully meshed in the drive gears.</p>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Bed Alignment Verification Checklist -->
+                        <div class="bg-slate-900/90 p-4 rounded-lg border border-slate-800 space-y-3">
+                            <div class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center justify-between">
+                                <span>Pre-Print Tray Placement Self-Check</span>
+                                <span id="bed-check-status" class="text-amber-400 font-mono text-[11px]">0/3 Ready</span>
+                            </div>
+
+                            <div class="space-y-2 text-xs">
+                                <label class="flex items-center gap-2.5 cursor-pointer text-slate-300 hover:text-white transition-colors">
+                                    <input type="checkbox" id="check-bed-1" onchange="updateBedChecklist()" class="w-4 h-4 rounded border-slate-700 text-brand-600 focus:ring-brand-500 bg-slate-950">
+                                    <span>The clear build plate is snapped flush onto the motion base (no bulging or raised edges).</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 cursor-pointer text-slate-300 hover:text-white transition-colors">
+                                    <input type="checkbox" id="check-bed-2" onchange="updateBedChecklist()" class="w-4 h-4 rounded border-slate-700 text-brand-600 focus:ring-brand-500 bg-slate-950">
+                                    <span>The tray is resting completely flat on the gear rods with zero tilt or diagonal twisting.</span>
+                                </label>
+                                <label class="flex items-center gap-2.5 cursor-pointer text-slate-300 hover:text-white transition-colors">
+                                    <input type="checkbox" id="check-bed-3" onchange="updateBedChecklist()" class="w-4 h-4 rounded border-slate-700 text-brand-600 focus:ring-brand-500 bg-slate-950">
+                                    <span>No plastic debris or purged PLA strands are sitting underneath the gear rods or ball bearings.</span>
+                                </label>
+                            </div>
+
+                            <div id="bed-check-msg" class="text-xs font-medium p-2 rounded bg-slate-950 text-slate-400 border border-slate-800">
+                                Complete all 3 checks before clicking "Print" in the New Matter Utility.
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -430,7 +551,7 @@
                             </div>
                             <h3 class="font-bold text-slate-200 text-sm">Prep Build Tray</h3>
                             <p class="text-xs text-slate-400 leading-relaxed">
-                                Wipe clear tray clean and apply a thin layer of purple washable glue stick or blue painter's tape to assist bed adhesion.
+                                Wipe clear tray clean and ensure it is properly seated flat on the dual gear shafts. Apply purple glue stick or painter's tape for adhesion.
                             </p>
                         </div>
 
@@ -552,7 +673,7 @@
                     </div>
 
                     <p class="text-xs text-slate-400 leading-relaxed">
-                        <comment-tag id="3"><strong>Why avoid the App's "Unload" command?</strong> Unloading retracts a swollen, hot bulb of filament backward through cold PTFE tubing, causing severe extruder jams. Use the classroom-safe <strong>"Purge & Snip"</strong> routine below instead:</comment-tag id="3" text="Concise warning text: 'Avoid the Unload command to prevent extruder jams from swollen filament tips. Follow the Purge & Snip routine below.'" type="suggestion">
+                        Avoid the Unload command to prevent extruder jams from swollen filament tips. Follow the Purge & Snip routine below:
                     </p>
 
                     <ol class="space-y-3 text-slate-300 text-sm list-decimal list-inside marker:text-brand-500 marker:font-bold">
@@ -665,7 +786,7 @@
                         <h3 class="text-xl font-bold text-slate-100 mt-0.5">Installing both Definition Files & Print Profiles</h3>
                         <p class="text-slate-400 text-sm mt-1 leading-relaxed">
                             Configuring Cura requires two distinct components from the <code class="text-brand-400 bg-slate-950 px-1.5 py-0.5 rounded text-xs font-mono">tripflex/MOD-t</code> repository: 
-                            the <strong>Machine Definition File</strong> (tells Cura about the MOD-t's $150 \times 100 \times 125\text{ mm}$ physical size) and the <strong>Print Profile File</strong> (sets temperatures, speeds, layer heights, and retracts).
+                            the <strong>Machine Definition File</strong> (tells Cura about the MOD-t's 150 × 100 × 125 mm physical size) and the <strong>Print Profile File</strong> (sets temperatures, speeds, layer heights, and retracts).
                         </p>
                     </div>
 
@@ -728,7 +849,7 @@
                         </div>
 
                         <p class="text-xs text-slate-300 leading-relaxed">
-                            Once the printer definition is created, you must import the calibrated <strong>tripflex print profile</strong> so Cura applies optimized feed rates, temperature targets ($200^\circ\text{C}$), retract distances ($2.5\text{ mm}$), and start/end sequences. Choose the method below based on your Cura version:
+                            Once the printer definition is created, you must import the calibrated <strong>tripflex print profile</strong> so Cura applies optimized feed rates, temperature targets (200°C), retract distances (2.5mm), and start/end sequences. Choose the method below based on your Cura version:
                         </p>
 
                         <!-- Version Tabs / Comparison Grid -->
@@ -743,7 +864,7 @@
                                     <li>Download <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code> from the tripflex GitHub repo.</li>
                                     <li>In Cura menu, click <strong>File $\rightarrow$ Open Profile...</strong> (or <strong>Load Profile from File...</strong>).</li>
                                     <li>Browse to your Downloads folder and select <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code>.</li>
-                                    <li>Verify that <strong>Print speed</strong> updates to $35\text{ mm/s}$ and <strong>Printing temperature</strong> updates to $200^\circ\text{C}$.</li>
+                                    <li>Verify that <strong>Print speed</strong> updates to 35 mm/s and <strong>Printing temperature</strong> updates to 200°C.</li>
                                 </ol>
                             </div>
 
@@ -894,11 +1015,15 @@ M84 ; Disable stepper motors</pre>
                     <div>
                         <div class="text-xs font-semibold text-brand-400 uppercase tracking-wider mb-1">Interactive Diagnostic Assistant</div>
                         <h2 class="text-2xl font-bold text-white tracking-tight">MOD-t Hardware Troubleshooting Tool</h2>
-                        <p class="text-slate-400 text-sm mt-1"><comment-tag id="4">Select the printing symptom or error behavior you are experiencing below to reveal step-by-step diagnostic procedures.</comment-tag id="4" text="Shorter call-to-action text: 'Select a printing symptom below for targeted troubleshooting steps.'" type="suggestion"></p>
+                        <p class="text-slate-400 text-sm mt-1">Select a printing symptom below for targeted troubleshooting steps.</p>
                     </div>
 
                     <!-- Diagnostic Selector Buttons -->
-                    <div class="grid sm:grid-cols-3 gap-3">
+                    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        <button onclick="selectSymptom('bed-grinding')" id="btn-bed-grinding" class="symptom-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-left hover:border-brand-500/50 transition-all">
+                            <div class="font-semibold text-sm text-slate-200">Bed Grinding / Stalling</div>
+                            <div class="text-xs text-slate-400 mt-1">Loud gear slip during bed movement</div>
+                        </button>
                         <button onclick="selectSymptom('clicking')" id="btn-clicking" class="symptom-btn p-3 rounded-xl border border-slate-800 bg-slate-950 text-left hover:border-brand-500/50 transition-all">
                             <div class="font-semibold text-sm text-slate-200">Extruder Clicking Noise</div>
                             <div class="text-xs text-slate-400 mt-1">Gears slipping or grinding filament</div>
@@ -979,14 +1104,35 @@ M84 ; Disable stepper motors</pre>
     <!-- FOOTER -->
     <footer class="border-t border-slate-800/80 bg-slate-950 mt-16 py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400 space-y-2">
-            <p><comment-tag id="5">New Matter MOD-t Master Guide & Documentation for OS X Yosemite / macOS Intel Systems.</comment-tag id="5" text="Streamlined footer notice: 'MOD-t 3D Printing Operational Guide for macOS.'" type="suggestion"></p>
+            <p>MOD-t 3D Printing Operational Guide for macOS.</p>
             <p class="text-slate-500">Open-source documentation compiled from community resources including <a href="https://github.com/tripflex/MOD-t" target="_blank" class="text-brand-400 hover:underline">tripflex/MOD-t</a>.</p>
         </div>
     </footer>
 
     <!-- INTERACTIVE SCRIPT LOGIC -->
     <script>
-        // Preset Picker Logic for Cura
+        function updateBedChecklist() {
+            const c1 = document.getElementById('check-bed-1').checked;
+            const c2 = document.getElementById('check-bed-2').checked;
+            const c3 = document.getElementById('check-bed-3').checked;
+
+            const count = [c1, c2, c3].filter(Boolean).length;
+            const statusEl = document.getElementById('bed-check-status');
+            const msgEl = document.getElementById('bed-check-msg');
+
+            statusEl.innerText = `${count}/3 Verified`;
+
+            if (count === 3) {
+                statusEl.className = 'text-emerald-400 font-mono text-[11px] font-bold';
+                msgEl.className = 'text-xs font-medium p-2.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 flex items-center gap-2';
+                msgEl.innerHTML = `<svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> <span><strong>Bed Position Verified!</strong> The tray is correctly meshed on the gear shafts. Safe to proceed with print transfer!</span>`;
+            } else {
+                statusEl.className = 'text-amber-400 font-mono text-[11px]';
+                msgEl.className = 'text-xs font-medium p-2 rounded bg-slate-950 text-slate-400 border border-slate-800';
+                msgEl.innerText = `Complete all 3 checks before clicking "Print" in the New Matter Utility (${3 - count} remaining).`;
+            }
+        }
+
         function applyPreset(type) {
             document.querySelectorAll('.preset-btn').forEach(btn => btn.classList.remove('border-brand-500', 'bg-brand-500/10'));
             
@@ -1027,8 +1173,19 @@ M84 ; Disable stepper motors</pre>
             }
         }
 
-        // Symptom Diagnostic Database
         const symptomData = {
+            'bed-grinding': {
+                title: 'Build Tray Loud Grinding / Skipping / Stalling',
+                content: `
+                    <p><strong>Primary Cause:</strong> The build tray rack teeth are misaligned or not seated square on the dual gear shafts.</p>
+                    <ul class="list-disc list-inside space-y-1 text-slate-300">
+                        <li>Lift the build tray off completely and check for stray bits of plastic in the drive gear channels.</li>
+                        <li>Re-seat the carriage flat onto both steel rods, ensuring bottom gear grooves align parallel with the casing.</li>
+                        <li>Confirm the clear top plate is snapped flush into all 4 corner slots on the grey motion base.</li>
+                        <li>Press down gently on the center of the bed and wiggle it to ensure the pinion teeth engage fully before starting homing.</li>
+                    </ul>
+                `
+            },
             'clicking': {
                 title: 'Extruder Gear Clicking & Skipping',
                 content: `
@@ -1083,7 +1240,6 @@ M84 ; Disable stepper motors</pre>
             panel.classList.remove('hidden');
         }
 
-        // Calculator Logic
         function calculateEstimates() {
             const height = parseFloat(document.getElementById('calc-height').value) || 0;
             const layerHeight = parseFloat(document.getElementById('calc-layer').value) || 0.2;
@@ -1105,7 +1261,6 @@ M84 ; Disable stepper motors</pre>
             document.getElementById('out-resolution').innerText = resText;
         }
 
-        // Copy Code Functionality
         function copyToClipboard(elementId, btn) {
             const text = document.getElementById(elementId).innerText;
             const textarea = document.createElement('textarea');
@@ -1122,7 +1277,6 @@ M84 ; Disable stepper motors</pre>
             }, 2000);
         }
 
-        // Search Filter Logic
         function filterContent() {
             const query = document.getElementById('global-search').value.toLowerCase();
             const sections = document.querySelectorAll('main > section');
@@ -1137,10 +1291,10 @@ M84 ; Disable stepper motors</pre>
             });
         }
 
-        // Export Document Functionality
         function exportPageAsMarkdown() {
             const markdownContent = `# New Matter MOD-t Master Operational Guide (OS X Yosemite / macOS)\n\n` +
                 `## Specs\n- Build Volume: 150x100x125 mm\n- Filament: 1.75mm PLA\n- Nozzle: 0.4mm\n\n` +
+                `## Bed & Motion System\n- 2-Axis Pinion Rod Drive: Motion carriage sits directly on dual rotating gear shafts.\n- Pre-Print Placement Check: Snap clear tray flush to grey base, clear gear tracks, and press down center to mesh teeth.\n\n` +
                 `## Bed Adhesion Options\n- Skirt: Outline around print to prime nozzle without touching object.\n- Brim: Single layer border attached to base of print to increase surface area & prevent corner lifting.\n- Raft: Disposable multi-layer grid platform printed underneath the entire model.\n\n` +
                 `## Cura Recommended Settings\n- Layer Height: 0.15 - 0.2mm\n- Speed: 30 - 40 mm/s\n- Temp: 195 - 200°C\n- Retraction: 2.5mm at 25mm/s\n\n`;
 
