@@ -612,10 +612,17 @@
 
             <!-- CURA & PROFILE SETUP SECTION -->
             <section id="cura-setup" class="scroll-mt-24 space-y-6">
-                <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
-                    <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
-                    Cura Slicer & GitHub Profile Setup
-                </h2>
+                <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                    <h2 class="text-2xl font-bold text-white tracking-tight flex items-center gap-2">
+                        <svg class="w-6 h-6 text-brand-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+                        Cura Slicer & GitHub Profile Setup
+                    </h2>
+                    <a href="https://github.com/tripflex/MOD-t/tree/master/Cura" target="_blank" rel="noopener noreferrer" 
+                       class="text-xs font-mono bg-slate-900 hover:bg-slate-800 text-brand-400 border border-slate-800 px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5">
+                        <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                        <span>tripflex/MOD-t/Cura Repo</span>
+                    </a>
+                </div>
 
                 <!-- INTERACTIVE PRESET HELPER FOR BEGINNERS -->
                 <div id="preset-picker" class="border border-brand-500/30 rounded-xl p-5 bg-slate-950 space-y-4">
@@ -624,7 +631,7 @@
                             <span class="text-xs font-semibold text-brand-400 uppercase tracking-wider">Beginner Cura Helper</span>
                             <h3 class="text-lg font-bold text-white">What are you printing today?</h3>
                         </div>
-                        <span class="text-xs bg-brand-500/10 text-brand-400 border border-brand-500/20 px-2 py-0.5 rounded">Preset Recommendation</span>
+                        <span class="text-xs bg-brand-500/10 text-brand-400 border border-brand-500/20 px-2 py-0.5 rounded font-mono">Preset Recommendation</span>
                     </div>
 
                     <div class="grid sm:grid-cols-3 gap-3">
@@ -649,22 +656,146 @@
                     </div>
                 </div>
 
-                <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-6">
-                    <div class="space-y-2">
-                        <h3 class="text-lg font-bold text-slate-100">Installing tripflex/MOD-t Definition Profile</h3>
-                        <p class="text-slate-400 text-sm leading-relaxed">
-                            To enable the MOD-t profile in Cura on OS X Yosemite, you must copy the <code class="text-brand-400 bg-slate-950 px-1.5 py-0.5 rounded text-xs">modt.def.json</code> machine definition file into the Cura application package resources.
+                <!-- COMPREHENSIVE CURA PROFILE INSTALLATION GUIDE -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-6 space-y-8">
+                    
+                    <!-- Section Header -->
+                    <div>
+                        <span class="text-xs font-semibold text-emerald-400 uppercase tracking-wider">Step-by-Step Installation</span>
+                        <h3 class="text-xl font-bold text-slate-100 mt-0.5">Installing both Definition Files & Print Profiles</h3>
+                        <p class="text-slate-400 text-sm mt-1 leading-relaxed">
+                            Configuring Cura requires two distinct components from the <code class="text-brand-400 bg-slate-950 px-1.5 py-0.5 rounded text-xs font-mono">tripflex/MOD-t</code> repository: 
+                            the <strong>Machine Definition File</strong> (tells Cura about the MOD-t's $150 \times 100 \times 125\text{ mm}$ physical size) and the <strong>Print Profile File</strong> (sets temperatures, speeds, layer heights, and retracts).
                         </p>
                     </div>
 
-                    <div class="bg-slate-950 border border-slate-800 rounded-lg p-4 font-mono text-xs text-slate-300 space-y-2">
-                        <div class="text-slate-500"># Path inside Ultimaker Cura Package on macOS:</div>
-                        <div class="text-emerald-400">/Applications/Ultimaker Cura.app/Contents/Resources/resources/definitions/modt.def.json</div>
+                    <!-- STEP 1: DEF FILE PLACEMENT -->
+                    <div class="space-y-3 bg-slate-950 p-5 rounded-xl border border-slate-800">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-brand-400 text-base flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs flex items-center justify-center font-mono border border-brand-500/30">1</span>
+                                Install Machine Definition & Bed Model Assets
+                            </h4>
+                            <span class="text-[10px] bg-slate-800 text-slate-400 px-2 py-0.5 rounded font-mono">macOS / OS X Yosemite</span>
+                        </div>
+                        
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            On macOS, right-click (or Control-click) <code class="text-slate-200 font-mono bg-slate-900 px-1 py-0.5 rounded">/Applications/Ultimaker Cura.app</code> and select <strong>Show Package Contents</strong>. Navigate to the internal resources directories and copy the following files:
+                        </p>
+
+                        <!-- Code / Path Box 1 -->
+                        <div class="bg-slate-900 p-3.5 rounded-lg border border-slate-800/80 font-mono text-xs space-y-2">
+                            <div class="text-slate-400 text-[11px] font-sans font-semibold">1. Place Machine Definition File:</div>
+                            <div class="text-emerald-400 break-all select-all">/Applications/Ultimaker Cura.app/Contents/Resources/resources/definitions/modt.def.json</div>
+                            
+                            <div class="text-slate-400 text-[11px] font-sans font-semibold pt-2 border-t border-slate-800">2. (Optional) Place 3D Print Tray Platform Preview:</div>
+                            <div class="text-sky-400 break-all select-all">/Applications/Ultimaker Cura.app/Contents/Resources/resources/meshes/modt_platform.stl</div>
+                        </div>
+
+                        <!-- macOS Gatekeeper Warning Box -->
+                        <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-xs text-amber-300/90 space-y-1">
+                            <strong class="font-semibold text-amber-300">macOS Gatekeeper Fix:</strong> If macOS prevents Cura from launching after modifying internal package files, open the Terminal app and execute:
+                            <div class="mt-1 bg-slate-950 p-2 rounded text-emerald-400 font-mono select-all flex justify-between items-center">
+                                <code>sudo xattr -cr '/Applications/Ultimaker Cura.app'</code>
+                                <button onclick="copyToClipboard('cmd-xattr', this)" class="text-[10px] bg-slate-800 hover:bg-slate-700 text-slate-300 px-2 py-0.5 rounded">Copy</button>
+                            </div>
+                            <span id="cmd-xattr" class="hidden">sudo xattr -cr '/Applications/Ultimaker Cura.app'</span>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: PRINTER UI ADDITION -->
+                    <div class="space-y-3 bg-slate-950 p-5 rounded-xl border border-slate-800">
+                        <h4 class="font-bold text-brand-400 text-base flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs flex items-center justify-center font-mono border border-brand-500/30">2</span>
+                            Add MOD-t Printer in Cura UI
+                        </h4>
+                        <ol class="text-xs text-slate-300 space-y-2 list-decimal list-inside pl-1">
+                            <li>Launch <strong>Ultimaker Cura</strong> on your Mac.</li>
+                            <li>Open the Printer Selection Menu: Navigate to <strong>Settings $\rightarrow$ Printer $\rightarrow$ Add Printer...</strong> (or click the top left printer dropdown).</li>
+                            <li>Select <strong>Add a non-networked printer</strong> (or <i>Other</i>).</li>
+                            <li>Scroll to locate <strong>New Matter</strong> $\rightarrow$ select <strong>MOD-t</strong> and click <strong>Add</strong>.</li>
+                        </ol>
+                    </div>
+
+                    <!-- STEP 3: LOADING PRINT PROFILE (.INI / .CURAPROFILE) -->
+                    <div class="space-y-3 bg-slate-950 p-5 rounded-xl border border-slate-800">
+                        <div class="flex items-center justify-between">
+                            <h4 class="font-bold text-brand-400 text-base flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs flex items-center justify-center font-mono border border-brand-500/30">3</span>
+                                Loading the Slicer Printing Profile (`.ini` or `.curaprofile`)
+                            </h4>
+                            <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded font-mono">Tripflex Config File</span>
+                        </div>
+
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Once the printer definition is created, you must import the calibrated <strong>tripflex print profile</strong> so Cura applies optimized feed rates, temperature targets ($200^\circ\text{C}$), retract distances ($2.5\text{ mm}$), and start/end sequences. Choose the method below based on your Cura version:
+                        </p>
+
+                        <!-- Version Tabs / Comparison Grid -->
+                        <div class="grid md:grid-cols-2 gap-4 pt-1">
+                            <!-- Legacy Cura 15.04.6 -->
+                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <h5 class="font-bold text-slate-100 text-xs uppercase tracking-wider">Method A: Cura 15.04.6 (Yosemite Default)</h5>
+                                    <span class="text-[10px] bg-brand-500/20 text-brand-300 px-1.5 py-0.5 rounded font-mono">.ini format</span>
+                                </div>
+                                <ol class="text-xs text-slate-300 space-y-1.5 list-decimal list-inside pl-1 leading-relaxed">
+                                    <li>Download <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code> from the tripflex GitHub repo.</li>
+                                    <li>In Cura menu, click <strong>File $\rightarrow$ Open Profile...</strong> (or <strong>Load Profile from File...</strong>).</li>
+                                    <li>Browse to your Downloads folder and select <code class="text-emerald-400 bg-slate-950 px-1 rounded">NM Cura Profile 151020.ini</code>.</li>
+                                    <li>Verify that <strong>Print speed</strong> updates to $35\text{ mm/s}$ and <strong>Printing temperature</strong> updates to $200^\circ\text{C}$.</li>
+                                </ol>
+                            </div>
+
+                            <!-- Cura 2.x / 3.x / 4.x -->
+                            <div class="bg-slate-900 p-4 rounded-lg border border-slate-800 space-y-2">
+                                <div class="flex items-center justify-between">
+                                    <h5 class="font-bold text-slate-100 text-xs uppercase tracking-wider">Method B: Cura 2.x / 3.x / 4.x Modern</h5>
+                                    <span class="text-[10px] bg-sky-500/20 text-sky-300 px-1.5 py-0.5 rounded font-mono">.curaprofile format</span>
+                                </div>
+                                <ol class="text-xs text-slate-300 space-y-1.5 list-decimal list-inside pl-1 leading-relaxed">
+                                    <li>Download <code class="text-sky-400 bg-slate-950 px-1 rounded">modt.curaprofile</code> from the community repository.</li>
+                                    <li>Click <strong>Preferences $\rightarrow$ Configure Cura...</strong> (or <kbd class="bg-slate-950 px-1 rounded border border-slate-700">⌘ + ,</kbd>).</li>
+                                    <li>Select <strong>Profiles</strong> on the left panel and click <strong>Import</strong>.</li>
+                                    <li>Select <code class="text-sky-400 bg-slate-950 px-1 rounded">modt.curaprofile</code>, then click <strong>Activate</strong> to set as default.</li>
+                                </ol>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: G-CODE VERIFICATION -->
+                    <div class="space-y-3 bg-slate-950 p-5 rounded-xl border border-slate-800">
+                        <h4 class="font-bold text-brand-400 text-base flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full bg-brand-500/20 text-brand-400 text-xs flex items-center justify-center font-mono border border-brand-500/30">4</span>
+                            Verify Start & End G-Code Sequences
+                        </h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Under <strong>Machine Settings</strong> in Cura, confirm that the Start and End G-Code scripts match the MOD-t homing routine:
+                        </p>
+
+                        <div class="grid md:grid-cols-2 gap-4 text-xs font-mono">
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-brand-400 font-sans font-semibold">Start G-Code:</div>
+                                <pre class="text-[11px] text-slate-300 whitespace-pre-wrap">G28 ; Home all axes
+G1 Z5 F5000 ; Lift nozzle
+M109 S200 ; Heat nozzle to 200C and wait
+G92 E0 ; Reset extruder position</pre>
+                            </div>
+                            <div class="bg-slate-900 p-3 rounded-lg border border-slate-800 space-y-1">
+                                <div class="text-rose-400 font-sans font-semibold">End G-Code:</div>
+                                <pre class="text-[11px] text-slate-300 whitespace-pre-wrap">M104 S0 ; Turn off hotend heater
+G91 ; Relative positioning
+G1 E-2 F300 ; Retract 2mm to prevent oozing
+G1 Z10 F5000 ; Move hotend up away from print
+G28 X0 Y0 ; Home X and Y
+M84 ; Disable stepper motors</pre>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Recommended Settings Table -->
                     <div id="recommended-settings" class="space-y-3">
-                        <h4 class="font-semibold text-slate-200 text-sm">Recommended Cura Print Parameters</h4>
+                        <h4 class="font-semibold text-slate-200 text-sm">Recommended Cura Print Parameters Reference</h4>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left text-xs">
                                 <thead class="bg-slate-950 text-slate-400 border-b border-slate-800">
